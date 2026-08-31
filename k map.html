@@ -550,7 +550,7 @@
             border-radius: 8px;
             position: relative;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
             text-align: center;
             vertical-align: middle;
         }
@@ -561,6 +561,44 @@
             transform: scale(1.03);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             z-index: 5;
+        }
+
+        /* Animated Block-by-Block Evaluation States */
+        .kmap-cell.cell-assigning {
+            border-color: var(--coral) !important;
+            box-shadow: 0 0 20px var(--coral-glow), inset 0 0 12px var(--coral-glow) !important;
+            transform: scale(1.12) !important;
+            z-index: 20;
+            animation: pulseAssign 0.8s infinite alternate;
+        }
+
+        .kmap-cell.cell-just-assigned-1 {
+            border-color: var(--teal) !important;
+            box-shadow: 0 0 16px var(--teal-glow) !important;
+            animation: popIn 0.35s ease forwards;
+        }
+
+        .kmap-cell.cell-just-assigned-0 {
+            border-color: #525d73 !important;
+            box-shadow: 0 0 8px rgba(0,0,0,0.5) !important;
+            animation: popIn 0.35s ease forwards;
+        }
+
+        .kmap-cell.cell-just-assigned-x {
+            border-color: var(--amber) !important;
+            box-shadow: 0 0 16px var(--amber-glow) !important;
+            animation: popIn 0.35s ease forwards;
+        }
+
+        @keyframes pulseAssign {
+            from { transform: scale(1.08); box-shadow: 0 0 12px var(--coral-glow); }
+            to { transform: scale(1.15); box-shadow: 0 0 24px var(--coral); }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            60% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .kmap-cell.cell-highlight-scan {
@@ -581,7 +619,7 @@
             font-size: 22px;
             font-weight: 800;
             color: var(--muted);
-            transition: all 0.15s ease;
+            transition: all 0.2s ease;
         }
 
         .kmap-cell.val-1 .val {
@@ -817,11 +855,43 @@
             margin-bottom: 18px;
         }
 
+        .anim-mode-tabs {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .anim-mode-btn {
+            font-family: var(--code-font);
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 6px;
+            background: var(--panel-2);
+            color: var(--muted);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .anim-mode-btn:hover {
+            color: var(--text);
+            background: var(--panel-3);
+        }
+
+        .anim-mode-btn.active {
+            background: var(--teal);
+            color: #08241e;
+            font-weight: 700;
+            border-color: var(--teal);
+        }
+
         .anim-layout {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
             gap: 18px;
-            margin-top: 12px;
+            margin-top: 10px;
         }
 
         @media (max-width: 880px) {
@@ -839,6 +909,7 @@
             font-size: 12.5px;
             line-height: 1.6;
             overflow-x: auto;
+            min-height: 150px;
         }
 
         .code-line {
@@ -861,7 +932,7 @@
             padding: 12px 14px;
             font-family: var(--code-font);
             font-size: 12.5px;
-            min-height: 130px;
+            min-height: 150px;
             display: flex;
             flex-direction: column;
             gap: 6px;
@@ -876,9 +947,24 @@
         .trace .cur {
             color: var(--text);
             background: rgba(255, 255, 255, 0.03);
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 4px;
             border-left: 2px solid var(--teal);
+        }
+
+        .trace .cur .eval-res {
+            color: var(--amber);
+            font-weight: 700;
+        }
+
+        .trace .cur .assigned-1 {
+            color: var(--teal);
+            font-weight: 800;
+        }
+
+        .trace .cur .assigned-0 {
+            color: #818cf8;
+            font-weight: 700;
         }
 
         .trace .cur .sum { color: var(--coral); font-weight: 600; }
@@ -1084,6 +1170,12 @@
         .truth-table td {
             padding: 6px 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .truth-table tr.tt-active-row td {
+            background: rgba(45, 212, 191, 0.18) !important;
+            color: var(--teal);
+            font-weight: 700;
         }
 
         .truth-table tr:hover td { background: rgba(255, 255, 255, 0.03); }
@@ -1378,8 +1470,11 @@
                             <span class="expr-input-icon">f =</span>
                             <input type="text" id="exprInput" placeholder="e.g. A'B + B'CD + A*B*C' (supports !, ~, ', +, *, XOR)" autocomplete="off" spellcheck="false">
                         </div>
-                        <button class="primary" onclick="applyExpression()">
+                        <button class="primary" onclick="applyExpression(false)">
                             <span>⚡</span> Parse & Evaluate
+                        </button>
+                        <button class="primary-amber" onclick="applyExpression(true)">
+                            <span>🎬</span> Animate 1/0 Assignment
                         </button>
                     </div>
 
@@ -1481,27 +1576,36 @@
             </div>
 
             <!-- ================================================================= -->
-            <!-- NEW: K-MAP STEP-BY-STEP ANIMATION & EXECUTION TRACE PANEL -->
+            <!-- K-MAP STEP-BY-STEP ANIMATION & EXECUTION TRACE PANEL -->
             <!-- ================================================================= -->
             <div class="anim-panel">
                 <div class="panel-title">
                     <span>⚡ K-Map Evaluation Trace & Algorithm Animation</span>
-                    <span class="badge">Live Execution Visualizer</span>
+                    <span class="badge" id="animStatusBadge">Interactive Animation</span>
+                </div>
+
+                <div class="anim-mode-tabs">
+                    <span style="font-family: var(--code-font); font-size: 11px; color: var(--muted); text-transform: uppercase; margin-right: 4px;">Animation Mode:</span>
+                    <button class="anim-mode-btn active" id="modeBtnAssign" onclick="switchAnimMode('assign')">
+                        🔢 1. Block-by-Block 1/0 Assignment
+                    </button>
+                    <button class="anim-mode-btn" id="modeBtnGroup" onclick="switchAnimMode('group')">
+                        🧩 2. Prime Implicant Grouping & Minimization
+                    </button>
+                    <button class="anim-mode-btn" id="modeBtnFull" onclick="switchAnimMode('full')">
+                        🎬 3. Full Flow (1/0 Assignment → Grouping)
+                    </button>
                 </div>
 
                 <div class="anim-layout">
                     <!-- Algorithm Code View -->
                     <div>
-                        <div class="code-box" id="kmapCodeBox">
-                            <!-- Code lines dynamically generated -->
-                        </div>
+                        <div class="code-box" id="kmapCodeBox"></div>
                     </div>
 
                     <!-- Step Execution Log Feed -->
                     <div>
-                        <div class="trace" id="kmapTraceBox">
-                            <!-- Live execution trace lines -->
-                        </div>
+                        <div class="trace" id="kmapTraceBox"></div>
                     </div>
                 </div>
 
@@ -1692,11 +1796,11 @@
             }
         }
 
-        // K-Map Solver Engine
         let numVars = 4;
         let optMode = 'SOP';
         let allowDC = true;
         let cellValues = {};
+        let currentExpr = "A'B + B'CD + A*B*C'";
 
         const VAR_NAMES = ['A', 'B', 'C', 'D'];
         const GRAY_2 = [0, 1];
@@ -1721,11 +1825,14 @@
             initCellValues();
             if (n === 2) {
                 cellValues[0] = 1; cellValues[1] = 1; cellValues[3] = 1;
+                document.getElementById('exprInput').value = "A' + B";
             } else if (n === 3) {
                 cellValues[1] = 1; cellValues[3] = 1; cellValues[5] = 1; cellValues[7] = 1; cellValues[6] = 'X';
+                document.getElementById('exprInput').value = "C + A B C'";
             } else {
                 cellValues[0] = 1; cellValues[2] = 1; cellValues[5] = 1; cellValues[7] = 1;
                 cellValues[8] = 1; cellValues[10] = 1; cellValues[13] = 1; cellValues[15] = 1;
+                document.getElementById('exprInput').value = "B'D' + BD";
             }
             solveAndRender();
         }
@@ -1818,9 +1925,10 @@
             solveAndRender();
         }
 
-        function applyExpression() {
+        function applyExpression(animate = false) {
             const raw = document.getElementById('exprInput').value.trim();
             if (!raw) return;
+            currentExpr = raw;
 
             try {
                 const total = 1 << numVars;
@@ -1832,6 +1940,12 @@
                     cellValues[m] = evaluateBoolExpr(raw, env) ? 1 : 0;
                 }
                 solveAndRender();
+
+                if (animate) {
+                    switchAnimMode('assign');
+                    startKmapPlay();
+                    document.querySelector('.anim-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             } catch (err) {
                 alert("Error parsing Boolean Expression: " + err.message);
             }
@@ -1946,7 +2060,7 @@
 
                     td.innerHTML = `
                         <span class="minterm-tag">m${m}</span>
-                        <span class="val">${val}</span>
+                        <span class="val" id="cellVal-${m}">${val}</span>
                         <span class="bin-coords">${binStr}</span>
                     `;
                     td.onclick = () => toggleCell(m);
@@ -2279,88 +2393,168 @@
         }
 
         // =========================================================================
-        // STEP-BY-STEP ANIMATION ENGINE FOR K-MAP
+        // MULTI-MODE STEP-BY-STEP ANIMATION ENGINE (WITH 1/0 BLOCK ASSIGNMENT)
         // =========================================================================
+        let animMode = 'assign'; // 'assign', 'group', or 'full'
         let kmapSteps = [];
         let kmapCurStep = 0;
         let kmapPlaying = false;
         let kmapTimer = null;
 
-        function buildKmapSteps(sol) {
+        function switchAnimMode(mode) {
+            animMode = mode;
+            document.getElementById('modeBtnAssign').className = `anim-mode-btn ${mode === 'assign' ? 'active' : ''}`;
+            document.getElementById('modeBtnGroup').className = `anim-mode-btn ${mode === 'group' ? 'active' : ''}`;
+            document.getElementById('modeBtnFull').className = `anim-mode-btn ${mode === 'full' ? 'active' : ''}`;
+
+            stopKmapPlay();
+            kmapSteps = buildCurrentSteps();
+            kmapCurStep = 0;
+            renderKmapCodeLines();
+            renderKmapAnimStep();
+        }
+
+        function buildCurrentSteps() {
+            const totalCells = 1 << numVars;
+            const sol = currentSolution;
+            const exprText = document.getElementById('exprInput').value.trim() || 'Custom Input';
             const st = [];
-            const targetM = sol.canonicalSOP;
 
-            st.push({
-                type: 'scan',
-                line: 0,
-                desc: `Initialize ${numVars}-Variable K-Map: Mapped ${targetM.length} active minterms ${sol.canonicalSOP.length ? 'Σm(' + sol.canonicalSOP.join(', ') + ')' : 'Σm(∅)'} and ${sol.canonicalDC.length} Don't-Cares d(${sol.canonicalDC.join(', ')}).`,
-                activeCells: targetM
-            });
-
-            if (sol.selectedGroups.length === 0) {
+            if (animMode === 'assign' || animMode === 'full') {
                 st.push({
-                    type: 'trivial',
-                    line: 7,
-                    desc: `No active 1-cells found. Boolean Function evaluates to constant F = ${sol.expression}.`,
-                    activeCells: []
+                    type: 'assign_start',
+                    line: 0,
+                    desc: `<b>[Start 1/0 Block Evaluation]</b> Target Boolean Expression: <code>${exprText}</code>. Preparing to evaluate across all ${totalCells} cells.`
                 });
-            } else {
-                sol.selectedGroups.forEach((g, gIdx) => {
-                    const typeName = g.size === 16 ? 'Hexadecet (16)' : (g.size === 8 ? 'Octet (8)' : (g.size === 4 ? 'Quad (4)' : (g.size === 2 ? 'Pair (2)' : 'Single (1)')));
+
+                for (let m = 0; m < totalCells; m++) {
+                    const bin = m.toString(2).padStart(numVars, '0');
+                    const env = {};
+                    const coords = [];
+                    for (let b = 0; b < numVars; b++) {
+                        const val = (m >> (numVars - 1 - b)) & 1;
+                        env[VAR_NAMES[b]] = val;
+                        coords.push(`${VAR_NAMES[b]}=${val}`);
+                    }
+
+                    const targetVal = cellValues[m];
+                    const valTag = targetVal === 1 ? `<span class="assigned-1">1 (High)</span>` : (targetVal === 0 ? `<span class="assigned-0">0 (Low)</span>` : `<span class="eval-res">X (Don't Care)</span>`);
 
                     st.push({
-                        type: 'find_group',
-                        line: 2,
-                        groupIdx: gIdx,
-                        desc: `Discovered maximal ${typeName} group #${gIdx + 1} covering minterms: { ${g.minterms.map(m => 'm' + m).join(', ')} }.`,
-                        activeCells: g.minterms,
-                        group: g
+                        type: 'assign_cell',
+                        line: 1,
+                        minterm: m,
+                        targetVal: targetVal,
+                        bin: bin,
+                        coordsStr: coords.join(', '),
+                        desc: `Cell <b>m${m}</b> (${bin}) &rarr; Inputs [${coords.join(', ')}]: Evaluates to ${valTag}. Assigned to K-Map cell.`
                     });
-
-                    const keptVars = g.elimination.filter(e => e.status !== 'eliminated').map(e => e.varName + (e.status === 'constant_1' ? '=1' : '=0')).join(', ') || 'None';
-                    const elimVars = g.elimination.filter(e => e.status === 'eliminated').map(e => e.varName).join(', ') || 'None';
-
-                    st.push({
-                        type: 'var_elim',
-                        line: 4,
-                        groupIdx: gIdx,
-                        desc: `Algebraic Elimination in Group #${gIdx + 1}: <span class="elim">${elimVars}</span> eliminated (0→1 variation), <span class="kept">${keptVars}</span> retained → Term: <span class="sum">${g.term}</span>.`,
-                        activeCells: g.minterms,
-                        group: g
-                    });
-
-                    st.push({
-                        type: 'epi_check',
-                        line: 5,
-                        groupIdx: gIdx,
-                        desc: `Evaluated group #${gIdx + 1} (${g.term}): ${g.isEssential ? 'Contains unique minterms → Selected as Essential Prime Implicant (EPI).' : 'Selected to complete minimal minterm coverage.'}`,
-                        activeCells: g.minterms,
-                        group: g
-                    });
-                });
+                }
 
                 st.push({
-                    type: 'done',
-                    line: 7,
-                    desc: `Minimization synthesized! Minimal Boolean Function: <span class="done">F = ${sol.expression}</span>.`,
-                    activeCells: []
+                    type: 'assign_done',
+                    line: 2,
+                    desc: `✓ <b>[Block Assignment Complete]</b> All ${totalCells} cells populated on K-Map and Truth Table!`
                 });
+            }
+
+            if (animMode === 'group' || animMode === 'full') {
+                const targetM = sol.canonicalSOP;
+
+                st.push({
+                    type: 'scan',
+                    line: 3,
+                    desc: `<b>[Grouping Phase Initiated]</b> Scanning active cells: ${targetM.length} minterms ${sol.canonicalSOP.length ? 'Σm(' + sol.canonicalSOP.join(', ') + ')' : 'Σm(∅)'} with ${sol.canonicalDC.length} Don't-Cares d(${sol.canonicalDC.join(', ')}).`,
+                    activeCells: targetM
+                });
+
+                if (sol.selectedGroups.length === 0) {
+                    st.push({
+                        type: 'trivial',
+                        line: 7,
+                        desc: `No active 1-cells found. Boolean Function evaluates to constant F = ${sol.expression}.`,
+                        activeCells: []
+                    });
+                } else {
+                    sol.selectedGroups.forEach((g, gIdx) => {
+                        const typeName = g.size === 16 ? 'Hexadecet (16)' : (g.size === 8 ? 'Octet (8)' : (g.size === 4 ? 'Quad (4)' : (g.size === 2 ? 'Pair (2)' : 'Single (1)')));
+
+                        st.push({
+                            type: 'find_group',
+                            line: 4,
+                            groupIdx: gIdx,
+                            desc: `Discovered maximal ${typeName} group #${gIdx + 1} covering minterms: { ${g.minterms.map(m => 'm' + m).join(', ')} }.`,
+                            activeCells: g.minterms,
+                            group: g
+                        });
+
+                        const keptVars = g.elimination.filter(e => e.status !== 'eliminated').map(e => e.varName + (e.status === 'constant_1' ? '=1' : '=0')).join(', ') || 'None';
+                        const elimVars = g.elimination.filter(e => e.status === 'eliminated').map(e => e.varName).join(', ') || 'None';
+
+                        st.push({
+                            type: 'var_elim',
+                            line: 5,
+                            groupIdx: gIdx,
+                            desc: `Algebraic Elimination in Group #${gIdx + 1}: <span class="elim">${elimVars}</span> eliminated (0→1 variation), <span class="kept">${keptVars}</span> retained → Term: <span class="sum">${g.term}</span>.`,
+                            activeCells: g.minterms,
+                            group: g
+                        });
+
+                        st.push({
+                            type: 'epi_check',
+                            line: 6,
+                            groupIdx: gIdx,
+                            desc: `Evaluated group #${gIdx + 1} (${g.term}): ${g.isEssential ? 'Contains unique minterms → Selected as Essential Prime Implicant (EPI).' : 'Selected to complete minimal minterm coverage.'}`,
+                            activeCells: g.minterms,
+                            group: g
+                        });
+                    });
+
+                    st.push({
+                        type: 'done',
+                        line: 7,
+                        desc: `✓ <b>[Minimization Synthesized]</b> Minimal Boolean Function: <span class="done">F = ${sol.expression}</span>.`,
+                        activeCells: []
+                    });
+                }
             }
 
             return st;
         }
 
         function renderKmapCodeLines() {
-            const lines = [
-                `// Quine-McCluskey & K-Map Minimizer`,
-                `1: target_minterms = scan_active_cells(KMap_Grid)`,
-                `2: for size in [16, 8, 4, 2, 1]: find_adjacent_blocks(size)`,
-                `3: prime_implicants = extract_maximal_groups()`,
-                `4: for group in PIs: group.term = eliminate_varying_vars(group)`,
-                `5: essential_PIs = find_essential_prime_implicants(PIs)`,
-                `6: minimal_cover = solve_petrick_cover(essential_PIs, target_minterms)`,
-                `7: return synthesize_minimal_expression(minimal_cover)`
-            ];
+            let lines = [];
+            if (animMode === 'assign') {
+                lines = [
+                    `// Block-by-Block 1/0 Cell Evaluator`,
+                    `1: for each cell m in 0..${(1 << numVars) - 1}:`,
+                    `2:   inputs = decode_gray_coordinates(m)`,
+                    `3:   cell[m] = evaluate_boolean_logic(expression, inputs)`,
+                    `4:   update_kmap_display(m, cell[m]) & sync_truth_table()`,
+                    `5: return populated_kmap_matrix`
+                ];
+            } else if (animMode === 'group') {
+                lines = [
+                    `// Quine-McCluskey & K-Map Minimizer`,
+                    `1: target_minterms = scan_active_cells(KMap_Grid)`,
+                    `2: for size in [16, 8, 4, 2, 1]: find_adjacent_blocks(size)`,
+                    `3: prime_implicants = extract_maximal_groups()`,
+                    `4: for group in PIs: group.term = eliminate_varying_vars(group)`,
+                    `5: essential_PIs = find_essential_prime_implicants(PIs)`,
+                    `6: minimal_cover = solve_petrick_cover(essential_PIs, target_minterms)`,
+                    `7: return synthesize_minimal_expression(minimal_cover)`
+                ];
+            } else {
+                lines = [
+                    `// Full Flow: 1/0 Assignment & K-Map Minimization`,
+                    `1: for each cell m: cell[m] = evaluate_expression(inputs)`,
+                    `2: kmap_grid = populate_cells_and_truth_table()`,
+                    `3: for size in [16,8,4,2,1]: find_power2_blocks(size)`,
+                    `4: for group in PIs: eliminate_varying_variables(group)`,
+                    `5: essential_PIs = select_essential_prime_implicants()`,
+                    `6: return synthesize_minimal_boolean_function()`
+                ];
+            }
             document.getElementById('kmapCodeBox').innerHTML = lines.map((l, idx) => `<div class="code-line" id="kline-${idx}">${l}</div>`).join('');
         }
 
@@ -2372,12 +2566,36 @@
             const curLine = document.getElementById(`kline-${s.line}`);
             if (curLine) curLine.classList.add('active');
 
-            document.querySelectorAll('.kmap-cell').forEach(c => c.classList.remove('cell-highlight-scan', 'cell-highlight-active'));
+            document.querySelectorAll('.kmap-cell').forEach(c => {
+                c.classList.remove('cell-assigning', 'cell-highlight-scan', 'cell-highlight-active');
+            });
             document.querySelectorAll('.group-box').forEach(b => b.classList.remove('active-anim'));
             document.querySelectorAll('.term-badge').forEach(t => t.classList.remove('active-anim'));
             document.querySelectorAll('.legend-item').forEach(li => li.classList.remove('active'));
+            document.querySelectorAll('.truth-table tr').forEach(r => r.classList.remove('tt-active-row'));
 
-            if (s.type === 'scan') {
+            if (s.type === 'assign_cell') {
+                const cell = document.querySelector(`.kmap-cell[data-m="${s.minterm}"]`);
+                if (cell) {
+                    cell.classList.add('cell-assigning');
+                    const valSpan = document.getElementById(`cellVal-${s.minterm}`);
+                    if (valSpan) {
+                        valSpan.textContent = s.targetVal;
+                        cell.className = `kmap-cell cell-assigning ${s.targetVal === 1 ? 'val-1 cell-just-assigned-1' : (s.targetVal === 0 ? 'val-0 cell-just-assigned-0' : 'val-x cell-just-assigned-x')}`;
+                    }
+                }
+                const ttRows = document.querySelectorAll('#explTruthTable tbody tr');
+                if (ttRows[s.minterm]) {
+                    ttRows[s.minterm].classList.add('tt-active-row');
+                    ttRows[s.minterm].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            } else if (s.type === 'assign_done' || s.type === 'assign_start') {
+                for (let m = 0; m < (1 << numVars); m++) {
+                    const c = document.querySelector(`.kmap-cell[data-m="${m}"]`);
+                    const v = cellValues[m];
+                    if (c) c.className = `kmap-cell ${v === 1 ? 'val-1' : (v === 0 ? 'val-0' : 'val-x')}`;
+                }
+            } else if (s.type === 'scan') {
                 s.activeCells.forEach(m => {
                     const cell = document.querySelector(`.kmap-cell[data-m="${m}"]`);
                     if (cell) cell.classList.add('cell-highlight-scan');
@@ -2462,7 +2680,7 @@
             for (let m = 0; m < totalCells; m++) {
                 const v = cellValues[m];
                 const outClass = v === 1 ? 'out-1' : (v === 0 ? 'out-0' : 'out-x');
-                ttHtml += `<tr>`;
+                ttHtml += `<tr id="ttRow-${m}">`;
                 for (let b = numVars - 1; b >= 0; b--) {
                     ttHtml += `<td>${(m >> b) & 1}</td>`;
                 }
@@ -2606,7 +2824,7 @@
             document.getElementById('metricGateSavings').textContent = `${savings}%`;
 
             stopKmapPlay();
-            kmapSteps = buildKmapSteps(sol);
+            kmapSteps = buildCurrentSteps();
             kmapCurStep = 0;
             renderKmapCodeLines();
 
