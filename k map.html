@@ -19,17 +19,17 @@
             --text: #d8e0ec;
             --muted: #748096;
             --amber: #f59e0b;
-            --amber-glow: rgba(245, 158, 11, 0.18);
+            --amber-glow: rgba(245, 158, 11, 0.22);
             --coral: #f43f5e;
-            --coral-glow: rgba(244, 63, 94, 0.18);
+            --coral-glow: rgba(244, 63, 94, 0.22);
             --teal: #2dd4bf;
-            --teal-glow: rgba(45, 212, 191, 0.18);
+            --teal-glow: rgba(45, 212, 191, 0.22);
             --purple: #a855f7;
-            --purple-glow: rgba(168, 85, 247, 0.18);
+            --purple-glow: rgba(168, 85, 247, 0.22);
             --blue: #38bdf8;
-            --blue-glow: rgba(56, 189, 248, 0.18);
+            --blue-glow: rgba(56, 189, 248, 0.22);
             --emerald: #10b981;
-            --emerald-glow: rgba(16, 185, 129, 0.18);
+            --emerald-glow: rgba(16, 185, 129, 0.22);
             --code-font: 'JetBrains Mono', 'Fira Code', monospace;
             --ui-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             --radius-sm: 6px;
@@ -61,10 +61,10 @@
 
         .wrap {
             width: 100%;
-            max-width: 1120px;
+            max-width: 1140px;
         }
 
-        /* App Header & Navigation Tabs */
+        /* Navigation Bar */
         .app-nav {
             display: flex;
             align-items: center;
@@ -148,14 +148,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(4px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .eyebrow {
@@ -229,7 +223,7 @@
             border: 1px solid var(--border);
         }
 
-        /* Button & Form Styles */
+        /* Buttons & Inputs */
         button {
             font-family: var(--ui-font);
             font-size: 13px;
@@ -272,6 +266,7 @@
             background: var(--amber);
             color: #261b05;
             border-color: var(--amber);
+            font-weight: 700;
         }
 
         button.primary-amber:hover {
@@ -294,20 +289,6 @@
             color: var(--text);
             background: var(--panel-2);
             border-color: var(--border);
-        }
-
-        button.pill-opt {
-            padding: 6px 12px;
-            font-size: 12px;
-            border-radius: 6px;
-            font-family: var(--code-font);
-        }
-
-        button.pill-opt.active {
-            background: var(--teal);
-            color: #08241e;
-            border-color: var(--teal);
-            font-weight: 700;
         }
 
         button:disabled {
@@ -336,7 +317,7 @@
             box-shadow: 0 0 0 2px var(--teal-glow);
         }
 
-        /* K-Map Top Controls Grid */
+        /* K-Map Setup Grid */
         .kmap-config-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -397,7 +378,7 @@
             border: none;
         }
 
-        /* Boolean Expression Input Bar */
+        /* Boolean Expression Bar */
         .expr-input-row {
             display: flex;
             gap: 10px;
@@ -463,7 +444,6 @@
             background: var(--panel-3);
         }
 
-        /* Quick Action Bar */
         .action-bar {
             display: flex;
             align-items: center;
@@ -494,7 +474,7 @@
             color: var(--muted);
         }
 
-        /* Main Workspace: 2-Column Split for K-Map & Minimized Output */
+        /* 2-Column Split for K-Map and Solution */
         .kmap-workspace {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -508,7 +488,7 @@
             }
         }
 
-        /* K-Map Interactive Grid Visualizer */
+        /* K-Map Visualizer Card */
         .kmap-visualizer-card {
             display: flex;
             flex-direction: column;
@@ -524,7 +504,7 @@
         .kmap-grid-container {
             position: relative;
             display: inline-block;
-            margin: 24px auto 14px;
+            margin: 20px auto 10px;
             user-select: none;
         }
 
@@ -545,18 +525,9 @@
             position: relative;
         }
 
-        .kmap-corner-header .axis-row {
-            color: var(--amber);
-        }
-
-        .kmap-corner-header .axis-col {
-            color: var(--teal);
-        }
-
-        .kmap-corner-header .slash {
-            color: var(--muted);
-            margin: 0 2px;
-        }
+        .kmap-corner-header .axis-row { color: var(--amber); }
+        .kmap-corner-header .axis-col { color: var(--teal); }
+        .kmap-corner-header .slash { color: var(--muted); margin: 0 2px; }
 
         .kmap-col-header,
         .kmap-row-header {
@@ -568,13 +539,8 @@
             padding: 4px;
         }
 
-        .kmap-col-header {
-            color: var(--teal);
-        }
-
-        .kmap-row-header {
-            color: var(--amber);
-        }
+        .kmap-col-header { color: var(--teal); }
+        .kmap-row-header { color: var(--amber); }
 
         .kmap-cell {
             width: 68px;
@@ -597,6 +563,19 @@
             z-index: 5;
         }
 
+        .kmap-cell.cell-highlight-scan {
+            box-shadow: 0 0 14px var(--teal-glow);
+            border-color: var(--teal);
+            transform: scale(1.05);
+        }
+
+        .kmap-cell.cell-highlight-active {
+            box-shadow: 0 0 16px var(--amber-glow);
+            border-color: var(--amber);
+            transform: scale(1.06);
+            background: var(--panel-3);
+        }
+
         .kmap-cell .val {
             font-family: var(--code-font);
             font-size: 22px;
@@ -610,10 +589,7 @@
             text-shadow: 0 0 10px var(--teal-glow);
         }
 
-        .kmap-cell.val-0 .val {
-            color: #525d73;
-        }
-
+        .kmap-cell.val-0 .val { color: #525d73; }
         .kmap-cell.val-x .val {
             color: var(--amber);
             text-shadow: 0 0 10px var(--amber-glow);
@@ -640,7 +616,7 @@
             pointer-events: none;
         }
 
-        /* SVG Overlays for Group Rectangles */
+        /* SVG Overlays */
         .group-svg-layer {
             position: absolute;
             top: 0;
@@ -658,66 +634,31 @@
             transition: all 0.2s ease;
         }
 
-        .group-box.solid {
-            stroke-dasharray: none;
+        .group-box.solid { stroke-dasharray: none; }
+        .group-box.active-hover,
+        .group-box.active-anim {
+            fill-opacity: 0.38;
+            stroke-width: 3.5px;
+            filter: drop-shadow(0 0 10px currentColor);
+            animation: pulseGlow 1.2s infinite alternate;
         }
 
-        .group-box.active-hover {
-            fill-opacity: 0.35;
-            stroke-width: 3.5px;
-            filter: drop-shadow(0 0 8px currentColor);
+        @keyframes pulseGlow {
+            from { filter: drop-shadow(0 0 6px currentColor); fill-opacity: 0.25; }
+            to { filter: drop-shadow(0 0 14px currentColor); fill-opacity: 0.45; }
         }
 
         /* Group Colors Palette */
-        .color-0 {
-            color: #2dd4bf;
-            fill: #2dd4bf;
-            stroke: #2dd4bf;
-        }
+        .color-0 { color: #2dd4bf; fill: #2dd4bf; stroke: #2dd4bf; }
+        .color-1 { color: #f59e0b; fill: #f59e0b; stroke: #f59e0b; }
+        .color-2 { color: #f43f5e; fill: #f43f5e; stroke: #f43f5e; }
+        .color-3 { color: #a855f7; fill: #a855f7; stroke: #a855f7; }
+        .color-4 { color: #38bdf8; fill: #38bdf8; stroke: #38bdf8; }
+        .color-5 { color: #10b981; fill: #10b981; stroke: #10b981; }
+        .color-6 { color: #fb923c; fill: #fb923c; stroke: #fb923c; }
+        .color-7 { color: #ec4899; fill: #ec4899; stroke: #ec4899; }
 
-        .color-1 {
-            color: #f59e0b;
-            fill: #f59e0b;
-            stroke: #f59e0b;
-        }
-
-        .color-2 {
-            color: #f43f5e;
-            fill: #f43f5e;
-            stroke: #f43f5e;
-        }
-
-        .color-3 {
-            color: #a855f7;
-            fill: #a855f7;
-            stroke: #a855f7;
-        }
-
-        .color-4 {
-            color: #38bdf8;
-            fill: #38bdf8;
-            stroke: #38bdf8;
-        }
-
-        .color-5 {
-            color: #10b981;
-            fill: #10b981;
-            stroke: #10b981;
-        }
-
-        .color-6 {
-            color: #fb923c;
-            fill: #fb923c;
-            stroke: #fb923c;
-        }
-
-        .color-7 {
-            color: #ec4899;
-            fill: #ec4899;
-            stroke: #ec4899;
-        }
-
-        /* Results & Minimized Function Card */
+        /* Minimized Result Card */
         .kmap-result-card {
             background: var(--panel);
             border: 1px solid var(--border);
@@ -772,15 +713,14 @@
             position: relative;
         }
 
-        .term-badge:hover {
+        .term-badge:hover,
+        .term-badge.active-anim {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             filter: brightness(1.25);
         }
 
-        .term-badge .overbar {
-            text-decoration: overline;
-        }
+        .term-badge .overbar { text-decoration: overline; }
 
         .canonical-forms {
             display: flex;
@@ -801,7 +741,6 @@
             font-weight: 600;
         }
 
-        /* Prime Implicants Group Legend */
         .group-legend-list {
             display: flex;
             flex-direction: column;
@@ -821,11 +760,7 @@
             transition: all .15s ease;
         }
 
-        .legend-item:hover {
-            border-color: var(--border-highlight);
-            background: var(--panel-3);
-        }
-
+        .legend-item:hover,
         .legend-item.active {
             border-color: currentColor;
             background: var(--panel-3);
@@ -871,7 +806,118 @@
             background: var(--teal-glow);
         }
 
-        /* Detailed Explanation Section */
+        /* ========================================================================= */
+        /* K-MAP STEP-BY-STEP ANIMATION & TRACE SECTION */
+        /* ========================================================================= */
+        .anim-panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
+            margin-bottom: 18px;
+        }
+
+        .anim-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 18px;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 880px) {
+            .anim-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .code-box {
+            background: #0f1217;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            font-family: var(--code-font);
+            font-size: 12.5px;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-line {
+            color: #5d6778;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+        }
+
+        .code-line.active {
+            background: rgba(45, 212, 191, 0.15);
+            color: #5eead4;
+            font-weight: 600;
+        }
+
+        .trace {
+            background: #0f1217;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-family: var(--code-font);
+            font-size: 12.5px;
+            min-height: 130px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            overflow-y: auto;
+        }
+
+        .trace .line {
+            color: var(--muted);
+            transition: all 0.15s ease;
+        }
+
+        .trace .cur {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border-left: 2px solid var(--teal);
+        }
+
+        .trace .cur .sum { color: var(--coral); font-weight: 600; }
+        .trace .cur .done { color: var(--teal); font-weight: 600; }
+        .trace .cur .elim { color: #f87171; text-decoration: line-through; }
+        .trace .cur .kept { color: var(--teal); font-weight: 700; }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .step-info {
+            font-family: var(--code-font);
+            font-size: 12px;
+            color: var(--muted);
+            margin-left: auto;
+        }
+
+        .speed-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--muted);
+            font-family: var(--code-font);
+        }
+
+        input[type=range] {
+            width: 90px;
+            accent-color: var(--teal);
+        }
+
+        /* Step-by-Step Explanation Block */
         .explanation-panel {
             background: var(--panel);
             border: 1px solid var(--border);
@@ -886,9 +932,7 @@
             margin-bottom: 24px;
         }
 
-        .expl-step:last-child {
-            margin-bottom: 0;
-        }
+        .expl-step:last-child { margin-bottom: 0; }
 
         .expl-step::before {
             content: '';
@@ -900,9 +944,7 @@
             background: var(--border);
         }
 
-        .expl-step:last-child::before {
-            display: none;
-        }
+        .expl-step:last-child::before { display: none; }
 
         .expl-step-badge {
             position: absolute;
@@ -1013,7 +1055,6 @@
             text-decoration: line-through;
         }
 
-        /* Truth Table Accordion / Card */
         .truth-table-wrap {
             max-height: 280px;
             overflow-y: auto;
@@ -1045,25 +1086,11 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        .truth-table tr:hover td {
-            background: rgba(255, 255, 255, 0.03);
-        }
+        .truth-table tr:hover td { background: rgba(255, 255, 255, 0.03); }
+        .truth-table td.out-1 { color: var(--teal); font-weight: 700; }
+        .truth-table td.out-0 { color: var(--muted); }
+        .truth-table td.out-x { color: var(--amber); font-weight: 700; }
 
-        .truth-table td.out-1 {
-            color: var(--teal);
-            font-weight: 700;
-        }
-
-        .truth-table td.out-0 {
-            color: var(--muted);
-        }
-
-        .truth-table td.out-x {
-            color: var(--amber);
-            font-weight: 700;
-        }
-
-        /* Hardware Metrics Bar */
         .metric-bar {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1094,7 +1121,9 @@
             font-family: var(--code-font);
         }
 
-        /* Matrix Tab Specific CSS (Preserved perfectly) */
+        /* ========================================================================= */
+        /* MATRIX VISUALIZER TAB STYLES */
+        /* ========================================================================= */
         .matrix-setup-row {
             display: flex;
             align-items: flex-end;
@@ -1114,9 +1143,7 @@
             color: var(--muted);
         }
 
-        .matrix-field input[type=number] {
-            width: 68px;
-        }
+        .matrix-field input[type=number] { width: 68px; }
 
         .matrix-msg {
             font-family: var(--code-font);
@@ -1276,96 +1303,8 @@
             border: 1px solid var(--border);
         }
 
-        .code-box {
-            background: #0f1217;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 14px;
-            font-family: var(--code-font);
-            font-size: 12.5px;
-            line-height: 1.6;
-            overflow-x: auto;
-        }
-
-        .code-line {
-            color: #5d6778;
-            padding: 1px 6px;
-            border-radius: 4px;
-        }
-
-        .code-line.active {
-            background: rgba(226, 162, 61, 0.15);
-            color: #f7d594;
-        }
-
-        .trace {
-            background: #0f1217;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px 14px;
-            font-family: var(--code-font);
-            font-size: 12.5px;
-            min-height: 90px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-top: 14px;
-        }
-
-        .trace .line {
-            color: var(--muted);
-        }
-
-        .trace .cur {
-            color: var(--text);
-        }
-
-        .trace .cur .sum {
-            color: var(--coral);
-            font-weight: 600;
-        }
-
-        .trace .cur .done {
-            color: var(--teal);
-            font-weight: 600;
-        }
-
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-
-        .step-info {
-            font-family: var(--code-font);
-            font-size: 12px;
-            color: var(--muted);
-            margin-left: auto;
-        }
-
-        .speed-wrap {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 12px;
-            color: var(--muted);
-            font-family: var(--code-font);
-        }
-
-        input[type=range] {
-            width: 90px;
-            accent-color: var(--amber);
-        }
-
-        #vizSection {
-            display: none;
-        }
-
-        #vizSection.shown {
-            display: block;
-        }
+        #vizSection { display: none; }
+        #vizSection.shown { display: block; }
     </style>
 </head>
 
@@ -1379,7 +1318,7 @@
             </div>
             <div class="tab-switcher">
                 <button class="tab-btn active" id="tabBtnKmap" onclick="switchTab('kmap')">
-                    <span>🗺️</span> K-Map Solver
+                    <span>🗺️</span> K-Map Solver & Animation
                 </button>
                 <button class="tab-btn" id="tabBtnMatrix" onclick="switchTab('matrix')">
                     <span>🔢</span> Matrix Multiplication
@@ -1388,7 +1327,7 @@
         </div>
 
         <!-- ========================================================================= -->
-        <!-- TAB 1: K-MAP SOLVER & VISUALIZER (NEW SECTION) -->
+        <!-- TAB 1: K-MAP SOLVER & ANIMATION TRACE -->
         <!-- ========================================================================= -->
         <div id="paneKmap" class="tab-pane active">
             <div class="eyebrow">// Karnaugh Map Solver & Minimizer</div>
@@ -1398,7 +1337,7 @@
                 <code>Boolean Expressions</code>, <code>Minterm Lists Σm(...)</code>, or <code>Direct Interactive Cell Clicking</code>.
             </div>
 
-            <!-- Configuration & Input Panel -->
+            <!-- Configuration Panel -->
             <div class="panel">
                 <div class="panel-title">
                     <span>Configuration & Input Setup</span>
@@ -1406,7 +1345,6 @@
                 </div>
 
                 <div class="kmap-config-grid">
-                    <!-- Variable Count Selector -->
                     <div class="config-block">
                         <label>Variable Count</label>
                         <div class="pill-group">
@@ -1416,7 +1354,6 @@
                         </div>
                     </div>
 
-                    <!-- Optimization Mode (SOP vs POS) -->
                     <div class="config-block">
                         <label>Optimization Mode</label>
                         <div class="pill-group">
@@ -1425,7 +1362,6 @@
                         </div>
                     </div>
 
-                    <!-- Don't Care Wildcards Toggle -->
                     <div class="config-block">
                         <label>Don't Care Values (X)</label>
                         <div class="pill-group">
@@ -1435,7 +1371,6 @@
                     </div>
                 </div>
 
-                <!-- Boolean Expression Input Bar -->
                 <div class="config-block" style="margin-top: 10px;">
                     <label>Boolean Expression Input</label>
                     <div class="expr-input-row">
@@ -1448,7 +1383,6 @@
                         </button>
                     </div>
 
-                    <!-- Quick Preset Chips -->
                     <div class="expr-presets">
                         <span class="expr-presets-label">Presets:</span>
                         <span class="preset-chip" onclick="loadPreset('full_adder_sum')">Full Adder Sum</span>
@@ -1460,7 +1394,6 @@
                     </div>
                 </div>
 
-                <!-- Action Toolbar: Random, Clear, Invert, Fill -->
                 <div class="action-bar">
                     <div class="action-bar-left">
                         <button class="secondary" onclick="randomFill()">
@@ -1482,9 +1415,9 @@
                 </div>
             </div>
 
-            <!-- Workspace: Visual K-Map Grid & Minimized Result -->
+            <!-- Workspace: Visual Grid & Minimized Result -->
             <div class="kmap-workspace">
-                <!-- Left: Interactive K-Map Grid -->
+                <!-- Left: Interactive Grid -->
                 <div class="kmap-visualizer-card">
                     <div class="panel-title" style="width: 100%; margin-bottom: 0;">
                         <span>Interactive Karnaugh Map</span>
@@ -1492,9 +1425,7 @@
                     </div>
 
                     <div class="kmap-grid-container" id="kmapGridContainer">
-                        <table class="kmap-table" id="kmapTable">
-                            <!-- Populated dynamically via JS -->
-                        </table>
+                        <table class="kmap-table" id="kmapTable"></table>
                         <svg class="group-svg-layer" id="groupSvgLayer"></svg>
                     </div>
 
@@ -1503,14 +1434,13 @@
                     </div>
                 </div>
 
-                <!-- Right: Minimized Output & Groups -->
+                <!-- Right: Solution & Group Legend -->
                 <div class="kmap-result-card">
                     <div class="panel-title">
                         <span>Minimized Boolean Solution</span>
                         <span id="solTypeBadge" class="badge">SOP Form</span>
                     </div>
 
-                    <!-- Minimized Equation Box -->
                     <div class="equation-box">
                         <div class="equation-label">
                             <span>Minimal Function F</span>
@@ -1518,29 +1448,21 @@
                                 📋 Copy
                             </button>
                         </div>
-                        <div class="equation-val" id="minimizedEquation">
-                            <!-- Populated dynamically -->
-                            F = 0
-                        </div>
+                        <div class="equation-val" id="minimizedEquation">F = 0</div>
                     </div>
 
-                    <!-- Canonical Minterm Summary -->
                     <div class="canonical-forms">
                         <div>SOP Form: <span class="val" id="canonicalSOP">Σm()</span></div>
                         <div>POS Form: <span class="val" id="canonicalPOS">ΠM()</span></div>
                         <div>Don't Cares: <span class="val" id="canonicalDC">d()</span></div>
                     </div>
 
-                    <!-- Group Legends & Prime Implicants -->
                     <div class="panel-title" style="margin-top: 6px; margin-bottom: 8px;">
                         <span>Selected Prime Implicants (Groups)</span>
                         <span id="groupCountBadge" class="badge">0 Groups</span>
                     </div>
-                    <div class="group-legend-list" id="groupLegendList">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div class="group-legend-list" id="groupLegendList"></div>
 
-                    <!-- Hardware Optimization Bar -->
                     <div class="metric-bar">
                         <div class="metric-card">
                             <div class="metric-val" id="metricOrigLiterals">0</div>
@@ -1558,79 +1480,105 @@
                 </div>
             </div>
 
-            <!-- Detailed Step-by-Step Explanation Block -->
-            <div class="explanation-panel">
-                <div class="panel-title" style="margin-bottom: 20px;">
-                    <span>Step-by-Step Derivation & Explanation</span>
-                    <span class="badge">Detailed Mathematical Proof</span>
+            <!-- ================================================================= -->
+            <!-- NEW: K-MAP STEP-BY-STEP ANIMATION & EXECUTION TRACE PANEL -->
+            <!-- ================================================================= -->
+            <div class="anim-panel">
+                <div class="panel-title">
+                    <span>⚡ K-Map Evaluation Trace & Algorithm Animation</span>
+                    <span class="badge">Live Execution Visualizer</span>
                 </div>
 
-                <!-- Step 1: Minterms & Truth Table Breakdown -->
+                <div class="anim-layout">
+                    <!-- Algorithm Code View -->
+                    <div>
+                        <div class="code-box" id="kmapCodeBox">
+                            <!-- Code lines dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Step Execution Log Feed -->
+                    <div>
+                        <div class="trace" id="kmapTraceBox">
+                            <!-- Live execution trace lines -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Playback Controls Bar -->
+                <div class="controls">
+                    <button class="secondary" id="btnKmapReset" onclick="resetKmapAnim()">⏮ Reset</button>
+                    <button class="secondary" id="btnKmapPrev" onclick="prevKmapStep()">‹ Prev</button>
+                    <button class="primary" id="btnKmapPlay" onclick="toggleKmapPlay()">▶ Play</button>
+                    <button class="secondary" id="btnKmapNext" onclick="nextKmapStep()">Next ›</button>
+
+                    <div class="speed-wrap">
+                        <span>Speed:</span>
+                        <input type="range" id="kmapSpeed" min="1" max="4" value="2">
+                    </div>
+
+                    <div class="step-info" id="kmapStepInfo">step 0 / 0</div>
+                </div>
+            </div>
+
+            <!-- Detailed Explanation & Mathematical Derivation -->
+            <div class="explanation-panel">
+                <div class="panel-title" style="margin-bottom: 20px;">
+                    <span>Step-by-Step Derivation & Proof</span>
+                    <span class="badge">Detailed Theory</span>
+                </div>
+
                 <div class="expl-step">
                     <div class="expl-step-badge">1</div>
                     <div class="expl-step-title">Minterm Identification & Map Population</div>
-                    <div class="expl-step-desc" id="explStep1Desc">
-                        Examining the inputs and mapping all high outputs ($1$), low outputs ($0$), and don't-care states ($X$) to the corresponding Gray-coded cells.
+                    <div class="expl-step-desc">
+                        Examining the inputs and mapping all high outputs (1), low outputs (0), and don't-care states (X) to the corresponding Gray-coded cells.
                     </div>
                     <div class="truth-table-wrap">
-                        <table class="truth-table" id="explTruthTable">
-                            <!-- Populated dynamically -->
-                        </table>
+                        <table class="truth-table" id="explTruthTable"></table>
                     </div>
                 </div>
 
-                <!-- Step 2: Adjacency & Prime Implicant Formation -->
                 <div class="expl-step">
                     <div class="expl-step-badge">2</div>
                     <div class="expl-step-title">Grouping by Gray Code Adjacencies & Powers of 2</div>
-                    <div class="expl-step-desc" id="explStep2Desc">
-                        According to Karnaugh Map theorems, adjacent cells differ by exactly one binary bit. Groups must form rectangular blocks of size $2^k$ (16, 8, 4, 2, or 1 cell) including edge-wrapping and 4-corner adjacencies.
+                    <div class="expl-step-desc">
+                        Adjacent cells differ by exactly one binary bit. Groups form rectangular blocks of size $2^k$ (16, 8, 4, 2, or 1 cell) including edge-wrapping and 4-corner adjacencies.
                     </div>
-                    <div class="expl-card" id="explStep2Card">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div class="expl-card" id="explStep2Card"></div>
                 </div>
 
-                <!-- Step 3: Variable Elimination Analysis -->
                 <div class="expl-step">
                     <div class="expl-step-badge">3</div>
                     <div class="expl-step-title">Algebraic Variable Elimination Analysis</div>
                     <div class="expl-step-desc">
-                        For each grouped block, we examine each input variable. If a variable changes its value within the group ($0 \to 1$), it cancels out algebraically via the Boolean identity $A + A' = 1$. Constant variables are retained in the product term:
+                        For each grouped block, if a variable changes value ($0 \to 1$), it cancels out algebraically ($A + A' = 1$). Constant variables are retained:
                     </div>
-                    <div class="expl-elimination-grid" id="explEliminationGrid">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div class="expl-elimination-grid" id="explEliminationGrid"></div>
                 </div>
 
-                <!-- Step 4: Essential Prime Implicant Verification -->
                 <div class="expl-step">
                     <div class="expl-step-badge">4</div>
                     <div class="expl-step-title">Essential Prime Implicant Coverage (Petrick's Reduction)</div>
-                    <div class="expl-step-desc" id="explStep4Desc">
-                        Identifying essential prime implicants (groups that cover at least one minterm not covered by any other group) and eliminating redundant overlapping groups to achieve the absolute minimal Boolean sum.
+                    <div class="expl-step-desc">
+                        Identifying essential prime implicants and eliminating redundant overlapping groups to achieve the absolute minimal Boolean sum.
                     </div>
-                    <div class="expl-card" id="explStep4Card">
-                        <!-- Populated dynamically -->
-                    </div>
+                    <div class="expl-card" id="explStep4Card"></div>
                 </div>
 
-                <!-- Step 5: Final Equation & Verilog / C Hardware Export -->
                 <div class="expl-step">
                     <div class="expl-step-badge">5</div>
                     <div class="expl-step-title">Hardware Implementation Expression</div>
                     <div class="expl-step-desc">
                         Direct RTL Verilog & C expression ready for digital circuit synthesis:
                     </div>
-                    <div class="expl-card" style="font-family: var(--code-font); color: var(--teal);" id="explHardwareExport">
-                        assign F = ...;
-                    </div>
+                    <div class="expl-card" style="font-family: var(--code-font); color: var(--teal);" id="explHardwareExport"></div>
                 </div>
             </div>
         </div>
 
         <!-- ========================================================================= -->
-        <!-- TAB 2: MATRIX MULTIPLICATION (ORIGINAL SECTION PRESERVED) -->
+        <!-- TAB 2: MATRIX MULTIPLICATION -->
         <!-- ========================================================================= -->
         <div id="paneMatrix" class="tab-pane">
             <div class="eyebrow matrix-eyebrow">// trace visualizer</div>
@@ -1730,9 +1678,6 @@
     <!-- JAVASCRIPT LOGIC ENGINE -->
     <!-- ========================================================================= -->
     <script>
-        // =========================================================================
-        // TAB NAVIGATION
-        // =========================================================================
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'active-matrix'));
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
@@ -1747,31 +1692,22 @@
             }
         }
 
-        // =========================================================================
-        // K-MAP STATE & SOLVER LOGIC
-        // =========================================================================
-        let numVars = 4; // 2, 3, or 4
-        let optMode = 'SOP'; // 'SOP' (min 1s) or 'POS' (min 0s)
-        let allowDC = true; // allow Don't Cares (X)
-
-        // Cells dictionary: minterm index -> value (0, 1, or 'X')
-        // Initialized with a sample function
+        // K-Map Solver Engine
+        let numVars = 4;
+        let optMode = 'SOP';
+        let allowDC = true;
         let cellValues = {};
 
         const VAR_NAMES = ['A', 'B', 'C', 'D'];
-
-        // Gray Code Order mappings
-        const GRAY_2 = [0, 1]; // 1-bit: 0, 1
-        const GRAY_4 = [0, 1, 3, 2]; // 2-bit Gray: 00, 01, 11, 10
+        const GRAY_2 = [0, 1];
+        const GRAY_4 = [0, 1, 3, 2];
         const GRAY_LABELS_1 = ['0', '1'];
         const GRAY_LABELS_2 = ['00', '01', '11', '10'];
 
         function initCellValues() {
             const total = 1 << numVars;
             cellValues = {};
-            for (let i = 0; i < total; i++) {
-                cellValues[i] = 0;
-            }
+            for (let i = 0; i < total; i++) cellValues[i] = 0;
         }
 
         function setVariables(n) {
@@ -1779,12 +1715,10 @@
             document.getElementById('btnVar2').className = n === 2 ? 'active teal-mode' : '';
             document.getElementById('btnVar3').className = n === 3 ? 'active teal-mode' : '';
             document.getElementById('btnVar4').className = n === 4 ? 'active teal-mode' : '';
-
             document.getElementById('gridDimLabel').textContent =
                 n === 2 ? '2×2 (4 cells)' : (n === 3 ? '2×4 (8 cells)' : '4×4 (16 cells)');
 
             initCellValues();
-            // Default sample
             if (n === 2) {
                 cellValues[0] = 1; cellValues[1] = 1; cellValues[3] = 1;
             } else if (n === 3) {
@@ -1832,9 +1766,7 @@
 
         function clearAll(val) {
             const total = 1 << numVars;
-            for (let i = 0; i < total; i++) {
-                cellValues[i] = val;
-            }
+            for (let i = 0; i < total; i++) cellValues[i] = val;
             solveAndRender();
         }
 
@@ -1847,30 +1779,24 @@
             solveAndRender();
         }
 
-        // =========================================================================
-        // PRESET FUNCTIONS
-        // =========================================================================
         function loadPreset(key) {
             if (key === 'full_adder_sum') {
                 setVariables(3);
-                // Sum = A ^ B ^ C -> m(1, 2, 4, 7)
                 clearAll(0);
                 [1, 2, 4, 7].forEach(m => cellValues[m] = 1);
                 document.getElementById('exprInput').value = "A ^ B ^ C";
             } else if (key === 'full_adder_carry') {
                 setVariables(3);
-                // Carry = AB + BC + AC -> m(3, 5, 6, 7)
                 clearAll(0);
                 [3, 5, 6, 7].forEach(m => cellValues[m] = 1);
                 document.getElementById('exprInput').value = "A*B + B*C + A*C";
             } else if (key === 'majority_4') {
                 setVariables(4);
-                // At least 3 inputs are 1 -> m(7, 11, 13, 14, 15)
                 clearAll(0);
                 [7, 11, 13, 14, 15].forEach(m => cellValues[m] = 1);
                 document.getElementById('exprInput').value = "A*B*C + A*B*D + A*C*D + B*C*D";
             } else if (key === 'mux_2to1') {
-                setVariables(3); // S=A, I0=B, I1=C -> S'I0 + S I1 -> A'B + AC
+                setVariables(3);
                 clearAll(0);
                 [2, 3, 5, 7].forEach(m => cellValues[m] = 1);
                 document.getElementById('exprInput').value = "A'B + A C";
@@ -1884,7 +1810,6 @@
                 document.getElementById('exprInput').value = "A ^ B ^ C ^ D";
             } else if (key === 'bcd_segment_a') {
                 setVariables(4);
-                // Segment A for BCD: m(0, 2, 3, 5, 6, 7, 8, 9) + d(10, 11, 12, 13, 14, 15)
                 clearAll(0);
                 [0, 2, 3, 5, 6, 7, 8, 9].forEach(m => cellValues[m] = 1);
                 [10, 11, 12, 13, 14, 15].forEach(m => cellValues[m] = 'X');
@@ -1893,9 +1818,6 @@
             solveAndRender();
         }
 
-        // =========================================================================
-        // BOOLEAN EXPRESSION PARSER & EVALUATOR
-        // =========================================================================
         function applyExpression() {
             const raw = document.getElementById('exprInput').value.trim();
             if (!raw) return;
@@ -1904,21 +1826,10 @@
                 const total = 1 << numVars;
                 for (let m = 0; m < total; m++) {
                     const env = {};
-                    if (numVars === 2) {
-                        env.A = (m >> 1) & 1;
-                        env.B = m & 1;
-                    } else if (numVars === 3) {
-                        env.A = (m >> 2) & 1;
-                        env.B = (m >> 1) & 1;
-                        env.C = m & 1;
-                    } else {
-                        env.A = (m >> 3) & 1;
-                        env.B = (m >> 2) & 1;
-                        env.C = (m >> 1) & 1;
-                        env.D = m & 1;
-                    }
-                    const res = evaluateBoolExpr(raw, env);
-                    cellValues[m] = res ? 1 : 0;
+                    if (numVars === 2) { env.A = (m >> 1) & 1; env.B = m & 1; }
+                    else if (numVars === 3) { env.A = (m >> 2) & 1; env.B = (m >> 1) & 1; env.C = m & 1; }
+                    else { env.A = (m >> 3) & 1; env.B = (m >> 2) & 1; env.C = (m >> 1) & 1; env.D = m & 1; }
+                    cellValues[m] = evaluateBoolExpr(raw, env) ? 1 : 0;
                 }
                 solveAndRender();
             } catch (err) {
@@ -1926,24 +1837,19 @@
             }
         }
 
-        // Simple and robust Boolean expression evaluator
         function evaluateBoolExpr(expr, env) {
-            // Normalize expression string
             let s = expr.toUpperCase();
             s = s.replace(/NOT\s+/g, '!');
             s = s.replace(/AND/g, '&');
             s = s.replace(/OR/g, '|');
             s = s.replace(/XOR/g, '^');
 
-            // Handle postfix tick inversion: A' -> !A, (A+B)' -> !(A+B)
             let tickFixed = '';
             for (let i = 0; i < s.length; i++) {
                 if (s[i] === "'") {
-                    // find preceding operand or group
                     let j = tickFixed.length - 1;
                     if (j >= 0 && tickFixed[j] === ')') {
-                        let depth = 1;
-                        j--;
+                        let depth = 1; j--;
                         while (j >= 0 && depth > 0) {
                             if (tickFixed[j] === ')') depth++;
                             else if (tickFixed[j] === '(') depth--;
@@ -1960,22 +1866,16 @@
             }
             s = tickFixed;
 
-            // Insert implicit AND between adjacent variables/parentheses e.g. AB -> A&B, A(B+C) -> A&(B+C)
             let clean = '';
             for (let i = 0; i < s.length; i++) {
                 const c = s[i];
                 clean += c;
                 if (i < s.length - 1) {
                     const next = s[i + 1];
-                    const isLeft = /[A-D0-1\)]/.test(c);
-                    const isRight = /[A-D0-1\(!~]/.test(next);
-                    if (isLeft && isRight) {
-                        clean += '&';
-                    }
+                    if (/[A-D0-1\)]/.test(c) && /[A-D0-1\(!~]/.test(next)) clean += '&';
                 }
             }
 
-            // Replace variables with their 0/1 values from environment
             let evalStr = clean;
             evalStr = evalStr.replace(/\bA\b/g, env.A !== undefined ? env.A : 0);
             evalStr = evalStr.replace(/\bB\b/g, env.B !== undefined ? env.B : 0);
@@ -1986,18 +1886,10 @@
             evalStr = evalStr.replace(/\*/g, '&');
             evalStr = evalStr.replace(/\+/g, '|');
 
-            // Sanitize check
-            if (!/^[01\(\)\s&\|\!\^]+$/.test(evalStr)) {
-                throw new Error("Invalid characters in expression");
-            }
-
-            // Use Function constructor in safe sandbox
+            if (!/^[01\(\)\s&\|\!\^]+$/.test(evalStr)) throw new Error("Invalid characters in expression");
             return !!(new Function(`return (${evalStr})`)());
         }
 
-        // =========================================================================
-        // K-MAP GRID RENDERER & CELL COORDINATE MAPPINGS
-        // =========================================================================
         function getGridDimensions() {
             if (numVars === 2) return { rows: 2, cols: 2, rowGray: GRAY_2, colGray: GRAY_2, rowLabels: GRAY_LABELS_1, colLabels: GRAY_LABELS_1, rowVars: 'A', colVars: 'B' };
             if (numVars === 3) return { rows: 2, cols: 4, rowGray: GRAY_2, colGray: GRAY_4, rowLabels: GRAY_LABELS_1, colLabels: GRAY_LABELS_2, rowVars: 'A', colVars: 'BC' };
@@ -2013,39 +1905,17 @@
             return (rVal << 2) | cVal;
         }
 
-        function getCellCoordsForMinterm(m) {
-            const { rows, cols, rowGray, colGray } = getGridDimensions();
-            let rVal, cVal;
-            if (numVars === 2) {
-                rVal = (m >> 1) & 1;
-                cVal = m & 1;
-            } else if (numVars === 3) {
-                rVal = (m >> 2) & 1;
-                cVal = m & 3;
-            } else {
-                rVal = (m >> 2) & 3;
-                cVal = m & 3;
-            }
-            const r = rowGray.indexOf(rVal);
-            const c = colGray.indexOf(cVal);
-            return { r, c };
-        }
-
         function renderKMapGrid() {
             const { rows, cols, rowLabels, colLabels, rowVars, colVars } = getGridDimensions();
             const table = document.getElementById('kmapTable');
             table.innerHTML = '';
 
-            // Header row
             const trHead = document.createElement('tr');
-
-            // Top-left corner
             const thCorner = document.createElement('th');
             thCorner.className = 'kmap-corner-header';
             thCorner.innerHTML = `<span class="axis-row">${rowVars}</span><span class="slash">\\</span><span class="axis-col">${colVars}</span>`;
             trHead.appendChild(thCorner);
 
-            // Column Gray Code Headers
             for (let c = 0; c < cols; c++) {
                 const thCol = document.createElement('th');
                 thCol.className = 'kmap-col-header';
@@ -2054,17 +1924,13 @@
             }
             table.appendChild(trHead);
 
-            // Data Rows
             for (let r = 0; r < rows; r++) {
                 const tr = document.createElement('tr');
-
-                // Row Gray Code Header
                 const thRow = document.createElement('th');
                 thRow.className = 'kmap-row-header';
                 thRow.textContent = rowLabels[r];
                 tr.appendChild(thRow);
 
-                // Cells
                 for (let c = 0; c < cols; c++) {
                     const m = getMintermIndex(r, c);
                     const td = document.createElement('td');
@@ -2076,7 +1942,6 @@
 
                     const val = cellValues[m];
                     td.classList.add(val === 1 ? 'val-1' : (val === 0 ? 'val-0' : 'val-x'));
-
                     const binStr = m.toString(2).padStart(numVars, '0');
 
                     td.innerHTML = `
@@ -2084,7 +1949,6 @@
                         <span class="val">${val}</span>
                         <span class="bin-coords">${binStr}</span>
                     `;
-
                     td.onclick = () => toggleCell(m);
                     tr.appendChild(td);
                 }
@@ -2092,9 +1956,6 @@
             }
         }
 
-        // =========================================================================
-        // K-MAP ALGORITHM & PRIME IMPLICANT ENGINE
-        // =========================================================================
         let currentSolution = {
             primeImplicants: [],
             selectedGroups: [],
@@ -2123,7 +1984,6 @@
             const targetMinterms = optMode === 'SOP' ? minterms : maxterms;
             const validSet = new Set(targetMinterms.concat(allowDC ? dontCares : []));
 
-            // Edge cases: All 0s or All 1s
             if (targetMinterms.length === 0) {
                 return {
                     primeImplicants: [],
@@ -2131,8 +1991,7 @@
                     expression: optMode === 'SOP' ? '0' : '1',
                     canonicalSOP: minterms,
                     canonicalPOS: maxterms,
-                    canonicalDC: dontCares,
-                    explanation: { type: 'trivial_zero' }
+                    canonicalDC: dontCares
                 };
             }
 
@@ -2143,18 +2002,18 @@
                         r0: 0, c0: 0, h: rows, w: cols,
                         minterms: Array.from({ length: totalCells }, (_, i) => i),
                         term: optMode === 'SOP' ? '1' : '0',
-                        isEssential: true
+                        htmlTerm: optMode === 'SOP' ? '1' : '0',
+                        literals: 0,
+                        isEssential: true,
+                        elimination: VAR_NAMES.slice(0, numVars).map(v => ({ varName: v, status: 'eliminated' }))
                     }],
                     expression: optMode === 'SOP' ? '1' : '0',
                     canonicalSOP: minterms,
                     canonicalPOS: maxterms,
-                    canonicalDC: dontCares,
-                    explanation: { type: 'trivial_one' }
+                    canonicalDC: dontCares
                 };
             }
 
-            // Generate all valid power-of-2 rectangular groups
-            // Dimensions: h in [1, 2, 4], w in [1, 2, 4] such that h*w in [1, 2, 4, 8, 16]
             const candidateGroups = [];
             const heights = rows === 4 ? [4, 2, 1] : [2, 1];
             const widths = cols === 4 ? [4, 2, 1] : [2, 1];
@@ -2162,12 +2021,10 @@
             for (const h of heights) {
                 for (const w of widths) {
                     const size = h * w;
-                    // Must be a power of 2
                     if ((size & (size - 1)) !== 0) continue;
 
                     for (let r0 = 0; r0 < rows; r0++) {
                         for (let c0 = 0; c0 < cols; c0++) {
-                            // Collect cells in wrapped rectangle
                             const groupMinterms = [];
                             let allValid = true;
                             let hasTarget = false;
@@ -2177,14 +2034,9 @@
                                     const r = (r0 + dr) % rows;
                                     const c = (c0 + dc) % cols;
                                     const m = getMintermIndex(r, c);
-                                    if (!validSet.has(m)) {
-                                        allValid = false;
-                                        break;
-                                    }
+                                    if (!validSet.has(m)) { allValid = false; break; }
                                     groupMinterms.push(m);
-                                    if (targetMinterms.includes(m)) {
-                                        hasTarget = true;
-                                    }
+                                    if (targetMinterms.includes(m)) hasTarget = true;
                                 }
                                 if (!allValid) break;
                             }
@@ -2203,16 +2055,12 @@
                 }
             }
 
-            // Deduplicate groups with identical minterm sets
             const uniqueGroupsMap = new Map();
             for (const g of candidateGroups) {
-                if (!uniqueGroupsMap.has(g.key)) {
-                    uniqueGroupsMap.set(g.key, g);
-                }
+                if (!uniqueGroupsMap.has(g.key)) uniqueGroupsMap.set(g.key, g);
             }
             const uniqueGroups = Array.from(uniqueGroupsMap.values());
 
-            // Filter down to Prime Implicants: groups that are not strictly a subset of a larger valid group
             const primeImplicants = uniqueGroups.filter(g1 => {
                 const s1 = new Set(g1.minterms);
                 return !uniqueGroups.some(g2 => {
@@ -2223,7 +2071,6 @@
                 });
             });
 
-            // Derive Boolean simplified term for each Prime Implicant
             primeImplicants.forEach(pi => {
                 const analysis = deriveBooleanTerm(pi.minterms, numVars, optMode);
                 pi.term = analysis.term;
@@ -2232,10 +2079,8 @@
                 pi.elimination = analysis.elimination;
             });
 
-            // Solve Minimum Set Cover for target minterms (Petrick's / Greedy Exact Search)
             const selectedGroups = findMinimalCover(primeImplicants, targetMinterms);
 
-            // Construct Final Expression String
             let expression = '';
             if (optMode === 'SOP') {
                 expression = selectedGroups.map(g => g.term).join(' + ') || '0';
@@ -2254,7 +2099,6 @@
             };
         }
 
-        // Variable Elimination and Boolean Term Generator
         function deriveBooleanTerm(minterms, nVars, mode) {
             const varList = VAR_NAMES.slice(0, nVars);
             const elimDetails = [];
@@ -2265,9 +2109,7 @@
             for (let bitIdx = 0; bitIdx < nVars; bitIdx++) {
                 const vName = varList[bitIdx];
                 const shift = nVars - 1 - bitIdx;
-
-                let hasZero = false;
-                let hasOne = false;
+                let hasZero = false, hasOne = false;
 
                 for (const m of minterms) {
                     const bit = (m >> shift) & 1;
@@ -2276,61 +2118,34 @@
                 }
 
                 if (hasZero && hasOne) {
-                    // Changes across cells -> Eliminated!
                     elimDetails.push({ varName: vName, status: 'eliminated', desc: `Varies (0 and 1)` });
                 } else if (hasOne) {
-                    // Constant 1
                     literalCount++;
-                    if (mode === 'SOP') {
-                        termParts.push(vName);
-                        htmlParts.push(vName);
-                    } else {
-                        termParts.push(vName + "'");
-                        htmlParts.push(`<span class="overbar">${vName}</span>`);
-                    }
+                    if (mode === 'SOP') { termParts.push(vName); htmlParts.push(vName); }
+                    else { termParts.push(vName + "'"); htmlParts.push(`<span class="overbar">${vName}</span>`); }
                     elimDetails.push({ varName: vName, status: 'constant_1', desc: `Constant 1` });
                 } else if (hasZero) {
-                    // Constant 0
                     literalCount++;
-                    if (mode === 'SOP') {
-                        termParts.push(vName + "'");
-                        htmlParts.push(`<span class="overbar">${vName}</span>`);
-                    } else {
-                        termParts.push(vName);
-                        htmlParts.push(vName);
-                    }
+                    if (mode === 'SOP') { termParts.push(vName + "'"); htmlParts.push(`<span class="overbar">${vName}</span>`); }
+                    else { termParts.push(vName); htmlParts.push(vName); }
                     elimDetails.push({ varName: vName, status: 'constant_0', desc: `Constant 0` });
                 }
             }
 
-            let term = '';
-            let htmlTerm = '';
-
+            let term = '', htmlTerm = '';
             if (termParts.length === 0) {
                 term = mode === 'SOP' ? '1' : '0';
                 htmlTerm = term;
             } else {
-                if (mode === 'SOP') {
-                    term = termParts.join('');
-                    htmlTerm = htmlParts.join('');
-                } else {
-                    term = termParts.join(' + ');
-                    htmlTerm = htmlParts.join(' + ');
-                }
+                if (mode === 'SOP') { term = termParts.join(''); htmlParts.join(''); }
+                else { term = termParts.join(' + '); htmlTerm = htmlParts.join(' + '); }
             }
 
-            return {
-                term,
-                htmlTerm,
-                literals: literalCount,
-                elimination: elimDetails
-            };
+            return { term, htmlTerm, literals: literalCount, elimination: elimDetails };
         }
 
-        // Exact Set Cover Solver for K-Map (handles essential prime implicants + branch and bound)
         function findMinimalCover(primeImplicants, targetMinterms) {
-            if (targetMinterms.length === 0) return [];
-            if (primeImplicants.length === 0) return [];
+            if (targetMinterms.length === 0 || primeImplicants.length === 0) return [];
 
             const coveredBy = {};
             targetMinterms.forEach(m => coveredBy[m] = []);
@@ -2343,7 +2158,6 @@
                 });
             });
 
-            // Find Essential Prime Implicants
             const essentialSet = new Set();
             targetMinterms.forEach(m => {
                 if (coveredBy[m].length === 1) {
@@ -2355,14 +2169,9 @@
 
             const selected = Array.from(essentialSet);
             const remainingMinterms = targetMinterms.filter(m => !selected.some(pi => pi.minterms.includes(m)));
+            if (remainingMinterms.length === 0) return selected;
 
-            if (remainingMinterms.length === 0) {
-                return selected;
-            }
-
-            // Branch and bound search for remaining minterms
             const candidatePool = primeImplicants.filter(pi => !essentialSet.has(pi));
-
             let bestCover = null;
             let bestCost = Infinity;
 
@@ -2375,12 +2184,9 @@
                     }
                     return;
                 }
-
                 if (idx >= candidatePool.length || currentCover.length >= bestCost) return;
 
                 const candidate = candidatePool[idx];
-
-                // Option A: Include candidate if it covers at least one uncovered minterm
                 const newlyCovered = uncovered.filter(m => candidate.minterms.includes(m));
                 if (newlyCovered.length > 0) {
                     const nextUncovered = uncovered.filter(m => !candidate.minterms.includes(m));
@@ -2388,30 +2194,21 @@
                     search(idx + 1, currentCover, nextUncovered);
                     currentCover.pop();
                 }
-
-                // Option B: Skip candidate
                 search(idx + 1, currentCover, uncovered);
             }
 
             search(0, [], remainingMinterms);
-
             return selected.concat(bestCover || []);
         }
 
-        // =========================================================================
-        // SVG GROUP VISUALIZER & OVERLAYS
-        // =========================================================================
         const COLOR_CLASSES = ['color-0', 'color-1', 'color-2', 'color-3', 'color-4', 'color-5', 'color-6', 'color-7'];
 
         function renderGroupSvgOverlays() {
             const svg = document.getElementById('groupSvgLayer');
             svg.innerHTML = '';
 
-            const table = document.getElementById('kmapTable');
-            const tableRect = table.getBoundingClientRect();
             const container = document.getElementById('kmapGridContainer');
             const contRect = container.getBoundingClientRect();
-
             svg.setAttribute('viewBox', `0 0 ${contRect.width} ${contRect.height}`);
 
             const { rows, cols } = getGridDimensions();
@@ -2420,11 +2217,8 @@
                 const colorClass = COLOR_CLASSES[gIdx % COLOR_CLASSES.length];
                 g.colorClass = colorClass;
 
-                // Split wrapped groups into sub-rectangles for clean rendering
                 const subRects = splitWrappedGroup(g.r0, g.c0, g.h, g.w, rows, cols);
-
                 subRects.forEach(sub => {
-                    // Find DOM coordinates of top-left and bottom-right cells
                     const cellTL = document.getElementById(`kcell-${sub.r}-${sub.c}`);
                     const cellBR = document.getElementById(`kcell-${sub.r + sub.h - 1}-${sub.c + sub.w - 1}`);
                     if (!cellTL || !cellBR) return;
@@ -2445,30 +2239,21 @@
                     rectEl.setAttribute('rx', '10');
                     rectEl.setAttribute('ry', '10');
                     rectEl.setAttribute('class', `group-box solid ${colorClass}`);
+                    rectEl.id = `svgGroup-${gIdx}`;
                     rectEl.dataset.groupIdx = gIdx;
-
                     svg.appendChild(rectEl);
                 });
             });
         }
 
-        // Splits a toroidally wrapping group into 1, 2, or 4 clean non-wrapping sub-rectangles
         function splitWrappedGroup(r0, c0, h, w, maxR, maxC) {
             const rowSpans = [];
-            if (r0 + h <= maxR) {
-                rowSpans.push({ r: r0, h: h });
-            } else {
-                rowSpans.push({ r: r0, h: maxR - r0 });
-                rowSpans.push({ r: 0, h: h - (maxR - r0) });
-            }
+            if (r0 + h <= maxR) rowSpans.push({ r: r0, h: h });
+            else { rowSpans.push({ r: r0, h: maxR - r0 }); rowSpans.push({ r: 0, h: h - (maxR - r0) }); }
 
             const colSpans = [];
-            if (c0 + w <= maxC) {
-                colSpans.push({ c: c0, w: w });
-            } else {
-                colSpans.push({ c: c0, w: maxC - c0 });
-                colSpans.push({ c: 0, w: w - (maxC - c0) });
-            }
+            if (c0 + w <= maxC) colSpans.push({ c: c0, w: w });
+            else { colSpans.push({ c: c0, w: maxC - c0 }); colSpans.push({ c: 0, w: w - (maxC - c0) }); }
 
             const subRects = [];
             rowSpans.forEach(rs => {
@@ -2494,13 +2279,181 @@
         }
 
         // =========================================================================
-        // STEP-BY-STEP EXPLANATION GENERATOR
+        // STEP-BY-STEP ANIMATION ENGINE FOR K-MAP
         // =========================================================================
+        let kmapSteps = [];
+        let kmapCurStep = 0;
+        let kmapPlaying = false;
+        let kmapTimer = null;
+
+        function buildKmapSteps(sol) {
+            const st = [];
+            const targetM = sol.canonicalSOP;
+
+            st.push({
+                type: 'scan',
+                line: 0,
+                desc: `Initialize ${numVars}-Variable K-Map: Mapped ${targetM.length} active minterms ${sol.canonicalSOP.length ? 'Σm(' + sol.canonicalSOP.join(', ') + ')' : 'Σm(∅)'} and ${sol.canonicalDC.length} Don't-Cares d(${sol.canonicalDC.join(', ')}).`,
+                activeCells: targetM
+            });
+
+            if (sol.selectedGroups.length === 0) {
+                st.push({
+                    type: 'trivial',
+                    line: 7,
+                    desc: `No active 1-cells found. Boolean Function evaluates to constant F = ${sol.expression}.`,
+                    activeCells: []
+                });
+            } else {
+                sol.selectedGroups.forEach((g, gIdx) => {
+                    const typeName = g.size === 16 ? 'Hexadecet (16)' : (g.size === 8 ? 'Octet (8)' : (g.size === 4 ? 'Quad (4)' : (g.size === 2 ? 'Pair (2)' : 'Single (1)')));
+
+                    st.push({
+                        type: 'find_group',
+                        line: 2,
+                        groupIdx: gIdx,
+                        desc: `Discovered maximal ${typeName} group #${gIdx + 1} covering minterms: { ${g.minterms.map(m => 'm' + m).join(', ')} }.`,
+                        activeCells: g.minterms,
+                        group: g
+                    });
+
+                    const keptVars = g.elimination.filter(e => e.status !== 'eliminated').map(e => e.varName + (e.status === 'constant_1' ? '=1' : '=0')).join(', ') || 'None';
+                    const elimVars = g.elimination.filter(e => e.status === 'eliminated').map(e => e.varName).join(', ') || 'None';
+
+                    st.push({
+                        type: 'var_elim',
+                        line: 4,
+                        groupIdx: gIdx,
+                        desc: `Algebraic Elimination in Group #${gIdx + 1}: <span class="elim">${elimVars}</span> eliminated (0→1 variation), <span class="kept">${keptVars}</span> retained → Term: <span class="sum">${g.term}</span>.`,
+                        activeCells: g.minterms,
+                        group: g
+                    });
+
+                    st.push({
+                        type: 'epi_check',
+                        line: 5,
+                        groupIdx: gIdx,
+                        desc: `Evaluated group #${gIdx + 1} (${g.term}): ${g.isEssential ? 'Contains unique minterms → Selected as Essential Prime Implicant (EPI).' : 'Selected to complete minimal minterm coverage.'}`,
+                        activeCells: g.minterms,
+                        group: g
+                    });
+                });
+
+                st.push({
+                    type: 'done',
+                    line: 7,
+                    desc: `Minimization synthesized! Minimal Boolean Function: <span class="done">F = ${sol.expression}</span>.`,
+                    activeCells: []
+                });
+            }
+
+            return st;
+        }
+
+        function renderKmapCodeLines() {
+            const lines = [
+                `// Quine-McCluskey & K-Map Minimizer`,
+                `1: target_minterms = scan_active_cells(KMap_Grid)`,
+                `2: for size in [16, 8, 4, 2, 1]: find_adjacent_blocks(size)`,
+                `3: prime_implicants = extract_maximal_groups()`,
+                `4: for group in PIs: group.term = eliminate_varying_vars(group)`,
+                `5: essential_PIs = find_essential_prime_implicants(PIs)`,
+                `6: minimal_cover = solve_petrick_cover(essential_PIs, target_minterms)`,
+                `7: return synthesize_minimal_expression(minimal_cover)`
+            ];
+            document.getElementById('kmapCodeBox').innerHTML = lines.map((l, idx) => `<div class="code-line" id="kline-${idx}">${l}</div>`).join('');
+        }
+
+        function renderKmapAnimStep() {
+            const s = kmapSteps[kmapCurStep];
+            if (!s) return;
+
+            document.querySelectorAll('#kmapCodeBox .code-line').forEach(l => l.classList.remove('active'));
+            const curLine = document.getElementById(`kline-${s.line}`);
+            if (curLine) curLine.classList.add('active');
+
+            document.querySelectorAll('.kmap-cell').forEach(c => c.classList.remove('cell-highlight-scan', 'cell-highlight-active'));
+            document.querySelectorAll('.group-box').forEach(b => b.classList.remove('active-anim'));
+            document.querySelectorAll('.term-badge').forEach(t => t.classList.remove('active-anim'));
+            document.querySelectorAll('.legend-item').forEach(li => li.classList.remove('active'));
+
+            if (s.type === 'scan') {
+                s.activeCells.forEach(m => {
+                    const cell = document.querySelector(`.kmap-cell[data-m="${m}"]`);
+                    if (cell) cell.classList.add('cell-highlight-scan');
+                });
+            } else if (s.groupIdx !== undefined) {
+                s.activeCells.forEach(m => {
+                    const cell = document.querySelector(`.kmap-cell[data-m="${m}"]`);
+                    if (cell) cell.classList.add('cell-highlight-active');
+                });
+
+                highlightGroup(s.groupIdx, true);
+                const termBadges = document.querySelectorAll('.term-badge');
+                if (termBadges[s.groupIdx]) termBadges[s.groupIdx].classList.add('active-anim');
+            } else if (s.type === 'done') {
+                currentSolution.selectedGroups.forEach((_, idx) => highlightGroup(idx, true));
+            }
+
+            const traceLines = [];
+            let count = 0;
+            for (let idx = kmapCurStep; idx >= 0 && count < 6; idx--) {
+                const st = kmapSteps[idx];
+                const isCur = idx === kmapCurStep;
+                traceLines.unshift(`<div class="line ${isCur ? 'cur' : ''}"><span style="color: var(--teal); margin-right: 6px;">›</span>${st.desc}</div>`);
+                count++;
+            }
+            document.getElementById('kmapTraceBox').innerHTML = traceLines.join('');
+
+            document.getElementById('kmapStepInfo').textContent = `step ${kmapCurStep} / ${kmapSteps.length - 1}`;
+            document.getElementById('btnKmapPrev').disabled = kmapCurStep === 0;
+            document.getElementById('btnKmapNext').disabled = kmapCurStep === kmapSteps.length - 1;
+        }
+
+        function goKmapStep(n) {
+            kmapCurStep = Math.max(0, Math.min(kmapSteps.length - 1, n));
+            renderKmapAnimStep();
+            if (kmapCurStep === kmapSteps.length - 1) stopKmapPlay();
+        }
+
+        function nextKmapStep() { goKmapStep(kmapCurStep + 1); }
+        function prevKmapStep() { goKmapStep(kmapCurStep - 1); }
+        function resetKmapAnim() { stopKmapPlay(); goKmapStep(0); }
+
+        function kmapSpeedMs() {
+            const speedVal = document.getElementById('kmapSpeed').value;
+            const map = { 1: 1100, 2: 600, 3: 300, 4: 140 };
+            return map[speedVal] || 600;
+        }
+
+        function kmapTick() {
+            if (kmapCurStep >= kmapSteps.length - 1) { stopKmapPlay(); return; }
+            goKmapStep(kmapCurStep + 1);
+            kmapTimer = setTimeout(kmapTick, kmapSpeedMs());
+        }
+
+        function startKmapPlay() {
+            if (kmapSteps.length <= 1) return;
+            kmapPlaying = true;
+            document.getElementById('btnKmapPlay').textContent = '⏸ Pause';
+            kmapTimer = setTimeout(kmapTick, kmapSpeedMs());
+        }
+
+        function stopKmapPlay() {
+            kmapPlaying = false;
+            document.getElementById('btnKmapPlay').textContent = '▶ Play';
+            clearTimeout(kmapTimer);
+        }
+
+        function toggleKmapPlay() {
+            if (kmapPlaying) stopKmapPlay();
+            else startKmapPlay();
+        }
+
         function updateExplanationView(sol) {
             const totalCells = 1 << numVars;
             const vars = VAR_NAMES.slice(0, numVars);
 
-            // Step 1: Truth Table
             const tt = document.getElementById('explTruthTable');
             let ttHtml = `<thead><tr>`;
             vars.forEach(v => ttHtml += `<th>${v}</th>`);
@@ -2518,7 +2471,6 @@
             ttHtml += `</tbody>`;
             tt.innerHTML = ttHtml;
 
-            // Step 2: Group Formation Details
             const s2Card = document.getElementById('explStep2Card');
             if (sol.selectedGroups.length === 0) {
                 s2Card.innerHTML = `No valid ${optMode === 'SOP' ? '1-cells' : '0-cells'} present. Function is constant <code>${sol.expression}</code>.`;
@@ -2536,7 +2488,6 @@
                 s2Card.innerHTML = cardHtml;
             }
 
-            // Step 3: Variable Elimination Breakdown
             const elimGrid = document.getElementById('explEliminationGrid');
             elimGrid.innerHTML = '';
 
@@ -2566,7 +2517,6 @@
                 elimGrid.appendChild(div);
             });
 
-            // Step 4: Essential Prime Implicant Card
             const s4Card = document.getElementById('explStep4Card');
             let s4Html = `
                 <table class="expl-table">
@@ -2593,7 +2543,6 @@
             s4Html += `</tbody></table>`;
             s4Card.innerHTML = s4Html;
 
-            // Step 5: Hardware Verilog / C Export
             const hw = document.getElementById('explHardwareExport');
             let verilogExpr = sol.expression;
             verilogExpr = verilogExpr.replace(/\'/g, '~');
@@ -2602,20 +2551,15 @@
             hw.innerHTML = `// Verilog RTL Logic<br>assign F = ${verilogExpr};<br><br>// C/C++ Bitwise Logic<br>uint8_t F = (${verilogExpr});`;
         }
 
-        // =========================================================================
-        // MASTER SOLVE & RENDER COORDINATOR
-        // =========================================================================
         function solveAndRender() {
             renderKMapGrid();
             const sol = solveKMap();
             currentSolution = sol;
 
-            // Update Canonical representations
             document.getElementById('canonicalSOP').textContent = sol.canonicalSOP.length > 0 ? `Σm(${sol.canonicalSOP.join(', ')})` : 'Σm(∅)';
             document.getElementById('canonicalPOS').textContent = sol.canonicalPOS.length > 0 ? `ΠM(${sol.canonicalPOS.join(', ')})` : 'ΠM(∅)';
             document.getElementById('canonicalDC').textContent = sol.canonicalDC.length > 0 ? `d(${sol.canonicalDC.join(', ')})` : 'd(∅)';
 
-            // Render Minimized Equation Box
             const eqBox = document.getElementById('minimizedEquation');
             if (sol.selectedGroups.length === 0) {
                 eqBox.textContent = `F = ${sol.expression}`;
@@ -2628,7 +2572,6 @@
                 }).join('');
             }
 
-            // Render Group Legend List
             const legendList = document.getElementById('groupLegendList');
             legendList.innerHTML = '';
             document.getElementById('groupCountBadge').textContent = `${sol.selectedGroups.length} Groups`;
@@ -2654,7 +2597,6 @@
                 legendList.appendChild(item);
             });
 
-            // Update Hardware Metrics
             const origLiterals = (sol.canonicalSOP.length || 1) * numVars;
             const minLiterals = sol.selectedGroups.reduce((sum, g) => sum + g.literals, 0);
             const savings = origLiterals > 0 ? Math.max(0, Math.round(((origLiterals - minLiterals) / origLiterals) * 100)) : 0;
@@ -2663,10 +2605,15 @@
             document.getElementById('metricMinLiterals').textContent = minLiterals;
             document.getElementById('metricGateSavings').textContent = `${savings}%`;
 
-            // Render SVG Group overlays and Detailed Explanation
+            stopKmapPlay();
+            kmapSteps = buildKmapSteps(sol);
+            kmapCurStep = 0;
+            renderKmapCodeLines();
+
             setTimeout(() => {
                 renderGroupSvgOverlays();
                 updateExplanationView(sol);
+                renderKmapAnimStep();
             }, 20);
         }
 
@@ -2683,18 +2630,16 @@
             });
         }
 
-        // Redraw SVG bounding boxes on window resize
         window.addEventListener('resize', () => {
             if (document.getElementById('paneKmap').classList.contains('active')) {
                 renderGroupSvgOverlays();
             }
         });
 
-        // Initialize K-Map on startup
         setVariables(4);
 
         // =========================================================================
-        // MATRIX MULTIPLICATION VISUALIZER (ORIGINAL ENGINE PRESERVED)
+        // MATRIX MULTIPLICATION VISUALIZER
         // =========================================================================
         let rowsA = 2, inner = 3, colsB = 2;
         let A = [[1, 2, 3], [4, 5, 6]];
@@ -2758,15 +2703,11 @@
 
             const newA = create2D(rA, inn, 0);
             for (let i = 0; i < Math.min(rA, rowsA); i++) {
-                for (let j = 0; j < Math.min(inn, inner); j++) {
-                    newA[i][j] = A[i][j];
-                }
+                for (let j = 0; j < Math.min(inn, inner); j++) newA[i][j] = A[i][j];
             }
             const newB = create2D(inn, cB, 0);
             for (let i = 0; i < Math.min(inn, inner); i++) {
-                for (let j = 0; j < Math.min(cB, colsB); j++) {
-                    newB[i][j] = B[i][j];
-                }
+                for (let j = 0; j < Math.min(cB, colsB); j++) newB[i][j] = B[i][j];
             }
 
             rowsA = rA; inner = inn; colsB = cB;
@@ -2788,7 +2729,6 @@
             buildEditor(gridB, inner, colsB, B, 'B');
         });
 
-        // Initialize editor
         buildEditor(gridA, rowsA, inner, A, 'A');
         buildEditor(gridB, inner, colsB, B, 'B');
 
@@ -2867,7 +2807,6 @@
             const s = steps[cur];
             if (!s) return;
 
-            // Clear highlights
             document.querySelectorAll('.mcell').forEach(c => {
                 c.classList.remove('active-a', 'active-b', 'active-c');
             });
@@ -2881,8 +2820,7 @@
                     for (let j = 0; j < colsB; j++) {
                         const cell = document.getElementById(`c-${i}-${j}`);
                         if (cell) {
-                            const val = s.cSnapshot[i][j];
-                            cell.textContent = val;
+                            cell.textContent = s.cSnapshot[i][j];
                             cell.classList.add('filled-c');
                         }
                     }
