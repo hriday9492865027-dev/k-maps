@@ -4168,17 +4168,19 @@
             const isActive = activeSignal === 1;
             const activeClass = isActive ? 'sig-active' : '';
 
+            const gateClass = `gate-${type.toLowerCase()}`;
+
             if (type === 'AND' || type === 'NAND') {
                 // ANSI Flat-back D-Shape
                 const path = `M ${x} ${y - h/2} L ${x + w/2} ${y - h/2} A ${h/2} ${h/2} 0 0 1 ${x + w/2} ${y + h/2} L ${x} ${y + h/2} Z`;
-                svgStr += `<path d="${path}" class="gate-body gate-and ${activeClass}" stroke="${strokeColor}" />`;
+                svgStr += `<path d="${path}" class="gate-body ${gateClass} ${activeClass}" stroke="${strokeColor}" />`;
                 if (type === 'NAND') {
                     svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
                 }
             } else if (type === 'OR' || type === 'NOR') {
                 // ANSI Curved Inward Shield Shape
                 const path = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
-                svgStr += `<path d="${path}" class="gate-body gate-or ${activeClass}" stroke="${strokeColor}" />`;
+                svgStr += `<path d="${path}" class="gate-body ${gateClass} ${activeClass}" stroke="${strokeColor}" />`;
                 if (type === 'NOR') {
                     svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
                 }
@@ -4187,13 +4189,13 @@
                 const backArc = `M ${x - 8} ${y - h/2} Q ${x - 8 + w * 0.28} ${y} ${x - 8} ${y + h/2}`;
                 const body = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
                 svgStr += `<path d="${backArc}" fill="none" stroke="${strokeColor}" stroke-width="2" />`;
-                svgStr += `<path d="${body}" class="gate-body gate-xor ${activeClass}" stroke="${strokeColor}" />`;
+                svgStr += `<path d="${body}" class="gate-body ${gateClass} ${activeClass}" stroke="${strokeColor}" />`;
                 if (type === 'XNOR') {
                     svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
                 }
             } else if (type === 'NOT') {
                 const path = `M ${x} ${y - h/2} L ${x + w - 8} ${y} L ${x} ${y + h/2} Z`;
-                svgStr += `<path d="${path}" class="gate-body gate-not ${activeClass}" stroke="${strokeColor}" />`;
+                svgStr += `<path d="${path}" class="gate-body ${gateClass} ${activeClass}" stroke="${strokeColor}" />`;
                 svgStr += `<circle cx="${x + w - 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
             }
 
