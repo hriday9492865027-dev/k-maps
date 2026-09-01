@@ -1999,6 +1999,57 @@
             font-weight: 700;
         }
 
+        /* Collapsible Step Sections */
+        .step-details {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: border-color 0.2s ease;
+        }
+
+        .step-details[open] {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .step-details summary {
+            padding: 14px 18px;
+            font-family: var(--ui-font);
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #cbd5e1;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+            transition: color 0.15s ease, background 0.15s ease;
+        }
+
+        .step-details summary::-webkit-details-marker { display: none; }
+
+        .step-details summary::before {
+            content: '▸';
+            font-size: 12px;
+            color: var(--muted);
+            transition: transform 0.2s ease;
+        }
+
+        .step-details[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .step-details summary:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .step-details > div {
+            padding: 0 18px 16px;
+        }
+
         .comp-dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -2725,203 +2776,173 @@
         <!-- TAB 3: 1'S AND 2'S COMPLEMENT CALCULATOR FOR RATIONAL NUMBERS -->
         <!-- ========================================================================= -->
         <div id="paneComplement" class="tab-pane">
-            <div class="eyebrow" style="color: #c084fc;">// Digital Logic & Fixed-Point Arithmetic</div>
-            <h1>1's & 2's Complement Calculator — All Rational Numbers</h1>
-            <div class="sub">
-                Compute 1's complement (diminished radix) and 2's complement (radix complement) for 
-                <code>Decimal Integers</code>, <code>Fractions (e.g. -15/4)</code>, <code>Decimal Floats (e.g. -13.625)</code>, 
-                and <code>Binary Fixed-Point Numbers</code> with step-by-step mathematical proofs.
+            <div class="eyebrow" style="color: #c084fc;">// Number System Converter</div>
+            <h1 style="font-size: 22px;">1's & 2's Complement Calculator</h1>
+            <div class="sub" style="max-width: 600px;">
+                Enter any number — decimal, fraction, or binary — and instantly see its 1's and 2's complement representation with step-by-step working.
             </div>
 
-            <!-- Input & Configuration Panel -->
-            <div class="panel">
-                <div class="panel-title">
-                    <span>Rational Number & Word Format Setup</span>
-                    <span class="badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border-color: rgba(168, 85, 247, 0.4);">
-                        Fixed-Point Precision
-                    </span>
+            <!-- ─── CLEAN INPUT AREA ─── -->
+            <div class="panel" style="max-width: 700px;">
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px; position: relative;">
+                        <span style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #c084fc; font-family: var(--code-font); font-weight: 700; font-size: 14px; pointer-events: none;">N =</span>
+                        <input type="text" id="compInputVal" value="-13.625" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter') calculateComplement();"
+                            style="width: 100%; padding: 12px 14px 12px 52px; font-size: 16px; font-family: var(--code-font); font-weight: 700; border-radius: 10px; background: rgba(11, 15, 24, 0.9); border: 1px solid rgba(255,255,255,0.1); color: #f1f5f9;"
+                            placeholder="e.g. -13.625, -15/4, 1101.101b">
+                    </div>
+                    <button onclick="calculateComplement()" style="background: linear-gradient(135deg, #a855f7, #7c3aed); color: #fff; border: 1px solid #c084fc; padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 14px; box-shadow: 0 4px 16px rgba(168, 85, 247, 0.35);">
+                        Calculate
+                    </button>
                 </div>
 
-                <div class="kmap-config-grid">
-                    <div class="config-block">
-                        <label>Integer Word Length ($m$ bits)</label>
-                        <div class="pill-group">
-                            <button id="btnIntBitsAuto" class="active teal-mode" onclick="setCompIntBits('auto')">Auto-Fit</button>
-                            <button id="btnIntBits4" onclick="setCompIntBits(4)">4-Bit</button>
-                            <button id="btnIntBits8" onclick="setCompIntBits(8)">8-Bit</button>
-                            <button id="btnIntBits16" onclick="setCompIntBits(16)">16-Bit</button>
-                        </div>
-                    </div>
-
-                    <div class="config-block">
-                        <label>Fractional Precision ($n$ bits)</label>
-                        <div class="pill-group">
-                            <button id="btnFracBitsAuto" class="active teal-mode" onclick="setCompFracBits('auto')">Auto-Fit</button>
-                            <button id="btnFracBits2" onclick="setCompFracBits(2)">2-Bit</button>
-                            <button id="btnFracBits4" onclick="setCompFracBits(4)">4-Bit</button>
-                            <button id="btnFracBits8" onclick="setCompFracBits(8)">8-Bit</button>
-                            <button id="btnFracBits12" onclick="setCompFracBits(12)">12-Bit</button>
-                        </div>
-                    </div>
-
-                    <div class="config-block">
-                        <label>Display Radix Format</label>
-                        <div class="pill-group">
-                            <button id="btnRadixSepPoint" class="active" onclick="setCompRadixDisplay('point')">Radix Point (.)</button>
-                            <button id="btnRadixSepQ" onclick="setCompRadixDisplay('q')">Q-Notation (Qm.n)</button>
-                        </div>
-                    </div>
+                <!-- Quick Examples -->
+                <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center;">
+                    <span style="font-size: 11px; color: var(--muted); font-family: var(--code-font);">TRY:</span>
+                    <span class="preset-chip" onclick="loadCompPreset('-13.625')">-13.625</span>
+                    <span class="preset-chip" onclick="loadCompPreset('+25.375')">+25.375</span>
+                    <span class="preset-chip" onclick="loadCompPreset('-15/4')">-15/4</span>
+                    <span class="preset-chip" onclick="loadCompPreset('-7/8')">-7/8</span>
+                    <span class="preset-chip" onclick="loadCompPreset('-0.125')">-0.125</span>
+                    <span class="preset-chip" onclick="loadCompPreset('+42.625')">+42.625</span>
                 </div>
 
-                <!-- Input Row -->
-                <div class="config-block" style="margin-top: 14px;">
-                    <label>Rational Number Input (Decimal, Fraction, or Binary)</label>
-                    <div class="expr-input-row">
-                        <div class="expr-input-wrap">
-                            <span class="expr-input-icon">N =</span>
-                            <input type="text" id="compInputVal" placeholder="e.g. -13.625, +25.75, -15/4, 7/8, or -1101.101b" value="-13.625" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter') calculateComplement();">
+                <!-- Advanced Settings Toggle -->
+                <div style="margin-top: 14px; border-top: 1px solid var(--border); padding-top: 12px;">
+                    <button onclick="document.getElementById('compAdvSettings').style.display = document.getElementById('compAdvSettings').style.display === 'none' ? 'block' : 'none';" style="background: transparent; border: none; color: var(--muted); font-size: 12px; font-family: var(--code-font); padding: 4px 0; cursor: pointer;">
+                        ⚙️ Advanced Settings ▾
+                    </button>
+                    <div id="compAdvSettings" style="display: none; margin-top: 10px;">
+                        <div class="kmap-config-grid" style="gap: 12px;">
+                            <div class="config-block">
+                                <label>Integer Bits</label>
+                                <div class="pill-group">
+                                    <button id="btnIntBitsAuto" class="active teal-mode" onclick="setCompIntBits('auto')">Auto</button>
+                                    <button id="btnIntBits4" onclick="setCompIntBits(4)">4</button>
+                                    <button id="btnIntBits8" onclick="setCompIntBits(8)">8</button>
+                                    <button id="btnIntBits16" onclick="setCompIntBits(16)">16</button>
+                                </div>
+                            </div>
+                            <div class="config-block">
+                                <label>Fraction Bits</label>
+                                <div class="pill-group">
+                                    <button id="btnFracBitsAuto" class="active teal-mode" onclick="setCompFracBits('auto')">Auto</button>
+                                    <button id="btnFracBits2" onclick="setCompFracBits(2)">2</button>
+                                    <button id="btnFracBits4" onclick="setCompFracBits(4)">4</button>
+                                    <button id="btnFracBits8" onclick="setCompFracBits(8)">8</button>
+                                    <button id="btnFracBits12" onclick="setCompFracBits(12)">12</button>
+                                </div>
+                            </div>
+                            <div class="config-block">
+                                <label>Display Format</label>
+                                <div class="pill-group">
+                                    <button id="btnRadixSepPoint" class="active" onclick="setCompRadixDisplay('point')">Binary Point</button>
+                                    <button id="btnRadixSepQ" onclick="setCompRadixDisplay('q')">Q-Notation</button>
+                                </div>
+                            </div>
                         </div>
-                        <button class="primary" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border-color: #c084fc; color: #fff;" onclick="calculateComplement()">
-                            <span>⚡</span> Calculate Complements
-                        </button>
-                    </div>
-
-                    <div class="expr-presets">
-                        <span class="expr-presets-label">Presets:</span>
-                        <span class="preset-chip" onclick="loadCompPreset('-13.625')">-13.625</span>
-                        <span class="preset-chip" onclick="loadCompPreset('+25.375')">+25.375</span>
-                        <span class="preset-chip" onclick="loadCompPreset('-15/4')">-15/4 (-3.75)</span>
-                        <span class="preset-chip" onclick="loadCompPreset('-7/8')">-7/8 (-0.875)</span>
-                        <span class="preset-chip" onclick="loadCompPreset('-0.125')">-0.125</span>
-                        <span class="preset-chip" onclick="loadCompPreset('-128.5')">-128.5</span>
-                        <span class="preset-chip" onclick="loadCompPreset('+42.625')">+42.625</span>
-                        <span class="preset-chip" onclick="loadCompPreset('-1101.101b')">-1101.101₂</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Key Complements Result Dashboard -->
-            <div class="comp-dashboard-grid" id="compDashboard">
-                <div class="comp-card">
-                    <div class="comp-card-header">
-                        <span class="comp-card-title">1. Normalized Decimal</span>
-                        <span class="badge" id="compSignBadge">Negative (−)</span>
-                    </div>
-                    <div class="comp-card-val teal" id="compResDec">-13.625</div>
-                    <div class="comp-card-sub" id="compResFraction">= -109 / 8 (Rational)</div>
+            <!-- ─── RESULTS: 2 BIG CARDS SIDE-BY-SIDE ─── -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; max-width: 700px;">
+                <!-- 1's Complement Card -->
+                <div style="background: linear-gradient(145deg, rgba(168, 85, 247, 0.08), rgba(15, 18, 28, 0.95)); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 14px; padding: 22px; text-align: center;">
+                    <div style="font-size: 12px; color: #a78bfa; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 10px;">1'S COMPLEMENT</div>
+                    <div id="compRes1s" style="font-family: var(--code-font); font-size: 26px; font-weight: 800; color: #c084fc; letter-spacing: 0.08em; word-break: break-all;">10010.0101</div>
+                    <div style="font-size: 11.5px; color: var(--muted); margin-top: 8px; font-family: var(--code-font);">Flip all bits</div>
                 </div>
 
-                <div class="comp-card">
-                    <div class="comp-card-header">
-                        <span class="comp-card-title">2. True Binary (Magnitude)</span>
-                        <span class="badge">Sign-Magnitude</span>
-                    </div>
-                    <div class="comp-card-val amber" id="compResTrueBin">01101.1010</div>
-                    <div class="comp-card-sub" id="compResQFormat">Q5.4 Format (9 total bits)</div>
-                </div>
-
-                <div class="comp-card">
-                    <div class="comp-card-header">
-                        <span class="comp-card-title">3. 1's Complement</span>
-                        <span class="badge">Diminished Radix</span>
-                    </div>
-                    <div class="comp-card-val purple" id="compRes1s">10010.0101</div>
-                    <div class="comp-card-sub">Invert all bits across binary point</div>
-                </div>
-
-                <div class="comp-card" style="border-color: rgba(52, 211, 153, 0.4); background: rgba(6, 78, 59, 0.15);">
-                    <div class="comp-card-header">
-                        <span class="comp-card-title" style="color: #6ee7b7;">4. 2's Complement</span>
-                        <span class="badge" style="background: rgba(16, 185, 129, 0.25); color: #34d399; border-color: #34d399;">Radix Complement</span>
-                    </div>
-                    <div class="comp-card-val emerald" id="compRes2s">10010.0110</div>
-                    <div class="comp-card-sub" id="compResLsbAdd">1's Complement + LSB (2⁻⁴ = 0.0001₂)</div>
+                <!-- 2's Complement Card -->
+                <div style="background: linear-gradient(145deg, rgba(16, 185, 129, 0.08), rgba(15, 18, 28, 0.95)); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 14px; padding: 22px; text-align: center;">
+                    <div style="font-size: 12px; color: #6ee7b7; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.06em; margin-bottom: 10px;">2'S COMPLEMENT</div>
+                    <div id="compRes2s" style="font-family: var(--code-font); font-size: 26px; font-weight: 800; color: #34d399; letter-spacing: 0.08em; word-break: break-all;">10010.0110</div>
+                    <div id="compResLsbAdd" style="font-size: 11.5px; color: var(--muted); margin-top: 8px; font-family: var(--code-font);">1's Comp + 1 (at LSB)</div>
                 </div>
             </div>
 
-            <!-- Bit-Level Interactive Visualizer -->
-            <div class="step-trace-card">
-                <div class="step-trace-title">
-                    <span class="step-num-badge">VISUAL BITS</span>
-                    <span>Interactive Fixed-Point 2's Complement Bit Matrix</span>
+            <!-- ─── INFO ROW: Decimal + Binary + Format ─── -->
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; max-width: 700px;">
+                <div style="flex: 1; min-width: 140px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px;">
+                    <div style="font-size: 10.5px; color: var(--muted); font-family: var(--code-font); text-transform: uppercase; letter-spacing: 0.06em;">Decimal Value</div>
+                    <div id="compResDec" style="font-family: var(--code-font); font-size: 18px; font-weight: 700; color: var(--teal); margin-top: 4px;">-13.625</div>
+                    <div id="compResFraction" style="font-size: 11px; color: var(--muted); font-family: var(--code-font); margin-top: 2px;">= -109 / 8</div>
                 </div>
-                <div style="font-size: 12.5px; color: var(--muted); margin-bottom: 8px;">
-                    Positional weights: MSB has negative weight <strong style="color: #fb7185;" id="compMsbWeightText">-2⁴ (-16)</strong>, fractional bits have negative power weights (<strong style="color: #c084fc;">2⁻¹, 2⁻², ...</strong>).
+                <div style="flex: 1; min-width: 140px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px;">
+                    <div style="font-size: 10.5px; color: var(--muted); font-family: var(--code-font); text-transform: uppercase; letter-spacing: 0.06em;">True Binary</div>
+                    <div id="compResTrueBin" style="font-family: var(--code-font); font-size: 18px; font-weight: 700; color: var(--amber); margin-top: 4px;">01101.1010</div>
+                    <div id="compResQFormat" style="font-size: 11px; color: var(--muted); font-family: var(--code-font); margin-top: 2px;">Q5.4 (9 bits)</div>
                 </div>
+                <div style="flex: 0 0 auto; min-width: 100px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center;">
+                    <div style="font-size: 10.5px; color: var(--muted); font-family: var(--code-font); text-transform: uppercase; letter-spacing: 0.06em;">Sign</div>
+                    <div id="compSignBadge" style="font-family: var(--code-font); font-size: 16px; font-weight: 700; color: #fb7185; margin-top: 4px;">Negative (−)</div>
+                </div>
+            </div>
 
+            <!-- ─── BIT VISUALIZER (simplified) ─── -->
+            <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 20px; max-width: 700px;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 10px;">Bit-Level View <span style="font-size: 11px; color: var(--muted); font-weight: 500;" id="compMsbWeightText">(MSB weight: −2⁴)</span></div>
                 <div class="bit-array-container" id="compBitArray"></div>
-
-                <div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 11.5px; font-family: var(--code-font); color: var(--muted); margin-top: 8px;">
-                    <span><span style="color: #fb7185;">■</span> Red: Sign Bit (MSB)</span>
-                    <span><span style="color: var(--teal);">■</span> Teal: Integer Bits</span>
-                    <span><span style="color: var(--amber);">■</span> Amber: Radix Point</span>
-                    <span><span style="color: #c084fc;">■</span> Purple: Fractional Bits</span>
+                <div style="display: flex; gap: 14px; flex-wrap: wrap; font-size: 10.5px; font-family: var(--code-font); color: var(--muted); margin-top: 8px;">
+                    <span><span style="color: #fb7185;">●</span> Sign</span>
+                    <span><span style="color: var(--teal);">●</span> Integer</span>
+                    <span><span style="color: var(--amber);">●</span> Point</span>
+                    <span><span style="color: #c084fc;">●</span> Fraction</span>
                 </div>
             </div>
 
-            <!-- Step-by-Step Mathematical Computation Trace -->
-            <div class="step-trace-card">
-                <div class="step-trace-title">
-                    <span class="step-num-badge">STEP 1</span>
-                    <span>Decimal to Binary Fixed-Point Conversion</span>
-                </div>
-                <div id="compStep1Container"></div>
+            <!-- ─── STEP-BY-STEP: Collapsible Sections ─── -->
+            <div style="max-width: 700px;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 12px;">📖 Step-by-Step Working <span style="font-size: 11px; color: var(--muted); font-weight: 400;">(click to expand)</span></div>
+
+                <details class="step-details" open>
+                    <summary>Step 1 — Decimal → Binary Conversion</summary>
+                    <div id="compStep1Container" style="padding: 12px 0;"></div>
+                </details>
+
+                <details class="step-details">
+                    <summary>Step 2 — 1's Complement (Bit Inversion)</summary>
+                    <div id="compStep2Container" style="padding: 12px 0;"></div>
+                </details>
+
+                <details class="step-details">
+                    <summary>Step 3 — 2's Complement (Add 1 to LSB)</summary>
+                    <div id="compStep3Container" style="padding: 12px 0;"></div>
+                </details>
+
+                <details class="step-details">
+                    <summary>Step 4 — Verification (Weight Check)</summary>
+                    <div id="compStep4Container" style="padding: 12px 0;"></div>
+                </details>
+
+                <details class="step-details">
+                    <summary>Step 5 — Range & Overflow</summary>
+                    <div id="compStep5Container" style="padding: 12px 0;"></div>
+                </details>
             </div>
 
-            <div class="step-trace-card">
-                <div class="step-trace-title">
-                    <span class="step-num-badge">STEP 2</span>
-                    <span>1's Complement Bit Inversion</span>
-                </div>
-                <div id="compStep2Container"></div>
-            </div>
-
-            <div class="step-trace-card">
-                <div class="step-trace-title">
-                    <span class="step-num-badge">STEP 3</span>
-                    <span>2's Complement Calculation (Addition of LSB: $+2^{-n}$)</span>
-                </div>
-                <div id="compStep3Container"></div>
-            </div>
-
-            <div class="step-trace-card">
-                <div class="step-trace-title">
-                    <span class="step-num-badge">STEP 4</span>
-                    <span>Positional Weight Verification Proof</span>
-                </div>
-                <div id="compStep4Container"></div>
-            </div>
-
-            <div class="step-trace-card">
-                <div class="step-trace-title">
-                    <span class="step-num-badge">STEP 5</span>
-                    <span>Dynamic Fixed-Point Range & Overflow Validation</span>
-                </div>
-                <div id="compStep5Container"></div>
-            </div>
-
-            <!-- 2's Complement Rational Arithmetic Section -->
-            <div class="panel" style="margin-top: 20px;">
-                <div class="panel-title">
-                    <span>2's Complement Rational Arithmetic (Addition & Subtraction)</span>
-                    <span class="badge" style="background: rgba(45, 212, 191, 0.15); color: var(--teal);">Binary ALU Trace</span>
-                </div>
-                <div class="kmap-config-grid" style="grid-template-columns: 1fr 1fr auto; align-items: end; gap: 12px;">
-                    <div>
-                        <label>Operand A</label>
-                        <input type="text" id="arithInputA" value="-13.625" style="width: 100%; font-family: var(--code-font); padding: 8px 12px; border-radius: 6px; background: var(--panel-2); border: 1px solid var(--border); color: var(--text);">
+            <!-- ─── ARITHMETIC (collapsible) ─── -->
+            <details class="step-details" style="max-width: 700px; margin-top: 16px;">
+                <summary style="font-weight: 700;">➕ 2's Complement Arithmetic (A + B / A − B)</summary>
+                <div style="padding: 14px 0;">
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: end;">
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="font-family: var(--code-font); font-size: 11px; color: var(--muted); text-transform: uppercase;">A</label>
+                            <input type="text" id="arithInputA" value="-13.625" style="width: 100%; margin-top: 4px;">
+                        </div>
+                        <div style="flex: 1; min-width: 120px;">
+                            <label style="font-family: var(--code-font); font-size: 11px; color: var(--muted); text-transform: uppercase;">B</label>
+                            <input type="text" id="arithInputB" value="+7.25" style="width: 100%; margin-top: 4px;">
+                        </div>
+                        <div style="display: flex; gap: 6px;">
+                            <button class="primary" onclick="calculateCompArithmetic('add')">A + B</button>
+                            <button class="secondary" onclick="calculateCompArithmetic('sub')">A − B</button>
+                        </div>
                     </div>
-                    <div>
-                        <label>Operand B</label>
-                        <input type="text" id="arithInputB" value="+7.25" style="width: 100%; font-family: var(--code-font); padding: 8px 12px; border-radius: 6px; background: var(--panel-2); border: 1px solid var(--border); color: var(--text);">
-                    </div>
-                    <div style="display: flex; gap: 6px;">
-                        <button class="primary" onclick="calculateCompArithmetic('add')">A + B</button>
-                        <button class="secondary" onclick="calculateCompArithmetic('sub')">A − B</button>
-                    </div>
+                    <div id="arithResultBox" style="margin-top: 12px;"></div>
                 </div>
-                <div id="arithResultBox" style="margin-top: 14px;"></div>
-            </div>
+            </details>
         </div>
 
 
