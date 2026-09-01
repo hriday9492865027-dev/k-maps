@@ -5443,39 +5443,94 @@
                 container.appendChild(cell);
             }
 
-            document.getElementById('compMsbWeightText').textContent = `-2^${m-1} (-${Math.pow(2, m-1)})`;
+            document.getElementById('compMsbWeightText').textContent = `(MSB weight: −2${m-1 > 1 ? '⁰¹²³⁴⁵⁶⁷⁸⁹'.split('')[m-1] || '^'+(m-1) : '¹'})`;
         }
 
         function renderStep1Trace(intPart, fracSteps, m, n, intBits, fracBits) {
             const container = document.getElementById('compStep1Container');
+
+            // Generate integer division trace
+            let intDivRows = '';
+            let tempDiv = intPart;
+            const divSteps = [];
+            while (tempDiv > 0) {
+                const q = Math.floor(tempDiv / 2);
+                const r = tempDiv % 2;
+                divSteps.push({ dividend: tempDiv, quotient: q, remainder: r });
+                tempDiv = q;
+            }
+            divSteps.forEach((s, i) => {
+                intDivRows += `<tr>
+                    <td>${i + 1}</td>
+                    <td>${s.dividend} ÷ 2</td>
+                    <td>${s.quotient}</td>
+                    <td><strong class="bit-highlight-${s.remainder}">${s.remainder}</strong></td>
+                </tr>`;
+            });
+
             let html = `
-                <div style="margin-bottom: 10px; font-size: 13px; color: var(--text);">
-                    <strong>A. Integer Part (${intPart}):</strong> Successive division by 2 yields binary integer:
-                    <code>${intBits.slice(1).join('')}₂</code> (padded with sign bit to <code>${intBits.join('')}₂</code>).
+                <div style="background: rgba(45, 212, 191, 0.06); border: 1px solid rgba(45, 212, 191, 0.2); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--teal); margin-bottom: 6px;">💡 What is this step?</div>
+                    <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.6;">
+                        Before we can find the complement, we first need to convert our decimal number into <strong>binary</strong> (base-2).
+                        We split the number into two parts: the <strong>integer part</strong> (before the decimal point) and the <strong>fractional part</strong> (after the decimal point), and convert each separately.
+                    </div>
                 </div>
-                <div style="margin-bottom: 10px; font-size: 13px; color: var(--text);">
-                    <strong>B. Fractional Part:</strong> Successive multiplication by 2 table:
+
+                <div style="font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 8px;">A. Integer Part → Binary: <code style="color: var(--teal);">${intPart}</code></div>
+                <div style="font-size: 12.5px; color: #94a3b8; margin-bottom: 8px; line-height: 1.5;">
+                    <strong>Method:</strong> Keep dividing by 2 and write down the remainders. Then read the remainders <strong>bottom-to-top</strong> to get the binary.
+                </div>
+            `;
+
+            if (intPart > 0) {
+                html += `
+                <table class="calc-table">
+                    <thead><tr><th>Step</th><th>Division</th><th>Quotient</th><th>Remainder (Bit)</th></tr></thead>
+                    <tbody>${intDivRows}</tbody>
+                </table>
+                <div style="font-size: 12.5px; color: #94a3b8; margin: 6px 0 16px;">
+                    ↑ Read remainders bottom-to-top: <strong style="color: var(--teal);">${intBits.slice(1).join('')}₂</strong>
+                    (padded to ${m} bits with sign bit → <code style="color: var(--teal);">${intBits.join('')}₂</code>)
+                </div>
+                `;
+            } else {
+                html += `<div style="font-size: 12.5px; color: #94a3b8; margin-bottom: 16px;">Integer part is <strong>0</strong>, so binary integer = <code>0</code> (padded to ${m} bits → <code>${intBits.join('')}₂</code>)</div>`;
+            }
+
+            html += `
+                <div style="font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 8px;">B. Fractional Part → Binary</div>
+                <div style="font-size: 12.5px; color: #94a3b8; margin-bottom: 8px; line-height: 1.5;">
+                    <strong>Method:</strong> Keep multiplying the fraction by 2. The <strong>integer part</strong> of each result (0 or 1) becomes the next binary digit. Use the remaining fraction for the next step.
                 </div>
                 <table class="calc-table">
                     <thead>
-                        <tr><th>Step</th><th>Fraction × 2</th><th>Product</th><th>Integer Bit (Extracted)</th><th>Remaining Fraction</th></tr>
+                        <tr><th>Step</th><th>Fraction × 2</th><th>Result</th><th>Bit (integer part)</th><th>Remaining Fraction</th></tr>
                     </thead>
                     <tbody>
             `;
             fracSteps.forEach(s => {
                 html += `<tr>
                     <td>${s.iter}</td>
-                    <td>${s.frac.toFixed(4)} × 2</td>
-                    <td>${s.prod.toFixed(4)}</td>
+                    <td>${s.frac.toFixed(6)} × 2</td>
+                    <td>${s.prod.toFixed(6)}</td>
                     <td><strong class="bit-highlight-${s.bit}">${s.bit}</strong></td>
-                    <td>${s.rem.toFixed(4)}</td>
+                    <td>${s.rem.toFixed(6)}</td>
                 </tr>`;
             });
             html += `
                     </tbody>
                 </table>
-                <div style="margin-top: 8px; font-family: var(--code-font); font-size: 13px; color: var(--teal);">
-                    ➜ True Magnitude Binary: <strong>${intBits.join('')}.${fracBits.join('')}₂</strong>
+                <div style="font-size: 12.5px; color: #94a3b8; margin-top: 6px;">
+                    → Read bits top-to-bottom: <strong style="color: var(--amber);">.${fracBits.join('')}₂</strong>
+                </div>
+
+                <div style="margin-top: 14px; padding: 12px; background: rgba(45, 212, 191, 0.08); border: 1px solid rgba(45, 212, 191, 0.25); border-radius: 8px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--teal);">✅ Result: True Binary (Magnitude)</div>
+                    <div style="font-family: var(--code-font); font-size: 18px; font-weight: 800; color: var(--teal); margin-top: 4px; letter-spacing: 0.08em;">
+                        ${intBits.join('')}<span style="color: var(--amber);">.</span>${fracBits.join('')}₂
+                    </div>
+                    <div style="font-size: 11.5px; color: #94a3b8; margin-top: 4px;">This is the magnitude (absolute value) in binary. The sign bit (leftmost) is 0 for positive.</div>
                 </div>
             `;
             container.innerHTML = html;
@@ -5483,20 +5538,62 @@
 
         function renderStep2Trace(intBits, fracBits, onesInt, onesFrac, isNeg) {
             const container = document.getElementById('compStep2Container');
+
+            let html = `
+                <div style="background: rgba(192, 132, 252, 0.06); border: 1px solid rgba(192, 132, 252, 0.2); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #c084fc; margin-bottom: 6px;">💡 What is 1's Complement?</div>
+                    <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.6;">
+                        The <strong>1's complement</strong> is found by <strong>flipping every bit</strong> in the binary number — every <code>0</code> becomes <code>1</code>, and every <code>1</code> becomes <code>0</code>.
+                        This is the simplest way to represent negative numbers in binary. For <strong>positive</strong> numbers, the 1's complement is the same as the original binary.
+                    </div>
+                </div>
+            `;
+
             if (!isNeg) {
-                container.innerHTML = `
-                    <div style="font-size: 13px; color: var(--muted); font-family: var(--code-font);">
-                        For positive numbers ($N \ge 0$), the 1's complement is <strong>identical to True Binary</strong>:
-                        <br><strong style="color: var(--teal); font-size: 15px;">${onesInt.join('')}.${onesFrac.join('')}₂</strong>
+                html += `
+                    <div style="font-size: 13px; color: #94a3b8;">
+                        Since the number is <strong style="color: #34d399;">positive</strong>, no bit flipping is needed. The 1's complement is the same as the true binary:
+                        <div style="font-family: var(--code-font); font-size: 18px; font-weight: 800; color: #c084fc; margin-top: 8px; letter-spacing: 0.08em;">
+                            ${onesInt.join('')}<span style="color: var(--amber);">.</span>${onesFrac.join('')}₂
+                        </div>
                     </div>
                 `;
+                container.innerHTML = html;
                 return;
             }
-            let html = `
-                <div style="font-size: 13px; color: var(--text); margin-bottom: 8px;">
-                    Invert every individual bit (both integer and fractional bits) across the binary point ($0 \to 1$, $1 \to 0$):
+
+            // Build bit-by-bit inversion table
+            const allOrigBits = [...intBits, '.', ...fracBits];
+            const allFlippedBits = [...onesInt, '.', ...onesFrac];
+
+            let bitFlipRows = '';
+            for (let i = 0; i < allOrigBits.length; i++) {
+                if (allOrigBits[i] === '.') {
+                    bitFlipRows += `<td style="font-size: 18px; color: var(--amber); font-weight: 800; border: none; background: transparent;">.</td>`;
+                    continue;
+                }
+                const orig = allOrigBits[i];
+                const flipped = allFlippedBits[i];
+                bitFlipRows += `<td style="text-align: center; padding: 6px 10px;">
+                    <div style="font-size: 16px; font-weight: 700; color: ${orig === 1 ? '#34d399' : '#fb7185'};">${orig}</div>
+                    <div style="font-size: 12px; color: var(--muted);">↓</div>
+                    <div style="font-size: 16px; font-weight: 700; color: ${flipped === 1 ? '#34d399' : '#fb7185'};">${flipped}</div>
+                </td>`;
+            }
+
+            html += `
+                <div style="font-size: 13px; color: var(--text); margin-bottom: 10px;">
+                    Since <strong style="color: #fb7185;">${-1} × magnitude</strong> is negative, we flip every bit:
                 </div>
-                <div class="addition-trace-box">
+                <div style="overflow-x: auto;">
+                    <table style="border-collapse: collapse; font-family: var(--code-font); margin: 0 auto;">
+                        <tr style="font-size: 11px; color: var(--muted); text-transform: uppercase;">
+                            ${allOrigBits.map((b, i) => b === '.' ? '<td></td>' : `<td style="text-align: center; padding: 4px 10px;">Bit ${i < intBits.length ? i : i - 1}</td>`).join('')}
+                        </tr>
+                        <tr>${bitFlipRows}</tr>
+                    </table>
+                </div>
+                <div class="addition-trace-box" style="margin-top: 12px;">
                     <div class="addition-row">
                         <span class="addition-label">True Binary:</span>
                         <span class="addition-bits">${intBits.join('')}<span class="binary-point-dot">.</span>${fracBits.join('')}</span>
@@ -5512,34 +5609,61 @@
 
         function renderStep3Trace(onesInt, onesFrac, twosInt, twosFrac, isNeg, n) {
             const container = document.getElementById('compStep3Container');
+
+            let html = `
+                <div style="background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #34d399; margin-bottom: 6px;">💡 What is 2's Complement?</div>
+                    <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.6;">
+                        The <strong>2's complement</strong> is the most common way computers represent negative numbers.
+                        It's calculated by taking the <strong>1's complement and adding 1</strong> to the least significant bit (the rightmost bit).
+                        This makes binary subtraction as simple as addition!
+                        For <strong>positive</strong> numbers, the 2's complement is the same as the original binary.
+                    </div>
+                </div>
+            `;
+
             if (!isNeg) {
-                container.innerHTML = `
-                    <div style="font-size: 13px; color: var(--muted); font-family: var(--code-font);">
-                        For positive numbers ($N \ge 0$), the 2's complement is <strong>identical to True Binary</strong>:
-                        <br><strong style="color: #34d399; font-size: 15px;">${twosInt.join('')}.${twosFrac.join('')}₂</strong>
+                html += `
+                    <div style="font-size: 13px; color: #94a3b8;">
+                        Since the number is <strong style="color: #34d399;">positive</strong>, no change is needed:
+                        <div style="font-family: var(--code-font); font-size: 18px; font-weight: 800; color: #34d399; margin-top: 8px; letter-spacing: 0.08em;">
+                            ${twosInt.join('')}<span style="color: var(--amber);">.</span>${twosFrac.join('')}₂
+                        </div>
                     </div>
                 `;
+                container.innerHTML = html;
                 return;
             }
+
             const lsbVal = Math.pow(2, -n);
             const lsbBits = '0'.repeat(onesInt.length) + '.' + '0'.repeat(n - 1) + '1';
-            let html = `
-                <div style="font-size: 13px; color: var(--text); margin-bottom: 8px;">
-                    Add 1 to the Least Significant Bit (LSB $= 2^{-${n}} = ${lsbVal}$):
+
+            html += `
+                <div style="font-size: 13px; color: var(--text); margin-bottom: 6px;">
+                    <strong>Formula:</strong> 2's Complement = 1's Complement + 1 (at the rightmost bit position)
+                </div>
+                <div style="font-size: 12.5px; color: #94a3b8; margin-bottom: 12px;">
+                    The LSB (least significant bit) has a value of <strong style="color: var(--amber);">2<sup>-${n}</sup> = ${lsbVal}</strong>, so we add that:
                 </div>
                 <div class="addition-trace-box">
                     <div class="addition-row">
-                        <span class="addition-label">1's Complement:</span>
+                        <span class="addition-label" style="min-width: 160px;">1's Complement:</span>
                         <span class="addition-bits">${onesInt.join('')}<span class="binary-point-dot">.</span>${onesFrac.join('')}</span>
                     </div>
                     <div class="addition-row" style="color: var(--amber);">
-                        <span class="addition-label">+ LSB (${lsbVal}):</span>
+                        <span class="addition-label" style="min-width: 160px;">+ 1 at LSB (${lsbVal}):</span>
                         <span class="addition-bits">${lsbBits}</span>
                     </div>
                     <div class="addition-divider"></div>
                     <div class="addition-row" style="color: #34d399;">
-                        <span class="addition-label">2's Complement:</span>
-                        <span class="addition-bits">${twosInt.join('')}<span class="binary-point-dot">.</span>${twosFrac.join('')}</span>
+                        <span class="addition-label" style="min-width: 160px;">= 2's Complement:</span>
+                        <span class="addition-bits" style="font-size: 16px;">${twosInt.join('')}<span class="binary-point-dot">.</span>${twosFrac.join('')}</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 12px; padding: 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px;">
+                    <div style="font-size: 12.5px; color: #94a3b8; line-height: 1.5;">
+                        <strong style="color: #6ee7b7;">How the addition works:</strong> Start from the rightmost bit. Add 1 + the bit value. If the sum is 2, write 0 and carry 1 to the next position (just like normal addition). Keep going left until there's no more carry.
                     </div>
                 </div>
             `;
@@ -5550,12 +5674,14 @@
             const container = document.getElementById('compStep4Container');
             let sum = 0;
             const terms = [];
+            const termDetails = [];
 
             // MSB
             if (twosInt[0] === 1) {
                 const w = -Math.pow(2, m - 1);
                 sum += w;
-                terms.push(`(-2<sup>${m-1}</sup> = ${w})`);
+                terms.push(`(${w})`);
+                termDetails.push(`<tr><td style="color: #fb7185;">Sign Bit (MSB)</td><td>1</td><td>−2<sup>${m-1}</sup></td><td style="color: #fb7185; font-weight: 700;">${w}</td></tr>`);
             }
 
             // Integer bits
@@ -5563,7 +5689,8 @@
                 if (twosInt[i] === 1) {
                     const w = Math.pow(2, m - 1 - i);
                     sum += w;
-                    terms.push(`(+2<sup>${m-1-i}</sup> = +${w})`);
+                    terms.push(`(+${w})`);
+                    termDetails.push(`<tr><td>Bit ${m-1-i}</td><td>1</td><td>+2<sup>${m-1-i}</sup></td><td style="color: #34d399; font-weight: 700;">+${w}</td></tr>`);
                 }
             }
 
@@ -5572,18 +5699,36 @@
                 if (twosFrac[j] === 1) {
                     const w = Math.pow(2, -(j + 1));
                     sum += w;
-                    terms.push(`(+2<sup>-${j+1}</sup> = +${w})`);
+                    terms.push(`(+${w})`);
+                    termDetails.push(`<tr><td>Bit −${j+1}</td><td>1</td><td>+2<sup>-${j+1}</sup></td><td style="color: #34d399; font-weight: 700;">+${w}</td></tr>`);
                 }
             }
 
             let html = `
-                <div style="font-size: 13px; line-height: 1.6; color: var(--text);">
-                    Fixed-point 2's complement value formula:
-                    <br>
-                    <code style="font-size: 13.5px; color: var(--teal);">Value = -b_{${m-1}}·2^{${m-1}} + ∑_{i=0}^{${m-2}} b_i·2^i + ∑_{j=1}^{${n}} b_{-j}·2^{-j}</code>
-                    <div style="margin-top: 10px; padding: 10px; background: var(--panel-2); border-radius: 6px; border: 1px solid var(--border);">
-                        <strong>Reconstruction:</strong> ${terms.join(' ')} = <strong style="color: #34d399; font-size: 15px;">${sum}</strong>
-                        <span style="color: var(--muted); margin-left: 8px;">(Exact Match with Input: ${targetVal})</span>
+                <div style="background: rgba(56, 189, 248, 0.06); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+                    <div style="font-size: 13px; font-weight: 700; color: #38bdf8; margin-bottom: 6px;">💡 Why verify?</div>
+                    <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.6;">
+                        We can check our work by converting the 2's complement <strong>back to decimal</strong>.
+                        Each bit position has a <strong>weight</strong> (a power of 2). The <strong>sign bit (MSB) has a negative weight</strong>.
+                        Multiply each bit by its weight and add them all up — you should get the original number!
+                    </div>
+                </div>
+
+                <div style="font-size: 13px; color: var(--text); margin-bottom: 8px;">
+                    <strong>2's Complement bits:</strong> <code style="color: #34d399; font-size: 14px;">${twosInt.join('')}.${twosFrac.join('')}</code>
+                </div>
+
+                <table class="calc-table">
+                    <thead><tr><th>Position</th><th>Bit</th><th>Weight</th><th>Value (Bit × Weight)</th></tr></thead>
+                    <tbody>${termDetails.join('')}</tbody>
+                </table>
+
+                <div style="margin-top: 12px; padding: 12px; background: var(--panel-2); border-radius: 8px; border: 1px solid var(--border);">
+                    <div style="font-size: 13px; color: #94a3b8;">
+                        <strong>Sum:</strong> ${terms.join(' + ')} = <strong style="color: #34d399; font-size: 17px;">${sum}</strong>
+                        <span style="margin-left: 8px;">
+                            ${Math.abs(sum - targetVal) < 0.0001 ? '<span style="color: #34d399;">✅ Matches our input!</span>' : '<span style="color: #fb7185;">⚠️ Mismatch</span>'}
+                        </span>
                     </div>
                 </div>
             `;
@@ -5597,17 +5742,35 @@
             const inRange = val >= minVal && val <= maxVal;
 
             let html = `
-                <div style="font-size: 13px; color: var(--text);">
-                    For <strong>Q${m}.${n}</strong> (${m} integer bits, ${n} fractional bits):
-                    <div style="margin-top: 6px; font-family: var(--code-font);">
-                        • Min Value: <strong style="color: #fb7185;">${minVal}</strong> ($-2^{${m-1}}$)
-                        <br>
-                        • Max Value: <strong style="color: #34d399;">+${maxVal}</strong> ($2^{${m-1}} - 2^{-${n}}$)
-                        <br>
-                        • Resolution (LSB step): <strong>${Math.pow(2, -n)}</strong> ($2^{-${n}}$)
+                <div style="background: rgba(251, 191, 36, 0.06); border: 1px solid rgba(251, 191, 36, 0.2); border-radius: 10px; padding: 14px; margin-bottom: 14px;">
+                    <div style="font-size: 13px; font-weight: 700; color: var(--amber); margin-bottom: 6px;">💡 What is overflow?</div>
+                    <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.6;">
+                        With a fixed number of bits, there's a <strong>limited range</strong> of numbers we can represent.
+                        If our number is too large (or too negative) to fit, that's called <strong>overflow</strong>.
+                        More bits = bigger range.
                     </div>
-                    <div style="margin-top: 8px;">
-                        Status: ${inRange ? '<span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border-color: #34d399;">✓ Fits inside range without overflow</span>' : '<span class="badge" style="background: rgba(244, 63, 94, 0.2); color: #fb7185; border-color: #fb7185;">⚠️ Out of Range: Integer bit width $m$ must be increased!</span>'}
+                </div>
+
+                <div style="font-size: 13px; color: var(--text);">
+                    Using <strong>Q${m}.${n}</strong> format (${m} integer bits + ${n} fractional bits = ${m + n} total bits):
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+                        <div style="background: var(--panel-2); padding: 12px; border-radius: 8px; border: 1px solid var(--border); text-align: center;">
+                            <div style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em;">Smallest Number</div>
+                            <div style="font-family: var(--code-font); font-size: 18px; font-weight: 700; color: #fb7185; margin-top: 4px;">${minVal}</div>
+                        </div>
+                        <div style="background: var(--panel-2); padding: 12px; border-radius: 8px; border: 1px solid var(--border); text-align: center;">
+                            <div style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em;">Largest Number</div>
+                            <div style="font-family: var(--code-font); font-size: 18px; font-weight: 700; color: #34d399; margin-top: 4px;">+${maxVal}</div>
+                        </div>
+                        <div style="background: var(--panel-2); padding: 12px; border-radius: 8px; border: 1px solid var(--border); text-align: center;">
+                            <div style="font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em;">Smallest Step</div>
+                            <div style="font-family: var(--code-font); font-size: 18px; font-weight: 700; color: var(--amber); margin-top: 4px;">${Math.pow(2, -n)}</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 12px; padding: 10px 14px; border-radius: 8px; ${inRange ? 'background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);' : 'background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3);'}">
+                        <span style="font-size: 13px; font-weight: 600; color: ${inRange ? '#34d399' : '#fb7185'};">
+                            ${inRange ? '✅ No overflow — the number fits within the range!' : '⚠️ Overflow! The number is outside the representable range. Increase integer bits.'}
+                        </span>
                     </div>
                 </div>
             `;
