@@ -1944,6 +1944,251 @@
             font-weight: 600;
             border: 1px solid var(--border-highlight);
         }
+
+        /* ═════════════════════════════════════════════════════════════════ */
+        /* 1'S & 2'S COMPLEMENT CALCULATOR STYLES                           */
+        /* ═════════════════════════════════════════════════════════════════ */
+        .tab-btn.active-comp {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(147, 51, 234, 0.08) 100%);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.45);
+            box-shadow: 0 4px 14px rgba(168, 85, 247, 0.22), inset 0 1px 0 rgba(168, 85, 247, 0.35);
+            font-weight: 700;
+        }
+
+        .comp-dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .comp-card {
+            background: var(--panel-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .comp-card:hover {
+            border-color: var(--border-highlight);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .comp-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .comp-card-title {
+            font-family: var(--code-font);
+            font-size: 11.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+        }
+
+        .comp-card-val {
+            font-family: var(--code-font);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+            word-break: break-all;
+        }
+
+        .comp-card-val.teal { color: var(--teal); }
+        .comp-card-val.amber { color: var(--amber); }
+        .comp-card-val.purple { color: #c084fc; }
+        .comp-card-val.emerald { color: #34d399; }
+        .comp-card-val.rose { color: #fb7185; }
+
+        .comp-card-sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 6px;
+            font-family: var(--code-font);
+        }
+
+        /* Bit Array Visualizer */
+        .bit-array-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            padding: 14px;
+            background: #0d1117;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin: 12px 0;
+            overflow-x: auto;
+        }
+
+        .bit-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--panel-2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 8px;
+            min-width: 44px;
+            transition: all 0.2s ease;
+        }
+
+        .bit-cell.is-sign {
+            border-color: #f43f5e;
+            background: rgba(244, 63, 94, 0.12);
+        }
+
+        .bit-cell.is-frac {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.08);
+        }
+
+        .bit-cell.is-point {
+            background: transparent;
+            border: none;
+            min-width: 14px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--amber);
+            justify-content: center;
+        }
+
+        .bit-val {
+            font-family: var(--code-font);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .bit-cell.is-sign .bit-val { color: #fb7185; }
+        .bit-cell.is-frac .bit-val { color: #c084fc; }
+
+        .bit-weight {
+            font-family: var(--code-font);
+            font-size: 9.5px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+
+        .bit-tag {
+            font-family: var(--code-font);
+            font-size: 8.5px;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        /* Step trace accordion & tables */
+        .step-trace-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin-bottom: 16px;
+        }
+
+        .step-trace-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .step-num-badge {
+            background: rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: var(--code-font);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .calc-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--code-font);
+            font-size: 12px;
+            margin: 10px 0;
+        }
+
+        .calc-table th {
+            text-align: left;
+            padding: 8px 12px;
+            background: var(--panel-2);
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .calc-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text);
+        }
+
+        .calc-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .bit-highlight-0 { color: #ef4444; font-weight: 700; }
+        .bit-highlight-1 { color: #10b981; font-weight: 700; }
+
+        .binary-point-dot {
+            color: var(--amber);
+            font-weight: 800;
+            padding: 0 1px;
+        }
+
+        .addition-trace-box {
+            background: #090c10;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-family: var(--code-font);
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text);
+            overflow-x: auto;
+        }
+
+        .addition-row {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .addition-label {
+            color: var(--muted);
+            font-size: 12px;
+            min-width: 140px;
+        }
+
+        .addition-bits {
+            letter-spacing: 0.18em;
+            font-weight: 700;
+        }
+
+        .addition-divider {
+            height: 1px;
+            background: var(--border-highlight);
+            margin: 6px 0;
+        }
+
     </style>
 </head>
 
@@ -1961,6 +2206,9 @@
                 </button>
                 <button class="tab-btn" id="tabBtnMatrix" onclick="switchTab('matrix')">
                     <span class="tab-icon">🔢</span> Matrix Multiplication
+                </button>
+                <button class="tab-btn" id="tabBtnComplement" onclick="switchTab('complement')">
+                    <span class="tab-icon">⚡</span> 1's & 2's Complement
                 </button>
             </div>
         </div>
@@ -2410,21 +2658,230 @@
         </div>
     </div>
 
+
+        <!-- ========================================================================= -->
+        <!-- TAB 3: 1'S AND 2'S COMPLEMENT CALCULATOR FOR RATIONAL NUMBERS -->
+        <!-- ========================================================================= -->
+        <div id="paneComplement" class="tab-pane">
+            <div class="eyebrow" style="color: #c084fc;">// Digital Logic & Fixed-Point Arithmetic</div>
+            <h1>1's & 2's Complement Calculator — All Rational Numbers</h1>
+            <div class="sub">
+                Compute 1's complement (diminished radix) and 2's complement (radix complement) for 
+                <code>Decimal Integers</code>, <code>Fractions (e.g. -15/4)</code>, <code>Decimal Floats (e.g. -13.625)</code>, 
+                and <code>Binary Fixed-Point Numbers</code> with step-by-step mathematical proofs.
+            </div>
+
+            <!-- Input & Configuration Panel -->
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Rational Number & Word Format Setup</span>
+                    <span class="badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border-color: rgba(168, 85, 247, 0.4);">
+                        Fixed-Point Precision
+                    </span>
+                </div>
+
+                <div class="kmap-config-grid">
+                    <div class="config-block">
+                        <label>Integer Word Length ($m$ bits)</label>
+                        <div class="pill-group">
+                            <button id="btnIntBitsAuto" class="active teal-mode" onclick="setCompIntBits('auto')">Auto-Fit</button>
+                            <button id="btnIntBits4" onclick="setCompIntBits(4)">4-Bit</button>
+                            <button id="btnIntBits8" onclick="setCompIntBits(8)">8-Bit</button>
+                            <button id="btnIntBits16" onclick="setCompIntBits(16)">16-Bit</button>
+                        </div>
+                    </div>
+
+                    <div class="config-block">
+                        <label>Fractional Precision ($n$ bits)</label>
+                        <div class="pill-group">
+                            <button id="btnFracBitsAuto" class="active teal-mode" onclick="setCompFracBits('auto')">Auto-Fit</button>
+                            <button id="btnFracBits2" onclick="setCompFracBits(2)">2-Bit</button>
+                            <button id="btnFracBits4" onclick="setCompFracBits(4)">4-Bit</button>
+                            <button id="btnFracBits8" onclick="setCompFracBits(8)">8-Bit</button>
+                            <button id="btnFracBits12" onclick="setCompFracBits(12)">12-Bit</button>
+                        </div>
+                    </div>
+
+                    <div class="config-block">
+                        <label>Display Radix Format</label>
+                        <div class="pill-group">
+                            <button id="btnRadixSepPoint" class="active" onclick="setCompRadixDisplay('point')">Radix Point (.)</button>
+                            <button id="btnRadixSepQ" onclick="setCompRadixDisplay('q')">Q-Notation (Qm.n)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Row -->
+                <div class="config-block" style="margin-top: 14px;">
+                    <label>Rational Number Input (Decimal, Fraction, or Binary)</label>
+                    <div class="expr-input-row">
+                        <div class="expr-input-wrap">
+                            <span class="expr-input-icon">N =</span>
+                            <input type="text" id="compInputVal" placeholder="e.g. -13.625, +25.75, -15/4, 7/8, or -1101.101b" value="-13.625" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter') calculateComplement();">
+                        </div>
+                        <button class="primary" style="background: linear-gradient(135deg, #a855f7 0%, #7e22ce 100%); border-color: #c084fc; color: #fff;" onclick="calculateComplement()">
+                            <span>⚡</span> Calculate Complements
+                        </button>
+                    </div>
+
+                    <div class="expr-presets">
+                        <span class="expr-presets-label">Presets:</span>
+                        <span class="preset-chip" onclick="loadCompPreset('-13.625')">-13.625</span>
+                        <span class="preset-chip" onclick="loadCompPreset('+25.375')">+25.375</span>
+                        <span class="preset-chip" onclick="loadCompPreset('-15/4')">-15/4 (-3.75)</span>
+                        <span class="preset-chip" onclick="loadCompPreset('-7/8')">-7/8 (-0.875)</span>
+                        <span class="preset-chip" onclick="loadCompPreset('-0.125')">-0.125</span>
+                        <span class="preset-chip" onclick="loadCompPreset('-128.5')">-128.5</span>
+                        <span class="preset-chip" onclick="loadCompPreset('+42.625')">+42.625</span>
+                        <span class="preset-chip" onclick="loadCompPreset('-1101.101b')">-1101.101₂</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Complements Result Dashboard -->
+            <div class="comp-dashboard-grid" id="compDashboard">
+                <div class="comp-card">
+                    <div class="comp-card-header">
+                        <span class="comp-card-title">1. Normalized Decimal</span>
+                        <span class="badge" id="compSignBadge">Negative (−)</span>
+                    </div>
+                    <div class="comp-card-val teal" id="compResDec">-13.625</div>
+                    <div class="comp-card-sub" id="compResFraction">= -109 / 8 (Rational)</div>
+                </div>
+
+                <div class="comp-card">
+                    <div class="comp-card-header">
+                        <span class="comp-card-title">2. True Binary (Magnitude)</span>
+                        <span class="badge">Sign-Magnitude</span>
+                    </div>
+                    <div class="comp-card-val amber" id="compResTrueBin">01101.1010</div>
+                    <div class="comp-card-sub" id="compResQFormat">Q5.4 Format (9 total bits)</div>
+                </div>
+
+                <div class="comp-card">
+                    <div class="comp-card-header">
+                        <span class="comp-card-title">3. 1's Complement</span>
+                        <span class="badge">Diminished Radix</span>
+                    </div>
+                    <div class="comp-card-val purple" id="compRes1s">10010.0101</div>
+                    <div class="comp-card-sub">Invert all bits across binary point</div>
+                </div>
+
+                <div class="comp-card" style="border-color: rgba(52, 211, 153, 0.4); background: rgba(6, 78, 59, 0.15);">
+                    <div class="comp-card-header">
+                        <span class="comp-card-title" style="color: #6ee7b7;">4. 2's Complement</span>
+                        <span class="badge" style="background: rgba(16, 185, 129, 0.25); color: #34d399; border-color: #34d399;">Radix Complement</span>
+                    </div>
+                    <div class="comp-card-val emerald" id="compRes2s">10010.0110</div>
+                    <div class="comp-card-sub" id="compResLsbAdd">1's Complement + LSB (2⁻⁴ = 0.0001₂)</div>
+                </div>
+            </div>
+
+            <!-- Bit-Level Interactive Visualizer -->
+            <div class="step-trace-card">
+                <div class="step-trace-title">
+                    <span class="step-num-badge">VISUAL BITS</span>
+                    <span>Interactive Fixed-Point 2's Complement Bit Matrix</span>
+                </div>
+                <div style="font-size: 12.5px; color: var(--muted); margin-bottom: 8px;">
+                    Positional weights: MSB has negative weight <strong style="color: #fb7185;" id="compMsbWeightText">-2⁴ (-16)</strong>, fractional bits have negative power weights (<strong style="color: #c084fc;">2⁻¹, 2⁻², ...</strong>).
+                </div>
+
+                <div class="bit-array-container" id="compBitArray"></div>
+
+                <div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 11.5px; font-family: var(--code-font); color: var(--muted); margin-top: 8px;">
+                    <span><span style="color: #fb7185;">■</span> Red: Sign Bit (MSB)</span>
+                    <span><span style="color: var(--teal);">■</span> Teal: Integer Bits</span>
+                    <span><span style="color: var(--amber);">■</span> Amber: Radix Point</span>
+                    <span><span style="color: #c084fc;">■</span> Purple: Fractional Bits</span>
+                </div>
+            </div>
+
+            <!-- Step-by-Step Mathematical Computation Trace -->
+            <div class="step-trace-card">
+                <div class="step-trace-title">
+                    <span class="step-num-badge">STEP 1</span>
+                    <span>Decimal to Binary Fixed-Point Conversion</span>
+                </div>
+                <div id="compStep1Container"></div>
+            </div>
+
+            <div class="step-trace-card">
+                <div class="step-trace-title">
+                    <span class="step-num-badge">STEP 2</span>
+                    <span>1's Complement Bit Inversion</span>
+                </div>
+                <div id="compStep2Container"></div>
+            </div>
+
+            <div class="step-trace-card">
+                <div class="step-trace-title">
+                    <span class="step-num-badge">STEP 3</span>
+                    <span>2's Complement Calculation (Addition of LSB: $+2^{-n}$)</span>
+                </div>
+                <div id="compStep3Container"></div>
+            </div>
+
+            <div class="step-trace-card">
+                <div class="step-trace-title">
+                    <span class="step-num-badge">STEP 4</span>
+                    <span>Positional Weight Verification Proof</span>
+                </div>
+                <div id="compStep4Container"></div>
+            </div>
+
+            <div class="step-trace-card">
+                <div class="step-trace-title">
+                    <span class="step-num-badge">STEP 5</span>
+                    <span>Dynamic Fixed-Point Range & Overflow Validation</span>
+                </div>
+                <div id="compStep5Container"></div>
+            </div>
+
+            <!-- 2's Complement Rational Arithmetic Section -->
+            <div class="panel" style="margin-top: 20px;">
+                <div class="panel-title">
+                    <span>2's Complement Rational Arithmetic (Addition & Subtraction)</span>
+                    <span class="badge" style="background: rgba(45, 212, 191, 0.15); color: var(--teal);">Binary ALU Trace</span>
+                </div>
+                <div class="kmap-config-grid" style="grid-template-columns: 1fr 1fr auto; align-items: end; gap: 12px;">
+                    <div>
+                        <label>Operand A</label>
+                        <input type="text" id="arithInputA" value="-13.625" style="width: 100%; font-family: var(--code-font); padding: 8px 12px; border-radius: 6px; background: var(--panel-2); border: 1px solid var(--border); color: var(--text);">
+                    </div>
+                    <div>
+                        <label>Operand B</label>
+                        <input type="text" id="arithInputB" value="+7.25" style="width: 100%; font-family: var(--code-font); padding: 8px 12px; border-radius: 6px; background: var(--panel-2); border: 1px solid var(--border); color: var(--text);">
+                    </div>
+                    <div style="display: flex; gap: 6px;">
+                        <button class="primary" onclick="calculateCompArithmetic('add')">A + B</button>
+                        <button class="secondary" onclick="calculateCompArithmetic('sub')">A − B</button>
+                    </div>
+                </div>
+                <div id="arithResultBox" style="margin-top: 14px;"></div>
+            </div>
+        </div>
+
+
     <!-- ========================================================================= -->
     <!-- JAVASCRIPT LOGIC ENGINE -->
     <!-- ========================================================================= -->
     <script>
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'active-matrix'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'active-matrix', 'active-comp'));
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
 
             if (tabId === 'kmap') {
-                document.getElementById('tabBtnKmap').classList.add('active');
-                document.getElementById('paneKmap').classList.add('active');
+                document.getElementById('tabBtnKmap')?.classList.add('active');
+                document.getElementById('paneKmap')?.classList.add('active');
                 renderKMap();
             } else if (tabId === 'matrix') {
-                document.getElementById('tabBtnMatrix').classList.add('active', 'active-matrix');
-                document.getElementById('paneMatrix').classList.add('active');
+                document.getElementById('tabBtnMatrix')?.classList.add('active', 'active-matrix');
+                document.getElementById('paneMatrix')?.classList.add('active');
+            } else if (tabId === 'complement') {
+                document.getElementById('tabBtnComplement')?.classList.add('active', 'active-comp');
+                document.getElementById('paneComplement')?.classList.add('active');
+                calculateComplement();
             }
         }
 
@@ -4643,5 +5100,455 @@
                 prompt('Copy Logic Circuit SVG:', svgData);
             });
         }
+    
+        // =========================================================================
+        // 1'S & 2'S COMPLEMENT RATIONAL NUMBER CALCULATOR ENGINE
+        // =========================================================================
+        let compIntBitsConfig = 'auto';
+        let compFracBitsConfig = 'auto';
+        let compRadixDisplay = 'point';
+
+        function setCompIntBits(bits) {
+            compIntBitsConfig = bits;
+            ['auto', 4, 8, 16].forEach(b => {
+                const el = document.getElementById(`btnIntBits${b === 'auto' ? 'Auto' : b}`);
+                if (el) el.className = (bits === b) ? 'active teal-mode' : '';
+            });
+            calculateComplement();
+        }
+
+        function setCompFracBits(bits) {
+            compFracBitsConfig = bits;
+            ['auto', 2, 4, 8, 12].forEach(b => {
+                const el = document.getElementById(`btnFracBits${b === 'auto' ? 'Auto' : b}`);
+                if (el) el.className = (bits === b) ? 'active teal-mode' : '';
+            });
+            calculateComplement();
+        }
+
+        function setCompRadixDisplay(mode) {
+            compRadixDisplay = mode;
+            document.getElementById('btnRadixSepPoint')?.classList.toggle('active', mode === 'point');
+            document.getElementById('btnRadixSepQ')?.classList.toggle('active', mode === 'q');
+            calculateComplement();
+        }
+
+        function loadCompPreset(val) {
+            const input = document.getElementById('compInputVal');
+            if (input) input.value = val;
+            calculateComplement();
+        }
+
+        function parseRationalInput(str) {
+            str = str.trim();
+            let isNegative = false;
+            if (str.startsWith('-')) {
+                isNegative = true;
+                str = str.slice(1).trim();
+            } else if (str.startsWith('+')) {
+                str = str.slice(1).trim();
+            }
+
+            // Binary input: e.g. 1101.101b or 1101.101_2
+            if (str.endsWith('b') || str.endsWith('_2')) {
+                const binStr = str.replace(/[b_2]/g, '');
+                const parts = binStr.split('.');
+                const intPart = parseInt(parts[0] || '0', 2);
+                let fracPart = 0;
+                if (parts[1]) {
+                    for (let i = 0; i < parts[1].length; i++) {
+                        if (parts[1][i] === '1') fracPart += Math.pow(2, -(i + 1));
+                    }
+                }
+                const decVal = (intPart + fracPart) * (isNegative ? -1 : 1);
+                return { value: decVal, isNegative, raw: str, isBinary: true, rawBin: binStr };
+            }
+
+            // Fraction input: e.g. 15/4
+            if (str.includes('/')) {
+                const parts = str.split('/');
+                const num = parseFloat(parts[0]);
+                const den = parseFloat(parts[1]);
+                if (den !== 0 && !isNaN(num) && !isNaN(den)) {
+                    const decVal = (num / den) * (isNegative ? -1 : 1);
+                    return { value: decVal, isNegative, raw: str, isFraction: true, num, den };
+                }
+            }
+
+            // Standard decimal float/integer
+            const decVal = parseFloat(str) * (isNegative ? -1 : 1);
+            if (isNaN(decVal)) return null;
+            return { value: decVal, isNegative, raw: str };
+        }
+
+        function calculateComplement() {
+            const inputEl = document.getElementById('compInputVal');
+            if (!inputEl) return;
+            const parsed = parseRationalInput(inputEl.value);
+            if (!parsed) {
+                alert("Please enter a valid rational number (e.g. -13.625, -15/4, 7/8, or -1101.101b)");
+                return;
+            }
+
+            const num = parsed.value;
+            const isNeg = num < 0;
+            const absNum = Math.abs(num);
+            const intPart = Math.floor(absNum);
+            const fracPart = absNum - intPart;
+
+            // 1. Determine Integer Bit Width (m)
+            let m = 5; // Default minimum
+            if (compIntBitsConfig === 'auto') {
+                const minBits = Math.ceil(Math.log2(intPart + 1)) + 1; // +1 for sign bit
+                m = Math.max(4, Math.min(16, minBits));
+            } else {
+                m = parseInt(compIntBitsConfig);
+            }
+
+            // 2. Determine Fractional Bit Precision (n)
+            let n = 4;
+            if (compFracBitsConfig === 'auto') {
+                let tempFrac = fracPart;
+                let count = 0;
+                while (tempFrac > 1e-6 && count < 8) {
+                    tempFrac = (tempFrac * 2) - Math.floor(tempFrac * 2);
+                    count++;
+                }
+                n = Math.max(2, Math.min(12, count === 0 ? 2 : count));
+            } else {
+                n = parseInt(compFracBitsConfig);
+            }
+
+            // 3. Convert Magnitude to Binary Fixed-Point Array
+            const intBits = [];
+            let tempInt = intPart;
+            for (let i = 0; i < m - 1; i++) {
+                intBits.unshift(tempInt % 2);
+                tempInt = Math.floor(tempInt / 2);
+            }
+            intBits.unshift(0); // Sign bit for positive magnitude
+
+            const fracBits = [];
+            let tempFrac = fracPart;
+            const fracSteps = [];
+            for (let i = 0; i < n; i++) {
+                const prod = tempFrac * 2;
+                const bit = Math.floor(prod);
+                fracSteps.push({ iter: i + 1, frac: tempFrac, prod, bit, rem: prod - bit });
+                fracBits.push(bit);
+                tempFrac = prod - bit;
+            }
+
+            // 4. Compute 1's Complement
+            let onesIntBits = intBits.slice();
+            let onesFracBits = fracBits.slice();
+
+            if (isNeg) {
+                onesIntBits = intBits.map(b => 1 - b);
+                onesFracBits = fracBits.map(b => 1 - b);
+            }
+
+            // 5. Compute 2's Complement (Add 1 to LSB of 1's complement)
+            let twosIntBits = onesIntBits.slice();
+            let twosFracBits = onesFracBits.slice();
+            let carryTrace = [];
+
+            if (isNeg) {
+                let carry = 1; // Adding 1 to LSB
+                for (let i = n - 1; i >= 0; i--) {
+                    const sum = onesFracBits[i] + carry;
+                    twosFracBits[i] = sum % 2;
+                    carry = Math.floor(sum / 2);
+                    carryTrace.unshift({ pos: `2⁻${i+1}`, orig: onesFracBits[i], carryIn: carry, res: twosFracBits[i] });
+                }
+                for (let i = m - 1; i >= 0; i--) {
+                    const sum = onesIntBits[i] + carry;
+                    twosIntBits[i] = sum % 2;
+                    carry = Math.floor(sum / 2);
+                    carryTrace.unshift({ pos: `2${i === 0 ? ' (Sign)' : i}`, orig: onesIntBits[i], carryIn: carry, res: twosIntBits[i] });
+                }
+            }
+
+            // 6. Format Strings
+            const trueBinStr = intBits.join('') + '.' + fracBits.join('');
+            const onesStr = onesIntBits.join('') + '.' + onesFracBits.join('');
+            const twosStr = twosIntBits.join('') + '.' + twosFracBits.join('');
+
+            // Update Summary Cards
+            document.getElementById('compResDec').textContent = num.toString();
+            document.getElementById('compSignBadge').textContent = isNeg ? 'Negative (−)' : 'Positive (+)';
+            document.getElementById('compSignBadge').style.borderColor = isNeg ? '#f43f5e' : '#10b981';
+            document.getElementById('compSignBadge').style.color = isNeg ? '#fb7185' : '#34d399';
+
+            document.getElementById('compResFraction').textContent = `= ${toFractionString(num)}`;
+            document.getElementById('compResTrueBin').textContent = trueBinStr;
+            document.getElementById('compResQFormat').textContent = `Q${m}.${n} Format (${m + n} Total Bits)`;
+
+            document.getElementById('compRes1s').textContent = onesStr;
+            document.getElementById('compRes2s').textContent = twosStr;
+            document.getElementById('compResLsbAdd').textContent = isNeg ? `1's Comp + LSB (2⁻${n} = ${Math.pow(2, -n)})` : "Positive number: 2's Comp = True Binary";
+
+            // 7. Render Interactive Bit Matrix
+            renderBitMatrix(twosIntBits, twosFracBits, m, n, isNeg);
+
+            // 8. Render Step-by-Step Educational Proofs
+            renderStep1Trace(intPart, fracSteps, m, n, intBits, fracBits);
+            renderStep2Trace(intBits, fracBits, onesIntBits, onesFracBits, isNeg);
+            renderStep3Trace(onesIntBits, onesFracBits, twosIntBits, twosFracBits, isNeg, n);
+            renderStep4Trace(twosIntBits, twosFracBits, m, n, num);
+            renderStep5Trace(m, n, num);
+        }
+
+        function toFractionString(val) {
+            if (Number.isInteger(val)) return `${val} / 1`;
+            const tolerance = 1.0E-6;
+            let h1 = 1, h2 = 0, k1 = 0, k2 = 1;
+            let b = val;
+            do {
+                const a = Math.floor(b);
+                let aux = h1; h1 = a * h1 + h2; h2 = aux;
+                aux = k1; k1 = a * k1 + k2; k2 = aux;
+                b = 1 / (b - a);
+            } while (Math.abs(val - h1 / k1) > val * tolerance);
+            return `${h1} / ${k1}`;
+        }
+
+        function renderBitMatrix(intBits, fracBits, m, n, isNeg) {
+            const container = document.getElementById('compBitArray');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // MSB (Sign Bit)
+            const msbCell = document.createElement('div');
+            msbCell.className = 'bit-cell is-sign';
+            msbCell.innerHTML = `
+                <span class="bit-tag">Sign (MSB)</span>
+                <span class="bit-val">${intBits[0]}</span>
+                <span class="bit-weight">-2<sup>${m-1}</sup> (-${Math.pow(2, m-1)})</span>
+            `;
+            container.appendChild(msbCell);
+
+            // Remaining Integer Bits
+            for (let i = 1; i < m; i++) {
+                const power = m - 1 - i;
+                const cell = document.createElement('div');
+                cell.className = 'bit-cell';
+                cell.innerHTML = `
+                    <span class="bit-tag">b${power}</span>
+                    <span class="bit-val">${intBits[i]}</span>
+                    <span class="bit-weight">+2<sup>${power}</sup> (${Math.pow(2, power)})</span>
+                `;
+                container.appendChild(cell);
+            }
+
+            // Radix Point
+            const pointCell = document.createElement('div');
+            pointCell.className = 'bit-cell is-point';
+            pointCell.innerHTML = `<span>.</span>`;
+            container.appendChild(pointCell);
+
+            // Fractional Bits
+            for (let j = 0; j < n; j++) {
+                const power = j + 1;
+                const cell = document.createElement('div');
+                cell.className = 'bit-cell is-frac';
+                cell.innerHTML = `
+                    <span class="bit-tag">b-${power}</span>
+                    <span class="bit-val">${fracBits[j]}</span>
+                    <span class="bit-weight">2<sup>-${power}</sup> (${Math.pow(2, -power)})</span>
+                `;
+                container.appendChild(cell);
+            }
+
+            document.getElementById('compMsbWeightText').textContent = `-2^${m-1} (-${Math.pow(2, m-1)})`;
+        }
+
+        function renderStep1Trace(intPart, fracSteps, m, n, intBits, fracBits) {
+            const container = document.getElementById('compStep1Container');
+            let html = `
+                <div style="margin-bottom: 10px; font-size: 13px; color: var(--text);">
+                    <strong>A. Integer Part (${intPart}):</strong> Successive division by 2 yields binary integer:
+                    <code>${intBits.slice(1).join('')}₂</code> (padded with sign bit to <code>${intBits.join('')}₂</code>).
+                </div>
+                <div style="margin-bottom: 10px; font-size: 13px; color: var(--text);">
+                    <strong>B. Fractional Part:</strong> Successive multiplication by 2 table:
+                </div>
+                <table class="calc-table">
+                    <thead>
+                        <tr><th>Step</th><th>Fraction × 2</th><th>Product</th><th>Integer Bit (Extracted)</th><th>Remaining Fraction</th></tr>
+                    </thead>
+                    <tbody>
+            `;
+            fracSteps.forEach(s => {
+                html += `<tr>
+                    <td>${s.iter}</td>
+                    <td>${s.frac.toFixed(4)} × 2</td>
+                    <td>${s.prod.toFixed(4)}</td>
+                    <td><strong class="bit-highlight-${s.bit}">${s.bit}</strong></td>
+                    <td>${s.rem.toFixed(4)}</td>
+                </tr>`;
+            });
+            html += `
+                    </tbody>
+                </table>
+                <div style="margin-top: 8px; font-family: var(--code-font); font-size: 13px; color: var(--teal);">
+                    ➜ True Magnitude Binary: <strong>${intBits.join('')}.${fracBits.join('')}₂</strong>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderStep2Trace(intBits, fracBits, onesInt, onesFrac, isNeg) {
+            const container = document.getElementById('compStep2Container');
+            if (!isNeg) {
+                container.innerHTML = `
+                    <div style="font-size: 13px; color: var(--muted); font-family: var(--code-font);">
+                        For positive numbers ($N \ge 0$), the 1's complement is <strong>identical to True Binary</strong>:
+                        <br><strong style="color: var(--teal); font-size: 15px;">${onesInt.join('')}.${onesFrac.join('')}₂</strong>
+                    </div>
+                `;
+                return;
+            }
+            let html = `
+                <div style="font-size: 13px; color: var(--text); margin-bottom: 8px;">
+                    Invert every individual bit (both integer and fractional bits) across the binary point ($0 \to 1$, $1 \to 0$):
+                </div>
+                <div class="addition-trace-box">
+                    <div class="addition-row">
+                        <span class="addition-label">True Binary:</span>
+                        <span class="addition-bits">${intBits.join('')}<span class="binary-point-dot">.</span>${fracBits.join('')}</span>
+                    </div>
+                    <div class="addition-row" style="color: #c084fc;">
+                        <span class="addition-label">1's Complement:</span>
+                        <span class="addition-bits">${onesInt.join('')}<span class="binary-point-dot">.</span>${onesFrac.join('')}</span>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderStep3Trace(onesInt, onesFrac, twosInt, twosFrac, isNeg, n) {
+            const container = document.getElementById('compStep3Container');
+            if (!isNeg) {
+                container.innerHTML = `
+                    <div style="font-size: 13px; color: var(--muted); font-family: var(--code-font);">
+                        For positive numbers ($N \ge 0$), the 2's complement is <strong>identical to True Binary</strong>:
+                        <br><strong style="color: #34d399; font-size: 15px;">${twosInt.join('')}.${twosFrac.join('')}₂</strong>
+                    </div>
+                `;
+                return;
+            }
+            const lsbVal = Math.pow(2, -n);
+            const lsbBits = '0'.repeat(onesInt.length) + '.' + '0'.repeat(n - 1) + '1';
+            let html = `
+                <div style="font-size: 13px; color: var(--text); margin-bottom: 8px;">
+                    Add 1 to the Least Significant Bit (LSB $= 2^{-${n}} = ${lsbVal}$):
+                </div>
+                <div class="addition-trace-box">
+                    <div class="addition-row">
+                        <span class="addition-label">1's Complement:</span>
+                        <span class="addition-bits">${onesInt.join('')}<span class="binary-point-dot">.</span>${onesFrac.join('')}</span>
+                    </div>
+                    <div class="addition-row" style="color: var(--amber);">
+                        <span class="addition-label">+ LSB (${lsbVal}):</span>
+                        <span class="addition-bits">${lsbBits}</span>
+                    </div>
+                    <div class="addition-divider"></div>
+                    <div class="addition-row" style="color: #34d399;">
+                        <span class="addition-label">2's Complement:</span>
+                        <span class="addition-bits">${twosInt.join('')}<span class="binary-point-dot">.</span>${twosFrac.join('')}</span>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderStep4Trace(twosInt, twosFrac, m, n, targetVal) {
+            const container = document.getElementById('compStep4Container');
+            let sum = 0;
+            const terms = [];
+
+            // MSB
+            if (twosInt[0] === 1) {
+                const w = -Math.pow(2, m - 1);
+                sum += w;
+                terms.push(`(-2<sup>${m-1}</sup> = ${w})`);
+            }
+
+            // Integer bits
+            for (let i = 1; i < m; i++) {
+                if (twosInt[i] === 1) {
+                    const w = Math.pow(2, m - 1 - i);
+                    sum += w;
+                    terms.push(`(+2<sup>${m-1-i}</sup> = +${w})`);
+                }
+            }
+
+            // Fractional bits
+            for (let j = 0; j < n; j++) {
+                if (twosFrac[j] === 1) {
+                    const w = Math.pow(2, -(j + 1));
+                    sum += w;
+                    terms.push(`(+2<sup>-${j+1}</sup> = +${w})`);
+                }
+            }
+
+            let html = `
+                <div style="font-size: 13px; line-height: 1.6; color: var(--text);">
+                    Fixed-point 2's complement value formula:
+                    <br>
+                    <code style="font-size: 13.5px; color: var(--teal);">Value = -b_{${m-1}}·2^{${m-1}} + ∑_{i=0}^{${m-2}} b_i·2^i + ∑_{j=1}^{${n}} b_{-j}·2^{-j}</code>
+                    <div style="margin-top: 10px; padding: 10px; background: var(--panel-2); border-radius: 6px; border: 1px solid var(--border);">
+                        <strong>Reconstruction:</strong> ${terms.join(' ')} = <strong style="color: #34d399; font-size: 15px;">${sum}</strong>
+                        <span style="color: var(--muted); margin-left: 8px;">(Exact Match with Input: ${targetVal})</span>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderStep5Trace(m, n, val) {
+            const container = document.getElementById('compStep5Container');
+            const minVal = -Math.pow(2, m - 1);
+            const maxVal = Math.pow(2, m - 1) - Math.pow(2, -n);
+            const inRange = val >= minVal && val <= maxVal;
+
+            let html = `
+                <div style="font-size: 13px; color: var(--text);">
+                    For <strong>Q${m}.${n}</strong> (${m} integer bits, ${n} fractional bits):
+                    <div style="margin-top: 6px; font-family: var(--code-font);">
+                        • Min Value: <strong style="color: #fb7185;">${minVal}</strong> ($-2^{${m-1}}$)
+                        <br>
+                        • Max Value: <strong style="color: #34d399;">+${maxVal}</strong> ($2^{${m-1}} - 2^{-${n}}$)
+                        <br>
+                        • Resolution (LSB step): <strong>${Math.pow(2, -n)}</strong> ($2^{-${n}}$)
+                    </div>
+                    <div style="margin-top: 8px;">
+                        Status: ${inRange ? '<span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #34d399; border-color: #34d399;">✓ Fits inside range without overflow</span>' : '<span class="badge" style="background: rgba(244, 63, 94, 0.2); color: #fb7185; border-color: #fb7185;">⚠️ Out of Range: Integer bit width $m$ must be increased!</span>'}
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function calculateCompArithmetic(op) {
+            const valA = parseFloat(document.getElementById('arithInputA')?.value || '0');
+            const valB = parseFloat(document.getElementById('arithInputB')?.value || '0');
+            const res = (op === 'add') ? (valA + valB) : (valA - valB);
+            const box = document.getElementById('arithResultBox');
+            if (!box) return;
+
+            box.innerHTML = `
+                <div style="background: #0d1117; border: 1px solid var(--border); border-radius: 8px; padding: 14px;">
+                    <div style="font-size: 14px; font-weight: 700; color: var(--teal); margin-bottom: 8px;">
+                        Arithmetic Result: ${valA} ${op === 'add' ? '+' : '−'} (${valB}) = <span style="color: #34d399;">${res}</span>
+                    </div>
+                    <div style="font-size: 12px; color: var(--muted); font-family: var(--code-font);">
+                        Fraction Representation: <strong>${toFractionString(res)}</strong>
+                    </div>
+                </div>
+            `;
+        }
+
     </script>
 </body>
