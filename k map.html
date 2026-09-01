@@ -1556,9 +1556,10 @@
         }
 
         .input-pin-toggle.val-0 .val-pill {
-            background: rgba(116, 128, 150, 0.2);
-            color: var(--muted);
-            border: 1px solid var(--border);
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.45);
         }
 
         .input-pin-toggle.val-1 .val-pill {
@@ -1675,20 +1676,47 @@
             transition: stroke 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
         }
 
+        /* ⚡ ANIMATED SIGNAL FLOW: RED for 0 (LOW), GREEN for 1 (HIGH) */
+        @keyframes signalFlowGreen {
+            0% { stroke-dashoffset: 24; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes signalFlowRed {
+            0% { stroke-dashoffset: 24; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes probeBeaconGreen {
+            0%, 100% { filter: drop-shadow(0 0 6px #10b981); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 14px #10b981) drop-shadow(0 0 24px #2dd4bf); transform: scale(1.03); }
+        }
+
+        @keyframes probeBeaconRed {
+            0%, 100% { filter: drop-shadow(0 0 6px #ef4444); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 14px #ef4444) drop-shadow(0 0 22px #f43f5e); transform: scale(1.03); }
+        }
+
+        .circuit-wire {
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 7 4;
+            transition: stroke 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
+        }
+
         .circuit-wire.sig-0 {
-            stroke: #2e384d;
-            stroke-width: 2;
+            stroke: #ef4444;
+            stroke-width: 2.2;
+            filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.8));
+            animation: signalFlowRed 1.1s linear infinite;
         }
 
         .circuit-wire.sig-1 {
             stroke: #10b981;
             stroke-width: 2.6;
-            filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.8));
-        }
-
-        .circuit-wire.sig-1.flowing {
-            stroke-dasharray: 8 5;
-            animation: signalPulseFlow 0.65s linear infinite;
+            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.9));
+            animation: signalFlowGreen 0.7s linear infinite;
         }
 
         .junction-dot {
@@ -1696,14 +1724,15 @@
         }
 
         .junction-dot.sig-0 {
-            fill: #3b465c;
-            stroke: #1b202c;
+            fill: #ef4444;
+            stroke: #fca5a5;
             stroke-width: 1.5;
+            filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.9));
         }
 
         .junction-dot.sig-1 {
             fill: #10b981;
-            stroke: #34d399;
+            stroke: #6ee7b7;
             stroke-width: 1.5;
             filter: drop-shadow(0 0 6px #10b981);
         }
@@ -1749,14 +1778,15 @@
         }
 
         .probe-box.sig-0 {
-            fill: #161b24;
-            stroke: #3b465c;
+            fill: #221217;
+            stroke: #ef4444;
+            filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.55));
         }
 
         .probe-box.sig-1 {
             fill: #064e3b;
             stroke: #10b981;
-            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.65));
+            filter: drop-shadow(0 0 14px rgba(16, 185, 129, 0.7));
         }
 
         .probe-led {
@@ -1764,9 +1794,11 @@
         }
 
         .probe-led.sig-0 {
-            fill: #334155;
-            stroke: #1e293b;
-            stroke-width: 1.5;
+            fill: #ef4444;
+            stroke: #fca5a5;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 8px #ef4444);
+            animation: probeBeaconRed 1.8s ease-in-out infinite;
         }
 
         .probe-led.sig-1 {
@@ -1774,7 +1806,7 @@
             stroke: #6ee7b7;
             stroke-width: 2;
             filter: drop-shadow(0 0 10px #10b981);
-            animation: probeBeacon 1.8s ease-in-out infinite;
+            animation: probeBeaconGreen 1.8s ease-in-out infinite;
         }
 
         .probe-text {
@@ -3842,6 +3874,10 @@
                     <feGaussianBlur stdDeviation="4" result="blur" />
                     <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
+                <filter id="glowRed" x="-30%" y="-30%" width="160%" height="160%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
                 <filter id="glowTeal" x="-30%" y="-30%" width="160%" height="160%">
                     <feGaussianBlur stdDeviation="5" result="blur" />
                     <feComposite in="SourceGraphic" in2="blur" operator="over" />
@@ -3962,9 +3998,9 @@
                 g.innerHTML += `
                     <!-- Input Pad ${v} -->
                     <g transform="translate(${inputPadX}, ${y - 14})" style="cursor: pointer;" onclick="toggleCircuitInput('${v}')">
-                        <rect width="44" height="28" rx="6" fill="#1b212d" stroke="${sig === 1 ? '#10b981' : '#3e485e'}" stroke-width="${sig === 1 ? '2' : '1.5'}" />
-                        <text x="14" y="18" font-family="var(--code-font)" font-size="12" font-weight="700" fill="${sig === 1 ? '#10b981' : '#e2e8f0'}">${v}</text>
-                        <circle cx="34" cy="14" r="4.5" fill="${sig === 1 ? '#10b981' : '#475569'}" ${sig === 1 ? 'filter="url(#glowGreen)"' : ''} />
+                        <rect width="44" height="28" rx="6" fill="#1b212d" stroke="${sig === 1 ? '#10b981' : '#ef4444'}" stroke-width="2" />
+                        <text x="14" y="18" font-family="var(--code-font)" font-size="12" font-weight="700" fill="${sig === 1 ? '#10b981' : '#ef4444'}">${v}</text>
+                        <circle cx="34" cy="14" r="4.5" fill="${sig === 1 ? '#10b981' : '#ef4444'}" filter="${sig === 1 ? 'url(#glowGreen)' : 'url(#glowRed)'}" />
                     </g>
                 `;
 
@@ -4048,8 +4084,8 @@
                             <!-- Smooth Orthogonal Route from ${lit.varName} to NOT Gate -->
                             <path d="M ${stemX} ${stemY} L ${stemX} ${pinY} L ${notX - notW/2} ${pinY}" class="${wireClassTrue}" />
                             <!-- Inline NOT Inverter -->
-                            <path d="M ${notX - notW/2} ${pinY - notH/2} L ${notX + notW/2 - 4} ${pinY} L ${notX - notW/2} ${pinY + notH/2} Z" class="gate-body gate-not ${trueSig === 0 ? 'sig-active' : ''}" stroke="${trueSig === 0 ? '#10b981' : '#64748b'}" />
-                            <circle cx="${notX + notW/2}" cy="${pinY}" r="3" class="gate-bubble" stroke="${trueSig === 0 ? '#10b981' : '#64748b'}" />
+                            <path d="M ${notX - notW/2} ${pinY - notH/2} L ${notX + notW/2 - 4} ${pinY} L ${notX - notW/2} ${pinY + notH/2} Z" class="gate-body gate-not ${litSig === 1 ? 'sig-active' : ''}" stroke="${litSig === 1 ? '#10b981' : '#ef4444'}" />
+                            <circle cx="${notX + notW/2}" cy="${pinY}" r="3" class="gate-bubble" stroke="${litSig === 1 ? '#10b981' : '#ef4444'}" />
                             <!-- NOT output to Gate Input Pin -->
                             <line x1="${notX + notW/2 + 3}" y1="${pinY}" x2="${stage1X}" y2="${pinY}" class="${wireClassLit}" />
                             <text x="${notX - notW/2 - 4}" y="${pinY - 4}" text-anchor="end" font-family="var(--code-font)" font-size="9" fill="#94a3b8">${lit.varName}'</text>
@@ -4065,7 +4101,7 @@
 
                 // Draw Gate Body & Color Accent
                 const colorHex = getGroupColorHex(gIdx);
-                const gateStroke = gateOutputVal === 1 ? '#10b981' : (colorHex || '#475569');
+                const gateStroke = gateOutputVal === 1 ? '#10b981' : '#ef4444';
 
                 if (literals.length === 1) {
                     // Single literal pass-through
@@ -4140,7 +4176,7 @@
                 });
 
                 // Render Stage 2 Gate
-                const stage2Stroke = finalCircuitOutput === 1 ? '#10b981' : '#38bdf8';
+                const stage2Stroke = finalCircuitOutput === 1 ? '#10b981' : '#ef4444';
                 g.innerHTML += drawAnsiGate(stage2GateType, stage2X, stage2Y, stage2GateW, stage2GateH, stage2Stroke, finalCircuitOutput);
                 g.innerHTML += `
                     <text x="${stage2X + stage2GateW/2}" y="${stage2Y - stage2GateH/2 - 7}" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="#38bdf8">
@@ -4204,8 +4240,8 @@
 
                 g.innerHTML += `
                     <g transform="translate(${rx - 16}, 16)" style="cursor: pointer;" onclick="toggleCircuitInput('${v}')">
-                        <rect width="32" height="22" rx="4" fill="#1b212d" stroke="${sig === 1 ? '#10b981' : '#334155'}" stroke-width="${sig === 1 ? '2' : '1'}" />
-                        <text x="16" y="15" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="${sig === 1 ? '#10b981' : '#94a3b8'}">${v}=${sig}</text>
+                        <rect width="32" height="22" rx="4" fill="#1b212d" stroke="${sig === 1 ? '#10b981' : '#ef4444'}" stroke-width="2" />
+                        <text x="16" y="15" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="${sig === 1 ? '#10b981' : '#ef4444'}">${v}=${sig}</text>
                     </g>
                     <line x1="${rx}" y1="42" x2="${rx}" y2="${circuitH - 30}" class="${wireClass}" />
                 `;
