@@ -4114,7 +4114,6 @@
                 const y = inputYCoords[v];
                 const sig = varStates[v].trueVal;
                 const trunkEndX = trunkBranchX + idx * 24;
-                const wireLen = trunkEndX - (inputPadX + 44);
 
                 g.innerHTML += `
                     <!-- Input Pad ${v} -->
@@ -4123,10 +4122,8 @@
                         <text x="14" y="18" class="input-pad-text" data-val="${sig}">${v}</text>
                         <circle cx="34" cy="14" r="4.5" class="input-pad-dot" data-val="${sig}" />
                     </g>
-
-                    <!-- Feeder trunk base + fill overlay -->
+                    <!-- Neutral Feeder Base Track -->
                     <line x1="${inputPadX + 44}" y1="${y}" x2="${trunkEndX}" y2="${y}" class="wire-base" />
-                    <line x1="${inputPadX + 44}" y1="${y}" x2="${trunkEndX}" y2="${y}" class="wire-fill wire-fill-stage1 sig-${sig}" style="stroke-dasharray: ${wireLen}; stroke-dashoffset: ${wireLen}; opacity: 0;" />
                 `;
             });
 
@@ -4137,7 +4134,7 @@
             const gateTypesTally = {};
             const stage1Outputs = [];
 
-            // 2. DRAW STAGE 1 GATES & INLINE INPUT CONNECTIONS
+            // 2. DRAW STAGE 1 GATES & INLINE INPUT CONNECTIONS (STRICTLY STARTING FROM INPUT PADS)
             groups.forEach((group, gIdx) => {
                 const gateY = topMargin + (gIdx * termRowSpacing) + 20;
                 const termAnalysis = deriveGroupTermLiterals(group, numVars, optMode);
@@ -4169,6 +4166,8 @@
                     const vIdx = vars.indexOf(lit.varName);
                     const stemX = trunkBranchX + vIdx * 24;
                     const stemY = inputYCoords[lit.varName];
+                    const padStartX = inputPadX + 44;
+                    const padStartY = stemY;
                     const litSig = lit.inverted ? varStates[lit.varName].invVal : varStates[lit.varName].trueVal;
                     const trueSig = varStates[lit.varName].trueVal;
 
@@ -4181,14 +4180,16 @@
                         totalInverters++;
                         const notX = stage1X - 60;
                         const notW = 22, notH = 18;
-                        const pathD1 = `M ${stemX} ${stemY} L ${stemX} ${pinY} L ${notX - notW/2} ${pinY}`;
-                        const estLen1 = Math.abs(pinY - stemY) + Math.abs(notX - notW/2 - stemX);
+                        
+                        // Continuous contiguous path STRICTLY starting from the input letter pad
+                        const pathD1 = `M ${padStartX} ${padStartY} L ${stemX} ${padStartY} L ${stemX} ${pinY} L ${notX - notW/2} ${pinY}`;
+                        const estLen1 = (stemX - padStartX) + Math.abs(pinY - padStartY) + (notX - notW/2 - stemX);
                         const estLen2 = stage1X - (notX + notW/2 + 3);
 
                         g.innerHTML += `
                             <!-- Neutral wire base -->
                             <path d="${pathD1}" class="wire-base" />
-                            <!-- Progressive filling line to NOT gate -->
+                            <!-- Progressive filling line starting strictly from Input Pad -->
                             <path d="${pathD1}" class="wire-fill wire-fill-stage1 sig-${trueSig}" style="stroke-dasharray: ${estLen1}; stroke-dashoffset: ${estLen1}; opacity: 0;" />
 
                             <!-- Inline NOT Inverter -->
@@ -4197,13 +4198,15 @@
 
                             <!-- Neutral wire base from NOT to Gate pin -->
                             <line x1="${notX + notW/2 + 3}" y1="${pinY}" x2="${stage1X}" y2="${pinY}" class="wire-base" />
-                            <line x1="${notX + notW/2 + 3}" y1="${pinY}" x2="${stage1X}" y2="${pinY}" class="wire-fill wire-fill-stage1 sig-${litSig}" style="stroke-dasharray: ${estLen2}; stroke-dashoffset: ${estLen2}; opacity: 0;" />
+                            <!-- Output of NOT inverter fills during stage 2 when inverter is reached -->
+                            <line x1="${notX + notW/2 + 3}" y1="${pinY}" x2="${stage1X}" y2="${pinY}" class="wire-fill wire-fill-stage2 sig-${litSig}" style="stroke-dasharray: ${estLen2}; stroke-dashoffset: ${estLen2}; opacity: 0;" />
 
                             <text x="${notX - notW/2 - 4}" y="${pinY - 4}" text-anchor="end" class="pin-label">${lit.varName}'</text>
                         `;
                     } else {
-                        const pathD = `M ${stemX} ${stemY} L ${stemX} ${pinY} L ${stage1X} ${pinY}`;
-                        const estLen = Math.abs(pinY - stemY) + Math.abs(stage1X - stemX);
+                        // Continuous contiguous path STRICTLY starting from the input letter pad
+                        const pathD = `M ${padStartX} ${padStartY} L ${stemX} ${padStartY} L ${stemX} ${pinY} L ${stage1X} ${pinY}`;
+                        const estLen = (stemX - padStartX) + Math.abs(pinY - padStartY) + (stage1X - stemX);
 
                         g.innerHTML += `
                             <path d="${pathD}" class="wire-base" />
@@ -4432,14 +4435,21 @@
                 const lenA = gateX - railCoords[vars[0]];
                 const lenB = gateX - railCoords[vars[1]];
 
-                g.innerHTML += `
-                    <circle cx="${railCoords[vars[0]]}" cy="${gateY - 12}" r="3.5" class="junction-dot junction-dot-stage1" data-val="${valA}" />
-                    <line x1="${railCoords[vars[0]]}" y1="${gateY - 12}" x2="${gateX}" y2="${gateY - 12}" class="wire-base" />
-                    <line x1="${railCoords[vars[0]]}" y1="${gateY - 12}" x2="${gateX}" y2="${gateY - 12}" class="wire-fill wire-fill-stage1 sig-${valA}" style="stroke-dasharray: ${lenA}; stroke-dashoffset: ${lenA}; opacity: 0;" />
+                const rxA = railCoords[vars[0]];
+                const rxB = railCoords[vars[1]];
+                const pathXA = `M ${rxA} 42 L ${rxA} ${gateY - 12} L ${gateX} ${gateY - 12}`;
+                const pathXB = `M ${rxB} 42 L ${rxB} ${gateY + 12} L ${gateX} ${gateY + 12}`;
+                const lenXA = (gateY - 12 - 42) + (gateX - rxA);
+                const lenXB = (gateY + 12 - 42) + (gateX - rxB);
 
-                    <circle cx="${railCoords[vars[1]]}" cy="${gateY + 12}" r="3.5" class="junction-dot junction-dot-stage1" data-val="${valB}" />
-                    <line x1="${railCoords[vars[1]]}" y1="${gateY + 12}" x2="${gateX}" y2="${gateY + 12}" class="wire-base" />
-                    <line x1="${railCoords[vars[1]]}" y1="${gateY + 12}" x2="${gateX}" y2="${gateY + 12}" class="wire-fill wire-fill-stage1 sig-${valB}" style="stroke-dasharray: ${lenB}; stroke-dashoffset: ${lenB}; opacity: 0;" />
+                g.innerHTML += `
+                    <circle cx="${rxA}" cy="${gateY - 12}" r="3.5" class="junction-dot junction-dot-stage1" data-val="${valA}" />
+                    <path d="${pathXA}" class="wire-base" />
+                    <path d="${pathXA}" class="wire-fill wire-fill-stage1 sig-${valA}" style="stroke-dasharray: ${lenXA}; stroke-dashoffset: ${lenXA}; opacity: 0;" />
+
+                    <circle cx="${rxB}" cy="${gateY + 12}" r="3.5" class="junction-dot junction-dot-stage1" data-val="${valB}" />
+                    <path d="${pathXB}" class="wire-base" />
+                    <path d="${pathXB}" class="wire-fill wire-fill-stage1 sig-${valB}" style="stroke-dasharray: ${lenXB}; stroke-dashoffset: ${lenXB}; opacity: 0;" />
                 `;
 
                 g.innerHTML += drawAnsiGate(gateType, gateX, gateY, gateW, gateH, '#475569', finalOut, 'stage1-gate-body', 'stage1-gate-bubble');
