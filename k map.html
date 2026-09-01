@@ -1397,6 +1397,386 @@
 
         #vizSection { display: none; }
         #vizSection.shown { display: block; }
+
+        /* ========================================================================= */
+        /* LOGIC GATE CONNECTION DIAGRAM PANEL STYLES */
+        /* ========================================================================= */
+        .circuit-panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 18px 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22);
+        }
+
+        .circuit-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .circuit-action-btn {
+            padding: 4px 10px;
+            font-size: 11px;
+            font-family: var(--code-font);
+            border-radius: 4px;
+            background: var(--panel-2);
+            border: 1px solid var(--border);
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .circuit-action-btn:hover {
+            background: var(--panel-3);
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .circuit-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            background: var(--panel-2);
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
+        }
+
+        .toolbar-label {
+            font-family: var(--code-font);
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-right: 6px;
+        }
+
+        .gate-toggle-group {
+            display: inline-flex;
+            background: var(--panel);
+            padding: 3px;
+            border-radius: 7px;
+            border: 1px solid var(--border);
+            gap: 3px;
+            flex-wrap: wrap;
+        }
+
+        .gate-mode-btn {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-family: var(--ui-font);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .gate-mode-btn:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .gate-mode-btn.active {
+            background: var(--panel-3);
+            color: var(--teal);
+            border: 1px solid var(--border-highlight);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        }
+
+        .circuit-sim-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .input-pins-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-pin-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-family: var(--code-font);
+            font-size: 12px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.15s ease;
+        }
+
+        .input-pin-toggle:hover {
+            border-color: var(--teal);
+        }
+
+        .input-pin-toggle .var-name {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .input-pin-toggle .val-pill {
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 700;
+            transition: all 0.15s ease;
+        }
+
+        .input-pin-toggle.val-0 .val-pill {
+            background: rgba(116, 128, 150, 0.2);
+            color: var(--muted);
+            border: 1px solid var(--border);
+        }
+
+        .input-pin-toggle.val-1 .val-pill {
+            background: rgba(16, 185, 129, 0.25);
+            color: var(--emerald);
+            border: 1px solid var(--emerald);
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+        }
+
+        .circuit-zoom-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .zoom-btn {
+            padding: 3px 8px;
+            font-size: 11px;
+            font-family: var(--code-font);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .circuit-sub-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: var(--panel-3);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
+            font-family: var(--code-font);
+            font-size: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .circuit-eq-display span {
+            color: var(--muted);
+        }
+
+        .circuit-eq-display strong {
+            color: var(--teal);
+            margin-left: 6px;
+        }
+
+        .circuit-stats-pill {
+            color: #a9b2c0;
+            font-size: 11px;
+            background: var(--panel-2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .circuit-viewport {
+            width: 100%;
+            min-height: 380px;
+            max-height: 600px;
+            overflow: auto;
+            background: #0d1017;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            position: relative;
+            padding: 16px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            scrollbar-width: thin;
+            scrollbar-color: var(--border) transparent;
+        }
+
+        .circuit-canvas-wrap {
+            transform-origin: 0 0;
+            transition: transform 0.15s ease-out;
+            display: inline-block;
+            min-width: 100%;
+        }
+
+        .circuit-svg {
+            display: block;
+            overflow: visible;
+        }
+
+        /* SVG Schematic Graphics & Glows */
+        .circuit-wire {
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: stroke 0.2s ease, stroke-width 0.2s ease, filter 0.2s ease;
+        }
+
+        .circuit-wire.sig-0 {
+            stroke: #334155;
+            stroke-width: 1.8;
+        }
+
+        .circuit-wire.sig-1 {
+            stroke: #10b981;
+            stroke-width: 2.4;
+            filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.8));
+        }
+
+        .junction-dot {
+            transition: all 0.2s ease;
+        }
+
+        .junction-dot.sig-0 {
+            fill: #475569;
+        }
+
+        .junction-dot.sig-1 {
+            fill: #10b981;
+            filter: drop-shadow(0 0 4px #10b981);
+        }
+
+        .gate-body {
+            stroke-width: 2;
+            transition: all 0.2s ease;
+            fill: #181d27;
+        }
+
+        .gate-body.sig-active {
+            filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.4));
+        }
+
+        .gate-bubble {
+            fill: #181d27;
+            stroke-width: 2;
+        }
+
+        .gate-label {
+            font-family: var(--code-font);
+            font-size: 10px;
+            font-weight: 700;
+            fill: #94a3b8;
+            user-select: none;
+        }
+
+        .pin-label {
+            font-family: var(--code-font);
+            font-size: 9px;
+            fill: #64748b;
+            user-select: none;
+        }
+
+        .probe-box {
+            rx: 6;
+            ry: 6;
+            stroke-width: 2;
+            transition: all 0.2s ease;
+        }
+
+        .probe-box.sig-0 {
+            fill: #1a1e27;
+            stroke: #475569;
+        }
+
+        .probe-box.sig-1 {
+            fill: #064e3b;
+            stroke: #10b981;
+            filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6));
+        }
+
+        .probe-led {
+            transition: all 0.2s ease;
+        }
+
+        .probe-led.sig-0 {
+            fill: #334155;
+        }
+
+        .probe-led.sig-1 {
+            fill: #10b981;
+            filter: drop-shadow(0 0 8px #10b981);
+        }
+
+        .probe-text {
+            font-family: var(--code-font);
+            font-size: 13px;
+            font-weight: 700;
+            fill: #ffffff;
+            user-select: none;
+        }
+
+        .probe-val {
+            font-family: var(--code-font);
+            font-size: 10px;
+            fill: #cbd5e1;
+            user-select: none;
+        }
+
+        /* IC Bill of Materials */
+        .circuit-metrics-bar {
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .ic-chip-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .ic-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--panel-2);
+            border: 1px solid var(--border);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-family: var(--code-font);
+            font-size: 11px;
+        }
+
+        .ic-chip .chip-name {
+            color: var(--teal);
+            font-weight: 700;
+        }
+
+        .ic-chip .chip-desc {
+            color: var(--muted);
+        }
+
+        .ic-chip .chip-count {
+            background: var(--panel-3);
+            color: var(--text);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            border: 1px solid var(--border-highlight);
+        }
+
     </style>
 </head>
 
@@ -1572,6 +1952,85 @@
                             <div class="metric-lbl">Logic Gate Savings</div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- ================================================================= -->
+            <!-- LOGIC GATE CONNECTION DIAGRAM PANEL -->
+            <!-- ================================================================= -->
+            <div class="circuit-panel" id="circuitPanel">
+                <div class="panel-title" style="margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <span>⚡ Logic Gate Connection Circuit Diagram</span>
+                        <span class="badge" id="circuitModeBadge">Basic Gates (AND / OR / NOT)</span>
+                    </div>
+                    <div class="circuit-header-actions">
+                        <button class="ghost circuit-action-btn" onclick="exportCircuitSvg()" title="Download as SVG">
+                            📥 Download SVG
+                        </button>
+                        <button class="ghost circuit-action-btn" onclick="exportCircuitPng()" title="Download as PNG">
+                            🖼️ Download PNG
+                        </button>
+                        <button class="ghost circuit-action-btn" onclick="copyCircuitSvg()" title="Copy SVG Code">
+                            📋 Copy SVG
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Circuit Configuration & Gate Selector Toolbar -->
+                <div class="circuit-toolbar">
+                    <div class="circuit-mode-selector">
+                        <span class="toolbar-label">Gate Mode:</span>
+                        <div class="gate-toggle-group">
+                            <button class="gate-mode-btn active" id="btnGateModeBasic" onclick="setCircuitGateMode('basic')">
+                                🔌 Basic Gates (AND / OR / NOT)
+                            </button>
+                            <button class="gate-mode-btn" id="btnGateModeAll" onclick="setCircuitGateMode('all')">
+                                ✨ All Gates (XOR / XNOR / Multi-Gate)
+                            </button>
+                            <button class="gate-mode-btn" id="btnGateModeNand" onclick="setCircuitGateMode('nand')">
+                                ⚡ Universal NAND-NAND
+                            </button>
+                            <button class="gate-mode-btn" id="btnGateModeNor" onclick="setCircuitGateMode('nor')">
+                                ⚡ Universal NOR-NOR
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="circuit-sim-controls">
+                        <span class="toolbar-label">Live Signal Inputs:</span>
+                        <div class="input-pins-bar" id="circuitInputToggles"></div>
+                        <button class="ghost circuit-action-btn" onclick="toggleSimAutoStep()" id="btnAutoSim">
+                            🔄 Auto Test
+                        </button>
+                        <div class="circuit-zoom-controls">
+                            <button class="ghost zoom-btn" onclick="adjustCircuitZoom(1.15)" title="Zoom In">🔍+</button>
+                            <button class="ghost zoom-btn" onclick="adjustCircuitZoom(0.85)" title="Zoom Out">🔍−</button>
+                            <button class="ghost zoom-btn" onclick="resetCircuitZoom()" title="Fit to Screen">⛶ Fit</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Equation Banner -->
+                <div class="circuit-sub-bar">
+                    <div class="circuit-eq-display" id="circuitEqDisplay">
+                        <span>Circuit Logic:</span> <strong id="circuitEqText">F = 0</strong>
+                    </div>
+                    <div class="circuit-stats-pill" id="circuitGateCountPill">
+                        0 Gates | 0 Inverters | 0 Levels
+                    </div>
+                </div>
+
+                <!-- SVG Circuit Viewport -->
+                <div class="circuit-viewport" id="circuitViewport">
+                    <div class="circuit-canvas-wrap" id="circuitCanvasWrap">
+                        <svg id="logicCircuitSvg" xmlns="http://www.w3.org/2000/svg" class="circuit-svg"></svg>
+                    </div>
+                </div>
+
+                <!-- Hardware IC Bill of Materials & Metrics -->
+                <div class="circuit-metrics-bar" id="circuitMetricsBar">
+                    <div class="ic-chip-list" id="icChipsList"></div>
                 </div>
             </div>
 
@@ -1796,6 +2255,7 @@
             }
         }
 
+        // K-Map Solver Engine
         let numVars = 4;
         let optMode = 'SOP';
         let allowDC = true;
@@ -2420,6 +2880,7 @@
             const exprText = document.getElementById('exprInput').value.trim() || 'Custom Input';
             const st = [];
 
+            // 1. BLOCK-BY-BLOCK 1/0 ASSIGNMENT STEPS
             if (animMode === 'assign' || animMode === 'full') {
                 st.push({
                     type: 'assign_start',
@@ -2458,6 +2919,7 @@
                 });
             }
 
+            // 2. PRIME IMPLICANT GROUPING & MINIMIZATION STEPS
             if (animMode === 'group' || animMode === 'full') {
                 const targetM = sol.canonicalSOP;
 
@@ -2562,10 +3024,12 @@
             const s = kmapSteps[kmapCurStep];
             if (!s) return;
 
+            // Highlight Code Line
             document.querySelectorAll('#kmapCodeBox .code-line').forEach(l => l.classList.remove('active'));
             const curLine = document.getElementById(`kline-${s.line}`);
             if (curLine) curLine.classList.add('active');
 
+            // Reset Cell Visual Classes
             document.querySelectorAll('.kmap-cell').forEach(c => {
                 c.classList.remove('cell-assigning', 'cell-highlight-scan', 'cell-highlight-active');
             });
@@ -2574,6 +3038,7 @@
             document.querySelectorAll('.legend-item').forEach(li => li.classList.remove('active'));
             document.querySelectorAll('.truth-table tr').forEach(r => r.classList.remove('tt-active-row'));
 
+            // Step Action Handlers
             if (s.type === 'assign_cell') {
                 const cell = document.querySelector(`.kmap-cell[data-m="${s.minterm}"]`);
                 if (cell) {
@@ -2584,12 +3049,14 @@
                         cell.className = `kmap-cell cell-assigning ${s.targetVal === 1 ? 'val-1 cell-just-assigned-1' : (s.targetVal === 0 ? 'val-0 cell-just-assigned-0' : 'val-x cell-just-assigned-x')}`;
                     }
                 }
+                // Highlight corresponding truth table row
                 const ttRows = document.querySelectorAll('#explTruthTable tbody tr');
                 if (ttRows[s.minterm]) {
                     ttRows[s.minterm].classList.add('tt-active-row');
                     ttRows[s.minterm].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
             } else if (s.type === 'assign_done' || s.type === 'assign_start') {
+                // reset all cells to their final values
                 for (let m = 0; m < (1 << numVars); m++) {
                     const c = document.querySelector(`.kmap-cell[data-m="${m}"]`);
                     const v = cellValues[m];
@@ -2613,6 +3080,7 @@
                 currentSolution.selectedGroups.forEach((_, idx) => highlightGroup(idx, true));
             }
 
+            // Update trace feed (show last 6 lines)
             const traceLines = [];
             let count = 0;
             for (let idx = kmapCurStep; idx >= 0 && count < 6; idx--) {
@@ -2623,6 +3091,7 @@
             }
             document.getElementById('kmapTraceBox').innerHTML = traceLines.join('');
 
+            // Controls status
             document.getElementById('kmapStepInfo').textContent = `step ${kmapCurStep} / ${kmapSteps.length - 1}`;
             document.getElementById('btnKmapPrev').disabled = kmapCurStep === 0;
             document.getElementById('btnKmapNext').disabled = kmapCurStep === kmapSteps.length - 1;
@@ -2832,6 +3301,7 @@
                 renderGroupSvgOverlays();
                 updateExplanationView(sol);
                 renderKmapAnimStep();
+                renderCircuitDiagram();
             }, 20);
         }
 
@@ -3120,6 +3590,746 @@
             renderMatrixStep();
             document.getElementById('vizSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
+
+        // =========================================================================
+        // LOGIC GATE CONNECTION DIAGRAM GENERATOR & INTERACTIVE SIMULATOR
+        // =========================================================================
+        let circuitGateMode = 'basic'; // 'basic', 'all', 'nand', 'nor'
+        let circuitInputs = { A: 0, B: 0, C: 0, D: 0 };
+        let circuitZoom = 1.0;
+        let autoSimTimer = null;
+
+        function setCircuitGateMode(mode) {
+            circuitGateMode = mode;
+            document.querySelectorAll('.gate-mode-btn').forEach(btn => btn.classList.remove('active'));
+            if (mode === 'basic') document.getElementById('btnGateModeBasic')?.classList.add('active');
+            else if (mode === 'all') document.getElementById('btnGateModeAll')?.classList.add('active');
+            else if (mode === 'nand') document.getElementById('btnGateModeNand')?.classList.add('active');
+            else if (mode === 'nor') document.getElementById('btnGateModeNor')?.classList.add('active');
+
+            const badgeMap = {
+                'basic': 'Basic Gates (AND / OR / NOT)',
+                'all': 'All Gates (XOR / XNOR / Multi-Gate)',
+                'nand': 'Universal NAND-NAND Logic',
+                'nor': 'Universal NOR-NOR Logic'
+            };
+            const badge = document.getElementById('circuitModeBadge');
+            if (badge) badge.textContent = badgeMap[mode] || 'Basic Gates';
+
+            renderCircuitDiagram();
+        }
+
+        function toggleCircuitInput(varName) {
+            circuitInputs[varName] = circuitInputs[varName] === 1 ? 0 : 1;
+            updateInputTogglesUI();
+            renderCircuitDiagram();
+        }
+
+        function updateInputTogglesUI() {
+            const container = document.getElementById('circuitInputToggles');
+            if (!container) return;
+            const vars = VAR_NAMES.slice(0, numVars);
+            container.innerHTML = '';
+            vars.forEach(v => {
+                const val = circuitInputs[v] || 0;
+                const btn = document.createElement('div');
+                btn.className = `input-pin-toggle val-${val}`;
+                btn.onclick = () => toggleCircuitInput(v);
+                btn.innerHTML = `<span class="var-name">${v}:</span><span class="val-pill">${val}</span>`;
+                container.appendChild(btn);
+            });
+        }
+
+        function adjustCircuitZoom(factor) {
+            circuitZoom = Math.min(2.5, Math.max(0.4, circuitZoom * factor));
+            const wrap = document.getElementById('circuitCanvasWrap');
+            if (wrap) wrap.style.transform = `scale(${circuitZoom})`;
+        }
+
+        function resetCircuitZoom() {
+            circuitZoom = 1.0;
+            const wrap = document.getElementById('circuitCanvasWrap');
+            if (wrap) wrap.style.transform = `scale(1)`;
+        }
+
+        function toggleSimAutoStep() {
+            const btn = document.getElementById('btnAutoSim');
+            if (autoSimTimer) {
+                clearInterval(autoSimTimer);
+                autoSimTimer = null;
+                if (btn) btn.textContent = '🔄 Auto Test';
+            } else {
+                if (btn) btn.textContent = '⏸ Stop Test';
+                let step = 0;
+                const total = 1 << numVars;
+                autoSimTimer = setInterval(() => {
+                    const vars = VAR_NAMES.slice(0, numVars);
+                    for (let i = 0; i < numVars; i++) {
+                        const shift = numVars - 1 - i;
+                        circuitInputs[vars[i]] = (step >> shift) & 1;
+                    }
+                    updateInputTogglesUI();
+                    renderCircuitDiagram();
+                    step = (step + 1) % total;
+                }, 800);
+            }
+        }
+
+        function detectXorXnorSynthesis(sol, nVars) {
+            // Checks if solution can be simplified into XOR / XNOR gates
+            const groups = sol.selectedGroups;
+            const vars = VAR_NAMES.slice(0, nVars);
+
+            // 2-variable XOR: A'B + AB'
+            if (nVars === 2 && groups.length === 2) {
+                const terms = groups.map(g => g.term).sort();
+                if ((terms[0] === "A'B" && terms[1] === "AB'") || (terms[0] === "AB'" && terms[1] === "A'B")) {
+                    return { type: 'XOR2', vars: ['A', 'B'], expr: 'A ⊕ B' };
+                }
+                // 2-variable XNOR: A'B' + AB
+                if ((terms[0] === "A'B'" && terms[1] === "AB") || (terms[0] === "AB" && terms[1] === "A'B'")) {
+                    return { type: 'XNOR2', vars: ['A', 'B'], expr: 'A ⊙ B' };
+                }
+            }
+
+            // 3-variable XOR parity: A ⊕ B ⊕ C (minterms: 1, 2, 4, 7)
+            if (nVars === 3 && groups.length === 4) {
+                const ms = groups.map(g => g.minterms[0]).sort((a,b)=>a-b);
+                if (ms.join(',') === '1,2,4,7') {
+                    return { type: 'XOR3', vars: ['A', 'B', 'C'], expr: 'A ⊕ B ⊕ C' };
+                }
+                if (ms.join(',') === '0,3,5,6') {
+                    return { type: 'XNOR3', vars: ['A', 'B', 'C'], expr: 'A ⊙ B ⊙ C' };
+                }
+            }
+
+            // 4-variable XOR parity: A ⊕ B ⊕ C ⊕ D (odd parity)
+            if (nVars === 4 && groups.length === 8) {
+                const ms = groups.map(g => g.minterms[0]).sort((a,b)=>a-b);
+                if (ms.join(',') === '1,2,4,7,8,11,13,14') {
+                    return { type: 'XOR4', vars: ['A', 'B', 'C', 'D'], expr: 'A ⊕ B ⊕ C ⊕ D' };
+                }
+                if (ms.join(',') === '0,3,5,6,9,10,12,15') {
+                    return { type: 'XNOR4', vars: ['A', 'B', 'C', 'D'], expr: 'A ⊙ B ⊙ C ⊙ D' };
+                }
+            }
+
+            return null;
+        }
+
+        function renderCircuitDiagram() {
+            const svg = document.getElementById('logicCircuitSvg');
+            if (!svg) return;
+            svg.innerHTML = '';
+
+            updateInputTogglesUI();
+
+            const sol = currentSolution;
+            const vars = VAR_NAMES.slice(0, numVars);
+
+            // Compute variable states
+            const varStates = {};
+            vars.forEach(v => {
+                varStates[v] = {
+                    trueVal: circuitInputs[v] || 0,
+                    invVal: 1 - (circuitInputs[v] || 0)
+                };
+            });
+
+            // Check for XOR synthesis in 'all' mode
+            let xorSynth = null;
+            if (circuitGateMode === 'all') {
+                xorSynth = detectXorXnorSynthesis(sol, numVars);
+            }
+
+            // Determine Circuit Logic Expression & Banner
+            const eqTextEl = document.getElementById('circuitEqText');
+            if (xorSynth) {
+                if (eqTextEl) eqTextEl.textContent = `F = ${xorSynth.expr}`;
+            } else if (circuitGateMode === 'nand' && optMode === 'SOP' && sol.selectedGroups.length > 0) {
+                if (eqTextEl) eqTextEl.textContent = `F = ( (${sol.selectedGroups.map(g => g.term).join(') NAND (')}) ) NAND 1`;
+            } else if (circuitGateMode === 'nor' && optMode === 'POS' && sol.selectedGroups.length > 0) {
+                if (eqTextEl) eqTextEl.textContent = `F = ( (${sol.selectedGroups.map(g => g.term).join(') NOR (')}) ) NOR 0`;
+            } else {
+                if (eqTextEl) eqTextEl.textContent = `F = ${sol.expression}`;
+            }
+
+            // Defs for glowing filters and gradients
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            defs.innerHTML = `
+                <filter id="glowGreen" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+                <filter id="glowTeal" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="4" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+            `;
+            svg.appendChild(defs);
+
+            // SPECIAL CASE 1: Constant 0 or Constant 1
+            if (sol.selectedGroups.length === 0 || sol.expression === '0' || sol.expression === '1') {
+                const constVal = sol.expression === '1' ? 1 : 0;
+                renderConstantCircuit(svg, constVal);
+                updateCircuitStats(0, 0, 0, {});
+                return;
+            }
+
+            // SPECIAL CASE 2: XOR / XNOR Synthesis Mode
+            if (xorSynth) {
+                renderXorCircuit(svg, xorSynth, varStates);
+                return;
+            }
+
+            // STANDARD CANONICAL CIRCUIT GENERATION (SOP / POS / NAND / NOR)
+            renderCanonicalGateCircuit(svg, sol, varStates);
+        }
+
+        function renderConstantCircuit(svg, constVal) {
+            const W = 520, H = 220;
+            svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+            svg.setAttribute('width', `${W}px`);
+            svg.setAttribute('height', `${H}px`);
+
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            const wireClass = constVal === 1 ? 'circuit-wire sig-1' : 'circuit-wire sig-0';
+
+            if (constVal === 1) {
+                // VCC Symbol
+                g.innerHTML += `
+                    <!-- VCC Power Symbol (+5V / Logic 1) -->
+                    <circle cx="120" cy="110" r="14" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+                    <text x="120" y="114" text-anchor="middle" font-family="var(--code-font)" font-size="10" font-weight="700" fill="#10b981">VCC</text>
+                    <text x="120" y="86" text-anchor="middle" font-family="var(--code-font)" font-size="11" fill="#94a3b8">+5V (Logic 1)</text>
+                    <line x1="134" y1="110" x2="340" y2="110" class="${wireClass}" />
+                `;
+            } else {
+                // GND Symbol
+                g.innerHTML += `
+                    <!-- GND Ground Symbol (0V / Logic 0) -->
+                    <circle cx="120" cy="110" r="14" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                    <text x="120" y="114" text-anchor="middle" font-family="var(--code-font)" font-size="10" font-weight="700" fill="#94a3b8">GND</text>
+                    <line x1="106" y1="132" x2="134" y2="132" stroke="#64748b" stroke-width="2.5" />
+                    <line x1="112" y1="137" x2="128" y2="137" stroke="#64748b" stroke-width="2" />
+                    <line x1="117" y1="142" x2="123" y2="142" stroke="#64748b" stroke-width="1.5" />
+                    <text x="120" y="86" text-anchor="middle" font-family="var(--code-font)" font-size="11" fill="#94a3b8">GND (Logic 0)</text>
+                    <line x1="134" y1="110" x2="340" y2="110" class="${wireClass}" />
+                `;
+            }
+
+            // Output Probe F
+            g.innerHTML += `
+                <g transform="translate(340, 85)">
+                    <rect width="110" height="50" class="probe-box sig-${constVal}" />
+                    <circle cx="22" cy="25" r="7" class="probe-led sig-${constVal}" />
+                    <text x="44" y="24" class="probe-text">F</text>
+                    <text x="44" y="40" class="probe-val">= ${constVal} (${constVal ? 'HIGH' : 'LOW'})</text>
+                </g>
+            `;
+            svg.appendChild(g);
+        }
+
+        function renderCanonicalGateCircuit(svg, sol, varStates) {
+            const vars = VAR_NAMES.slice(0, numVars);
+            const groups = sol.selectedGroups;
+            const isSOP = optMode === 'SOP';
+            const isNAND = circuitGateMode === 'nand';
+            const isNOR = circuitGateMode === 'nor';
+
+            // Layout Dimensions
+            const leftMargin = 40;
+            const railSpacing = 42;
+            const totalRailWidth = numVars * railSpacing * 2;
+            const stage1X = leftMargin + totalRailWidth + 60;
+            const stage1GateW = 54;
+            const stage1GateH = 46;
+
+            const numTerms = groups.length;
+            const termRowSpacing = Math.max(70, Math.min(100, 360 / (numTerms || 1)));
+            const topMargin = 70;
+            const circuitH = Math.max(340, topMargin + (numTerms * termRowSpacing) + 60);
+
+            const stage2X = stage1X + stage1GateW + 140;
+            const stage2GateW = 60;
+            const stage2GateH = Math.max(50, Math.min(120, 30 + numTerms * 14));
+            const stage2Y = topMargin + ((numTerms - 1) * termRowSpacing) / 2;
+
+            const probeX = stage2X + stage2GateW + 60;
+            const circuitW = probeX + 140;
+
+            svg.setAttribute('viewBox', `0 0 ${circuitW} ${circuitH}`);
+            svg.setAttribute('width', `${circuitW}px`);
+            svg.setAttribute('height', `${circuitH}px`);
+
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+            // 1. DRAW INPUT VARIABLE BUS RAILS (True & Inverted)
+            const railXCoords = {};
+            vars.forEach((v, idx) => {
+                const trueX = leftMargin + (idx * railSpacing * 2);
+                const invX = trueX + railSpacing - 12;
+                railXCoords[v] = { trueX, invX };
+
+                const vState = varStates[v];
+                const trueSig = vState.trueVal;
+                const invSig = vState.invVal;
+
+                // Variable Header Label
+                g.innerHTML += `
+                    <g transform="translate(${trueX - 12}, 16)">
+                        <rect width="48" height="24" rx="4" fill="#1e293b" stroke="#334155" />
+                        <text x="24" y="16" text-anchor="middle" font-family="var(--code-font)" font-size="12" font-weight="700" fill="${trueSig ? '#10b981' : '#94a3b8'}">${v} = ${trueSig}</text>
+                    </g>
+                `;
+
+                // True Rail (Vertical Line)
+                g.innerHTML += `
+                    <line x1="${trueX}" y1="44" x2="${trueX}" y2="${circuitH - 20}" class="circuit-wire sig-${trueSig} bus-true" />
+                    <text x="${trueX}" y="56" text-anchor="middle" class="pin-label">${v}</text>
+                `;
+
+                // Inverter (NOT Gate) on Inverted Rail
+                const notY = 66;
+                const notW = 20, notH = 18;
+                g.innerHTML += `
+                    <line x1="${trueX}" y1="${notY}" x2="${invX - notW/2}" y2="${notY}" class="circuit-wire sig-${trueSig}" />
+                    <circle cx="${trueX}" cy="${notY}" r="3" class="junction-dot sig-${trueSig}" />
+                    <!-- Small NOT Gate -->
+                    <path d="M ${invX - notW/2} ${notY - notH/2} L ${invX + notW/2 - 4} ${notY} L ${invX - notW/2} ${notY + notH/2} Z" class="gate-body gate-not ${trueSig === 0 ? 'sig-active' : ''}" stroke="${trueSig === 0 ? '#10b981' : '#64748b'}" />
+                    <circle cx="${invX + notW/2}" cy="${notY}" r="3" class="gate-bubble" stroke="${trueSig === 0 ? '#10b981' : '#64748b'}" />
+                    <!-- Inverted Rail -->
+                    <line x1="${invX + notW/2 + 3}" y1="${notY}" x2="${invX + notW/2 + 3}" y2="${circuitH - 20}" class="circuit-wire sig-${invSig} bus-inv" />
+                    <text x="${invX + notW/2 + 3}" y="88" text-anchor="middle" class="pin-label">${v}'</text>
+                `;
+            });
+
+            // IC & Gate Counter Trackers
+            let totalInverters = numVars;
+            let stage1GatesCount = 0;
+            let stage2GatesCount = (numTerms > 1) ? 1 : 0;
+            const gateTypesTally = {};
+
+            const stage1Outputs = [];
+
+            // 2. DRAW STAGE 1 GATES (Product Terms for SOP / Sum Terms for POS)
+            groups.forEach((group, gIdx) => {
+                const gateY = topMargin + (gIdx * termRowSpacing) + 20;
+                const termAnalysis = deriveGroupTermLiterals(group, numVars, optMode);
+                const literals = termAnalysis.literals; // Array of { varName, inverted, value }
+
+                // Calculate gate output signal
+                let gateOutputVal = 0;
+                if (isSOP) {
+                    // AND gate: 1 if all inputs are 1
+                    gateOutputVal = literals.every(lit => (lit.inverted ? varStates[lit.varName].invVal : varStates[lit.varName].trueVal) === 1) ? 1 : 0;
+                    if (isNAND) gateOutputVal = 1 - gateOutputVal; // NAND output inverted
+                } else {
+                    // POS / OR gate: 1 if at least one input is 1
+                    gateOutputVal = literals.some(lit => (lit.inverted ? varStates[lit.varName].invVal : varStates[lit.varName].trueVal) === 1) ? 1 : 0;
+                    if (isNOR) gateOutputVal = 1 - gateOutputVal; // NOR output inverted
+                }
+
+                stage1Outputs.push({ y: gateY, val: gateOutputVal, colorClass: group.colorClass || `color-${gIdx % 8}` });
+
+                // Gate Type & Tally
+                let stage1GateType = isSOP ? (isNAND ? 'NAND' : 'AND') : (isNOR ? 'NOR' : 'OR');
+                if (literals.length > 1) {
+                    stage1GatesCount++;
+                    gateTypesTally[stage1GateType] = (gateTypesTally[stage1GateType] || 0) + 1;
+                }
+
+                // Draw Horizontal Tap Connections from Rails to Gate Inputs
+                const numInputs = Math.max(1, literals.length);
+                const inputSpacing = numInputs > 1 ? (stage1GateH - 12) / (numInputs - 1) : 0;
+                const inputStartY = numInputs > 1 ? gateY - (stage1GateH - 12) / 2 : gateY;
+
+                literals.forEach((lit, inIdx) => {
+                    const pinY = inputStartY + inIdx * inputSpacing;
+                    const railInfo = railXCoords[lit.varName];
+                    const tapX = lit.inverted ? (railInfo.invX + 13) : railInfo.trueX;
+                    const litSig = lit.inverted ? varStates[lit.varName].invVal : varStates[lit.varName].trueVal;
+
+                    // Tap Connection Wire & Solder Junction Dot
+                    g.innerHTML += `
+                        <circle cx="${tapX}" cy="${pinY}" r="3.5" class="junction-dot sig-${litSig}" />
+                        <line x1="${tapX}" y1="${pinY}" x2="${stage1X}" y2="${pinY}" class="circuit-wire sig-${litSig}" />
+                    `;
+                });
+
+                // Draw Stage 1 Gate Body
+                const colorHex = getGroupColorHex(gIdx);
+                const gateStroke = gateOutputVal === 1 ? '#10b981' : (colorHex || '#475569');
+
+                if (literals.length === 1) {
+                    // Single literal pass-through line with label
+                    g.innerHTML += `
+                        <line x1="${stage1X}" y1="${gateY}" x2="${stage1X + stage1GateW}" y2="${gateY}" class="circuit-wire sig-${gateOutputVal}" />
+                        <text x="${stage1X + stage1GateW/2}" y="${gateY - 6}" text-anchor="middle" font-family="var(--code-font)" font-size="10" fill="${colorHex}">${group.term}</text>
+                    `;
+                } else {
+                    // Render ANSI Gate Symbol
+                    const gateSvgStr = drawAnsiGate(stage1GateType, stage1X, gateY, stage1GateW, stage1GateH, gateStroke, gateOutputVal);
+                    g.innerHTML += gateSvgStr;
+                    // Group Term Label Tag
+                    g.innerHTML += `
+                        <text x="${stage1X + stage1GateW/2 - 4}" y="${gateY - stage1GateH/2 - 4}" text-anchor="middle" font-family="var(--code-font)" font-size="10" font-weight="700" fill="${colorHex}">
+                            G${gIdx + 1}: ${group.term}
+                        </text>
+                    `;
+                }
+            });
+
+            // 3. DRAW STAGE 2 (COMBINING OUTPUT GATE: OR / AND / NAND / NOR)
+            let finalCircuitOutput = 0;
+            if (isSOP) {
+                // SOP combining: OR of all terms (or NAND in NAND-NAND mode)
+                const termOrVal = stage1Outputs.some(st => st.val === 1) ? 1 : 0;
+                finalCircuitOutput = isNAND ? (stage1Outputs.every(st => st.val === 1) ? 0 : 1) : termOrVal;
+            } else {
+                // POS combining: AND of all sum terms (or NOR in NOR-NOR mode)
+                const termAndVal = stage1Outputs.every(st => st.val === 1) ? 1 : 0;
+                finalCircuitOutput = isNOR ? (stage1Outputs.some(st => st.val === 1) ? 0 : 1) : termAndVal;
+            }
+
+            if (numTerms === 1) {
+                // Single term direct route to Output Probe
+                finalCircuitOutput = stage1Outputs[0].val;
+                const outY = stage1Outputs[0].y;
+                g.innerHTML += `
+                    <line x1="${stage1X + stage1GateW}" y1="${outY}" x2="${probeX}" y2="${outY}" class="circuit-wire sig-${finalCircuitOutput}" />
+                    <g transform="translate(${probeX}, ${outY - 25})">
+                        <rect width="110" height="50" class="probe-box sig-${finalCircuitOutput}" />
+                        <circle cx="22" cy="25" r="7" class="probe-led sig-${finalCircuitOutput}" />
+                        <text x="44" y="24" class="probe-text">F</text>
+                        <text x="44" y="40" class="probe-val">= ${finalCircuitOutput} (${finalCircuitOutput ? 'HIGH' : 'LOW'})</text>
+                    </g>
+                `;
+            } else {
+                // Multiple terms -> Stage 2 Gate
+                let stage2GateType = isSOP ? (isNAND ? 'NAND' : 'OR') : (isNOR ? 'NOR' : 'AND');
+                gateTypesTally[stage2GateType] = (gateTypesTally[stage2GateType] || 0) + 1;
+
+                const stage2InputSpacing = (stage2GateH - 14) / (numTerms - 1);
+                const stage2InputStartY = stage2Y - (stage2GateH - 14) / 2;
+
+                // Route wires from Stage 1 outputs to Stage 2 inputs with clean step routing
+                stage1Outputs.forEach((st, idx) => {
+                    const pinY = stage2InputStartY + idx * stage2InputSpacing;
+                    const midX = stage1X + stage1GateW + 40 + (idx % 2 === 0 ? 0 : 20);
+
+                    g.innerHTML += `
+                        <path d="M ${stage1X + stage1GateW} ${st.y} L ${midX} ${st.y} L ${midX} ${pinY} L ${stage2X} ${pinY}" class="circuit-wire sig-${st.val}" />
+                    `;
+                });
+
+                // Render Stage 2 Gate
+                const stage2Stroke = finalCircuitOutput === 1 ? '#10b981' : '#38bdf8';
+                g.innerHTML += drawAnsiGate(stage2GateType, stage2X, stage2Y, stage2GateW, stage2GateH, stage2Stroke, finalCircuitOutput);
+                g.innerHTML += `
+                    <text x="${stage2X + stage2GateW/2}" y="${stage2Y - stage2GateH/2 - 6}" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="#38bdf8">
+                        Output Stage (${stage2GateType})
+                    </text>
+                `;
+
+                // Connect to Probe
+                g.innerHTML += `
+                    <line x1="${stage2X + stage2GateW + (stage2GateType.includes('N') ? 8 : 0)}" y1="${stage2Y}" x2="${probeX}" y2="${stage2Y}" class="circuit-wire sig-${finalCircuitOutput}" />
+                    <g transform="translate(${probeX}, ${stage2Y - 25})">
+                        <rect width="110" height="50" class="probe-box sig-${finalCircuitOutput}" />
+                        <circle cx="22" cy="25" r="7" class="probe-led sig-${finalCircuitOutput}" />
+                        <text x="44" y="24" class="probe-text">F</text>
+                        <text x="44" y="40" class="probe-val">= ${finalCircuitOutput} (${finalCircuitOutput ? 'HIGH' : 'LOW'})</text>
+                    </g>
+                `;
+            }
+
+            svg.appendChild(g);
+
+            // Update Circuit Metrics & Bill of Materials
+            const totalGates = stage1GatesCount + stage2GatesCount + totalInverters;
+            const logicLevels = numTerms > 1 ? 2 : 1;
+            updateCircuitStats(totalGates, totalInverters, logicLevels, gateTypesTally);
+        }
+
+        function renderXorCircuit(svg, xorSynth, varStates) {
+            const vars = xorSynth.vars;
+            const numVarsXor = vars.length;
+
+            const leftMargin = 50;
+            const railSpacing = 40;
+            const totalRailWidth = numVarsXor * railSpacing;
+            const gateX = leftMargin + totalRailWidth + 60;
+            const gateW = 56, gateH = 46;
+
+            const circuitW = gateX + gateW + 280;
+            const circuitH = 300;
+
+            svg.setAttribute('viewBox', `0 0 ${circuitW} ${circuitH}`);
+            svg.setAttribute('width', `${circuitW}px`);
+            svg.setAttribute('height', `${circuitH}px`);
+
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+
+            // Draw Input Rails
+            const railCoords = {};
+            vars.forEach((v, idx) => {
+                const rx = leftMargin + idx * railSpacing;
+                railCoords[v] = rx;
+                const sig = varStates[v].trueVal;
+                g.innerHTML += `
+                    <g transform="translate(${rx - 16}, 16)">
+                        <rect width="32" height="22" rx="4" fill="#1e293b" stroke="#334155" />
+                        <text x="16" y="15" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="${sig ? '#10b981' : '#94a3b8'}">${v}=${sig}</text>
+                    </g>
+                    <line x1="${rx}" y1="42" x2="${rx}" y2="${circuitH - 30}" class="circuit-wire sig-${sig}" />
+                `;
+            });
+
+            let finalOut = 0;
+            const gateType = xorSynth.type.startsWith('XNOR') ? 'XNOR' : 'XOR';
+
+            if (numVarsXor === 2) {
+                const valA = varStates[vars[0]].trueVal;
+                const valB = varStates[vars[1]].trueVal;
+                finalOut = gateType === 'XOR' ? (valA ^ valB) : (1 - (valA ^ valB));
+
+                const gateY = 150;
+                // Connect A & B to XOR Gate
+                g.innerHTML += `
+                    <circle cx="${railCoords[vars[0]]}" cy="${gateY - 12}" r="3.5" class="junction-dot sig-${valA}" />
+                    <line x1="${railCoords[vars[0]]}" y1="${gateY - 12}" x2="${gateX}" y2="${gateY - 12}" class="circuit-wire sig-${valA}" />
+                    <circle cx="${railCoords[vars[1]]}" cy="${gateY + 12}" r="3.5" class="junction-dot sig-${valB}" />
+                    <line x1="${railCoords[vars[1]]}" y1="${gateY + 12}" x2="${gateX}" y2="${gateY + 12}" class="circuit-wire sig-${valB}" />
+                `;
+
+                // Render Gate
+                g.innerHTML += drawAnsiGate(gateType, gateX, gateY, gateW, gateH, finalOut === 1 ? '#10b981' : '#a855f7', finalOut);
+                g.innerHTML += `<text x="${gateX + gateW/2}" y="${gateY - gateH/2 - 6}" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="#a855f7">${gateType} Gate (74LS86)</text>`;
+
+                // Probe
+                const probeX = gateX + gateW + 60;
+                g.innerHTML += `
+                    <line x1="${gateX + gateW + (gateType === 'XNOR' ? 8 : 0)}" y1="${gateY}" x2="${probeX}" y2="${gateY}" class="circuit-wire sig-${finalOut}" />
+                    <g transform="translate(${probeX}, ${gateY - 25})">
+                        <rect width="110" height="50" class="probe-box sig-${finalOut}" />
+                        <circle cx="22" cy="25" r="7" class="probe-led sig-${finalOut}" />
+                        <text x="44" y="24" class="probe-text">F</text>
+                        <text x="44" y="40" class="probe-val">= ${finalOut} (${finalOut ? 'HIGH' : 'LOW'})</text>
+                    </g>
+                `;
+            } else {
+                // Cascaded XORs for 3 or 4 variables
+                const valA = varStates[vars[0]].trueVal;
+                const valB = varStates[vars[1]].trueVal;
+                const stage1Val = valA ^ valB;
+                const valC = varStates[vars[2]].trueVal;
+                finalOut = gateType === 'XOR' ? (stage1Val ^ valC) : (1 - (stage1Val ^ valC));
+
+                const g1Y = 110;
+                const g2Y = 180;
+                const g2X = gateX + gateW + 40;
+
+                // Gate 1 (A ⊕ B)
+                g.innerHTML += `
+                    <circle cx="${railCoords[vars[0]]}" cy="${g1Y - 12}" r="3.5" class="junction-dot sig-${valA}" />
+                    <line x1="${railCoords[vars[0]]}" y1="${g1Y - 12}" x2="${gateX}" y2="${g1Y - 12}" class="circuit-wire sig-${valA}" />
+                    <circle cx="${railCoords[vars[1]]}" cy="${g1Y + 12}" r="3.5" class="junction-dot sig-${valB}" />
+                    <line x1="${railCoords[vars[1]]}" y1="${g1Y + 12}" x2="${gateX}" y2="${g1Y + 12}" class="circuit-wire sig-${valB}" />
+                `;
+                g.innerHTML += drawAnsiGate('XOR', gateX, g1Y, gateW, gateH, '#a855f7', stage1Val);
+
+                // Gate 2 (Stage1 ⊕ C)
+                g.innerHTML += `
+                    <path d="M ${gateX + gateW} ${g1Y} L ${g2X - 20} ${g1Y} L ${g2X - 20} ${g2Y - 12} L ${g2X} ${g2Y - 12}" class="circuit-wire sig-${stage1Val}" />
+                    <circle cx="${railCoords[vars[2]]}" cy="${g2Y + 12}" r="3.5" class="junction-dot sig-${valC}" />
+                    <line x1="${railCoords[vars[2]]}" y1="${g2Y + 12}" x2="${g2X}" y2="${g2Y + 12}" class="circuit-wire sig-${valC}" />
+                `;
+                g.innerHTML += drawAnsiGate(gateType, g2X, g2Y, gateW, gateH, finalOut === 1 ? '#10b981' : '#a855f7', finalOut);
+
+                const probeX = g2X + gateW + 50;
+                g.innerHTML += `
+                    <line x1="${g2X + gateW + (gateType === 'XNOR' ? 8 : 0)}" y1="${g2Y}" x2="${probeX}" y2="${g2Y}" class="circuit-wire sig-${finalOut}" />
+                    <g transform="translate(${probeX}, ${g2Y - 25})">
+                        <rect width="110" height="50" class="probe-box sig-${finalOut}" />
+                        <circle cx="22" cy="25" r="7" class="probe-led sig-${finalOut}" />
+                        <text x="44" y="24" class="probe-text">F</text>
+                        <text x="44" y="40" class="probe-val">= ${finalOut} (${finalOut ? 'HIGH' : 'LOW'})</text>
+                    </g>
+                `;
+            }
+
+            svg.appendChild(g);
+            updateCircuitStats(numVarsXor - 1, 0, numVarsXor - 1, { [gateType]: numVarsXor - 1 });
+        }
+
+        function drawAnsiGate(type, x, y, w, h, strokeColor, activeSignal) {
+            let svgStr = '';
+            const isActive = activeSignal === 1;
+            const activeClass = isActive ? 'sig-active' : '';
+
+            if (type === 'AND' || type === 'NAND') {
+                // ANSI Flat-back D-Shape
+                const path = `M ${x} ${y - h/2} L ${x + w/2} ${y - h/2} A ${h/2} ${h/2} 0 0 1 ${x + w/2} ${y + h/2} L ${x} ${y + h/2} Z`;
+                svgStr += `<path d="${path}" class="gate-body gate-and ${activeClass}" stroke="${strokeColor}" />`;
+                if (type === 'NAND') {
+                    svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
+                }
+            } else if (type === 'OR' || type === 'NOR') {
+                // ANSI Curved Inward Shield Shape
+                const path = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
+                svgStr += `<path d="${path}" class="gate-body gate-or ${activeClass}" stroke="${strokeColor}" />`;
+                if (type === 'NOR') {
+                    svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
+                }
+            } else if (type === 'XOR' || type === 'XNOR') {
+                // ANSI Double-Curved Back XOR Shape
+                const backArc = `M ${x - 8} ${y - h/2} Q ${x - 8 + w * 0.28} ${y} ${x - 8} ${y + h/2}`;
+                const body = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
+                svgStr += `<path d="${backArc}" fill="none" stroke="${strokeColor}" stroke-width="2" />`;
+                svgStr += `<path d="${body}" class="gate-body gate-xor ${activeClass}" stroke="${strokeColor}" />`;
+                if (type === 'XNOR') {
+                    svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
+                }
+            } else if (type === 'NOT') {
+                const path = `M ${x} ${y - h/2} L ${x + w - 8} ${y} L ${x} ${y + h/2} Z`;
+                svgStr += `<path d="${path}" class="gate-body gate-not ${activeClass}" stroke="${strokeColor}" />`;
+                svgStr += `<circle cx="${x + w - 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
+            }
+
+            return svgStr;
+        }
+
+        function deriveGroupTermLiterals(group, nVars, mode) {
+            const varList = VAR_NAMES.slice(0, nVars);
+            const literals = [];
+            for (let bitIdx = 0; bitIdx < nVars; bitIdx++) {
+                const vName = varList[bitIdx];
+                const shift = nVars - 1 - bitIdx;
+                let hasZero = false, hasOne = false;
+
+                for (const m of group.minterms) {
+                    const bit = (m >> shift) & 1;
+                    if (bit === 0) hasZero = true;
+                    if (bit === 1) hasOne = true;
+                }
+
+                if (!hasZero || !hasOne) {
+                    if (hasOne) {
+                        literals.push({ varName: vName, inverted: mode === 'POS', constVal: 1 });
+                    } else if (hasZero) {
+                        literals.push({ varName: vName, inverted: mode === 'SOP', constVal: 0 });
+                    }
+                }
+            }
+            return { literals };
+        }
+
+        function getGroupColorHex(idx) {
+            const colors = ['#38bdf8', '#f43f5e', '#a855f7', '#10b981', '#f59e0b', '#2dd4bf', '#fb923c', '#ec4899'];
+            return colors[idx % colors.length];
+        }
+
+        function updateCircuitStats(totalGates, totalInverters, logicLevels, gateTypesTally) {
+            const pill = document.getElementById('circuitGateCountPill');
+            if (pill) {
+                pill.textContent = `${totalGates} Logic Gates | ${totalInverters} Inverters | ${logicLevels} Gate Levels`;
+            }
+
+            // Estimate Hardware ICs (Standard 74LS TTL Series)
+            const icList = document.getElementById('icChipsList');
+            if (!icList) return;
+            icList.innerHTML = '';
+
+            const icSpecs = [
+                { name: '74LS04', desc: 'Hex Inverter (6 NOT)', count: Math.ceil(totalInverters / 6), gateCount: totalInverters },
+                { name: '74LS08', desc: 'Quad 2-In AND', count: Math.ceil((gateTypesTally['AND'] || 0) / 4), gateCount: gateTypesTally['AND'] || 0 },
+                { name: '74LS32', desc: 'Quad 2-In OR', count: Math.ceil((gateTypesTally['OR'] || 0) / 4), gateCount: gateTypesTally['OR'] || 0 },
+                { name: '74LS86', desc: 'Quad 2-In XOR', count: Math.ceil((gateTypesTally['XOR'] || 0) / 4), gateCount: gateTypesTally['XOR'] || 0 },
+                { name: '74LS00', desc: 'Quad 2-In NAND', count: Math.ceil((gateTypesTally['NAND'] || 0) / 4), gateCount: gateTypesTally['NAND'] || 0 },
+                { name: '74LS02', desc: 'Quad 2-In NOR', count: Math.ceil((gateTypesTally['NOR'] || 0) / 4), gateCount: gateTypesTally['NOR'] || 0 }
+            ];
+
+            let totalPackages = 0;
+            icSpecs.forEach(ic => {
+                if (ic.count > 0) {
+                    totalPackages += ic.count;
+                    const chipEl = document.createElement('div');
+                    chipEl.className = 'ic-chip';
+                    chipEl.innerHTML = `
+                        <span class="chip-name">IC ${ic.name}</span>
+                        <span class="chip-desc">${ic.desc}</span>
+                        <span class="chip-count">${ic.count} IC (${ic.gateCount} gates)</span>
+                    `;
+                    icList.appendChild(chipEl);
+                }
+            });
+
+            if (totalPackages === 0) {
+                icList.innerHTML = `<span style="font-family: var(--code-font); font-size: 11px; color: var(--muted);">Direct tie to Power/Ground. No active IC chips required.</span>`;
+            }
+        }
+
+        function exportCircuitSvg() {
+            const svg = document.getElementById('logicCircuitSvg');
+            if (!svg) return;
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `kmap-logic-circuit-${currentSolution.expression.replace(/[^a-zA-Z0-9]/g, '_')}.svg`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportCircuitPng() {
+            const svg = document.getElementById('logicCircuitSvg');
+            if (!svg) return;
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+
+            const viewBox = svg.getAttribute('viewBox').split(' ');
+            const w = parseFloat(viewBox[2]) || 800;
+            const h = parseFloat(viewBox[3]) || 400;
+            const scale = 2; // Hi-DPI resolution
+            canvas.width = w * scale;
+            canvas.height = h * scale;
+
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+
+            img.onload = () => {
+                ctx.fillStyle = '#0d1017';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const pngUrl = canvas.toDataURL('image/png');
+                const a = document.createElement('a');
+                a.href = pngUrl;
+                a.download = `kmap-logic-circuit-${currentSolution.expression.replace(/[^a-zA-Z0-9]/g, '_')}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            };
+            img.src = url;
+        }
+
+        function copyCircuitSvg() {
+            const svg = document.getElementById('logicCircuitSvg');
+            if (!svg) return;
+            const svgData = new XMLSerializer().serializeToString(svg);
+            navigator.clipboard.writeText(svgData).then(() => {
+                alert('Logic Circuit SVG markup copied to clipboard!');
+            }).catch(() => {
+                prompt('Copy Logic Circuit SVG:', svgData);
+            });
+        }
+
     </script>
 </body>
 

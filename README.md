@@ -28,7 +28,25 @@ An interactive **Karnaugh Map (K-Map) Solver & Minimizer** and **Matrix Multipli
   - Hardware RTL Verilog and C bitwise logic exports.
   - Logic gate savings percentage.
 
-### 2. 🔢 Matrix Multiplication Trace Visualizer
+### 2. ⚡ Logic Gate Connection Circuit Diagram Generator
+- **Gate Family Modes**:
+  - **Basic Gates Only (AND, OR, NOT)**: Canonical 2-level gate realization with standard NOT inverters, product AND gates (SOP) or sum OR gates (POS), and final stage OR/AND combining gates.
+  - **All Gates (XOR / XNOR / Multi-Gate)**: Advanced synthesis with pattern recognition for XOR / XNOR gates (Parity generators, Full Adder Sum, etc.).
+  - **Universal NAND-NAND**: Realizes SOP logic using universal NAND gates.
+  - **Universal NOR-NOR**: Realizes POS logic using universal NOR gates.
+- **Interactive Live Signal Simulator**:
+  - Click individual input pins ($A, B, C, D$) or use **Auto Test** to simulate live signal propagation.
+  - Active HIGH ($1$) signal paths glow brightly in neon green/teal; LOW ($0$) signals display in dark slate.
+  - Live output probe $F$ displays state and LED status in real time.
+- **Hardware IC Bill of Materials (BOM)**:
+  - Exact standard 74LS TTL Series IC chips estimation (7404 Hex Inverter, 7408 Quad AND, 7432 Quad OR, 7486 Quad XOR, 7400 Quad NAND, 7402 Quad NOR).
+- **Export & Lab Tools**:
+  - 📥 **Download SVG**: High-quality vector schematic.
+  - 🖼️ **Download PNG**: 2x Hi-DPI raster diagram.
+  - 📋 **Copy SVG**: Direct vector markup copy to clipboard.
+  - 🔍 **Zoom & Pan**: Zoom in/out and Fit-to-screen controls.
+
+### 3. 🔢 Matrix Multiplication Trace Visualizer
 - Visualizes step-by-step dot product calculation: $C[i][j] = \sum A[i][k] \times B[k][j]$.
 - Step controls: Play, Pause, Step Forward/Backward, and Speed adjustment.
 - Dynamic matrix dimensions and value editing.
@@ -38,3 +56,4 @@ An interactive **Karnaugh Map (K-Map) Solver & Minimizer** and **Matrix Multipli
 ## 🚀 Getting Started
 
 Simply open `index.html` (or `k map.html`) in your browser or with **Live Server** in VS Code.
+
