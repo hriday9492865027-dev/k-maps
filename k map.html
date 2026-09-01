@@ -1676,6 +1676,79 @@
             transition: stroke 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
         }
 
+        /* 🌟 GATE GLOW-UP & WAVE PROPAGATION ANIMATIONS (RED/GREEN) */
+        @keyframes signalFlowGreen {
+            0% { stroke-dashoffset: 24; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes signalFlowRed {
+            0% { stroke-dashoffset: 24; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes gateGlowBurstGreen {
+            0% { transform: scale(1); filter: drop-shadow(0 0 4px #10b981); }
+            45% { transform: scale(1.14); filter: drop-shadow(0 0 22px #10b981) drop-shadow(0 0 38px #34d399); fill: #14382e; stroke: #34d399; }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6)); fill: #181d28; stroke: #10b981; }
+        }
+
+        @keyframes gateGlowBurstRed {
+            0% { transform: scale(1); filter: drop-shadow(0 0 4px #ef4444); }
+            45% { transform: scale(1.14); filter: drop-shadow(0 0 22px #ef4444) drop-shadow(0 0 38px #f43f5e); fill: #351418; stroke: #f87171; }
+            100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5)); fill: #181d28; stroke: #ef4444; }
+        }
+
+        @keyframes probeIgniteGreen {
+            0% { transform: scale(0.95); filter: drop-shadow(0 0 4px #10b981); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 25px #10b981) drop-shadow(0 0 45px #2dd4bf); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(16, 185, 129, 0.7)); }
+        }
+
+        @keyframes probeIgniteRed {
+            0% { transform: scale(0.95); filter: drop-shadow(0 0 4px #ef4444); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 25px #ef4444) drop-shadow(0 0 45px #f43f5e); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.7)); }
+        }
+
+        @keyframes wireProgress {
+            0% { stroke-dashoffset: 300; opacity: 0.3; }
+            100% { stroke-dashoffset: 0; opacity: 1; }
+        }
+
+        .gate-body.glow-burst-green {
+            animation: gateGlowBurstGreen 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .gate-body.glow-burst-red {
+            animation: gateGlowBurstRed 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .probe-box.ignite-green {
+            animation: probeIgniteGreen 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .probe-box.ignite-red {
+            animation: probeIgniteRed 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .circuit-action-btn.btn-play-pulse {
+            background: rgba(16, 185, 129, 0.18);
+            border-color: #10b981;
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .circuit-action-btn.btn-play-pulse.playing {
+            background: rgba(244, 63, 94, 0.2);
+            border-color: #f43f5e;
+            color: #f43f5e;
+        }
+
+        .circuit-action-btn.btn-play-pulse:hover {
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+        }
+
         /* ⚡ ANIMATED SIGNAL FLOW: RED for 0 (LOW), GREEN for 1 (HIGH) */
         @keyframes signalFlowGreen {
             0% { stroke-dashoffset: 24; }
@@ -2055,17 +2128,20 @@
                         <span class="badge" id="circuitModeBadge">Basic Gates (AND / OR / NOT)</span>
                     </div>
                     <div class="circuit-header-actions">
-                        <button class="circuit-action-btn btn-play-formation" onclick="playCircuitFormationAnim()" title="Animate Circuit Formation Step-by-Step">
-                            🎬 Animate Formation
+                        <button class="circuit-action-btn btn-play-pulse" id="btnCircuitPlayPulse" onclick="toggleCircuitPlayPulse()" title="Play continuous signal propagation wave through all gates">
+                            ▶ Play Animation
+                        </button>
+                        <button class="circuit-action-btn" id="btnCircuitResetPulse" onclick="triggerCircuitWavePulse()" title="Replay signal wave from start to end">
+                            ⚡ Trigger Wave
                         </button>
                         <button class="ghost circuit-action-btn" onclick="exportCircuitSvg()" title="Download as SVG">
-                            📥 Download SVG
+                            📥 SVG
                         </button>
                         <button class="ghost circuit-action-btn" onclick="exportCircuitPng()" title="Download as PNG">
-                            🖼️ Download PNG
+                            🖼️ PNG
                         </button>
                         <button class="ghost circuit-action-btn" onclick="copyCircuitSvg()" title="Copy SVG Code">
-                            📋 Copy SVG
+                            📋 Copy
                         </button>
                     </div>
                 </div>
@@ -3395,6 +3471,7 @@
                 updateExplanationView(sol);
                 renderKmapAnimStep();
                 renderCircuitDiagram();
+                if (isCircuitPlaying) startContinuousPulseWave(); else triggerCircuitWavePulse();
             }, 20);
         }
 
@@ -3691,8 +3768,10 @@
         let circuitInputs = { A: 0, B: 0, C: 0, D: 0 };
         let circuitZoom = 1.0;
         let autoSimTimer = null;
+        let circuitWaveTimer = null;
+        let isCircuitPlaying = true; // Auto-play continuous pulse wave by default
+        let formationStep = 3;
         let formationAnimTimer = null;
-        let formationStep = -1; // -1 means normal full display, 0..N means animation phase
 
         function setCircuitGateMode(mode) {
             circuitGateMode = mode;
@@ -3712,12 +3791,14 @@
             if (badge) badge.textContent = badgeMap[mode] || 'Basic Gates';
 
             renderCircuitDiagram();
+            triggerCircuitWavePulse();
         }
 
         function toggleCircuitInput(varName) {
             circuitInputs[varName] = circuitInputs[varName] === 1 ? 0 : 1;
             updateInputTogglesUI();
             renderCircuitDiagram();
+            triggerCircuitWavePulse();
         }
 
         function updateInputTogglesUI() {
@@ -3765,28 +3846,102 @@
                     }
                     updateInputTogglesUI();
                     renderCircuitDiagram();
+                    triggerCircuitWavePulse();
                     step = (step + 1) % total;
-                }, 800);
+                }, 1400);
             }
         }
 
-        function playCircuitFormationAnim() {
-            if (formationAnimTimer) clearInterval(formationAnimTimer);
-            formationStep = 0;
-            renderCircuitDiagram();
+        // =========================================================================
+        // LEFT-TO-RIGHT PROPAGATION WAVE ANIMATION & GATE GLOW BURSTS
+        // =========================================================================
+        function toggleCircuitPlayPulse() {
+            isCircuitPlaying = !isCircuitPlaying;
+            updatePlayBtnUI();
 
-            // Formation stages: 0 (Inputs) -> 1 (Stage 1 Gates & Inverters) -> 2 (Stage 2 Output Gate) -> 3 (Output Probe Glow & Full Flow)
-            let step = 0;
-            formationAnimTimer = setInterval(() => {
-                step++;
-                formationStep = step;
-                renderCircuitDiagram();
-                if (step >= 3) {
-                    clearInterval(formationAnimTimer);
-                    formationAnimTimer = null;
-                    formationStep = -1; // back to live full mode
-                }
-            }, 450);
+            if (isCircuitPlaying) {
+                startContinuousPulseWave();
+            } else {
+                stopContinuousPulseWave();
+            }
+        }
+
+        function updatePlayBtnUI() {
+            const btn = document.getElementById('btnCircuitPlayPulse');
+            if (!btn) return;
+            if (isCircuitPlaying) {
+                btn.innerHTML = '⏸ Pause';
+                btn.classList.add('playing');
+            } else {
+                btn.innerHTML = '▶ Play Animation';
+                btn.classList.remove('playing');
+            }
+        }
+
+        function startContinuousPulseWave() {
+            if (circuitWaveTimer) clearInterval(circuitWaveTimer);
+            triggerCircuitWavePulse();
+            circuitWaveTimer = setInterval(() => {
+                triggerCircuitWavePulse();
+            }, 2400);
+        }
+
+        function stopContinuousPulseWave() {
+            if (circuitWaveTimer) {
+                clearInterval(circuitWaveTimer);
+                circuitWaveTimer = null;
+            }
+        }
+
+        function triggerCircuitWavePulse() {
+            const svg = document.getElementById('logicCircuitSvg');
+            if (!svg || typeof svg.querySelectorAll !== 'function') return;
+
+            // Reset glow classes
+            try {
+                svg.querySelectorAll('.gate-body').forEach(el => {
+                    el.classList?.remove('glow-burst-green', 'glow-burst-red');
+                });
+                svg.querySelectorAll('.probe-box').forEach(el => {
+                    el.classList?.remove('ignite-green', 'ignite-red');
+                });
+            } catch (e) {}
+
+            // Stage 1: Wave reaches Inverters & Stage 1 Gates at 420ms -> Gates Glow Up!
+            setTimeout(() => {
+                try {
+                    if (typeof svg.querySelectorAll !== 'function') return;
+                    svg.querySelectorAll('.stage1-gate-body').forEach(el => {
+                        const outVal = el.dataset?.outVal || el.getAttribute?.('data-out-val');
+                        el.classList?.add(outVal === '1' ? 'glow-burst-green' : 'glow-burst-red');
+                    });
+                    svg.querySelectorAll('.gate-not').forEach(el => {
+                        el.classList?.add('glow-burst-green');
+                    });
+                } catch (e) {}
+            }, 420);
+
+            // Stage 2: Wave passes through intermediate wires into Stage 2 Gate at 1050ms -> Stage 2 Gate Glows Up!
+            setTimeout(() => {
+                try {
+                    if (typeof svg.querySelectorAll !== 'function') return;
+                    svg.querySelectorAll('.stage2-gate-body').forEach(el => {
+                        const outVal = el.dataset?.outVal || el.getAttribute?.('data-out-val');
+                        el.classList?.add(outVal === '1' ? 'glow-burst-green' : 'glow-burst-red');
+                    });
+                } catch (e) {}
+            }, 1050);
+
+            // Stage 3: Wave reaches Output Probe F at 1550ms -> Probe Ignites!
+            setTimeout(() => {
+                try {
+                    if (typeof svg.querySelectorAll !== 'function') return;
+                    svg.querySelectorAll('.probe-box').forEach(el => {
+                        const outVal = el.dataset?.outVal || el.getAttribute?.('data-out-val');
+                        el.classList?.add(outVal === '1' ? 'ignite-green' : 'ignite-red');
+                    });
+                } catch (e) {}
+            }, 1550);
         }
 
         function detectXorXnorSynthesis(sol, nVars) {
@@ -4113,8 +4268,8 @@
                         </text>
                     `;
                 } else {
-                    // Render ANSI Gate
-                    const gateSvgStr = drawAnsiGate(stage1GateType, stage1X, gateY, stage1GateW, stage1GateH, gateStroke, gateOutputVal);
+                    // Render ANSI Gate with Stage 1 Identifier and data-out-val for Wave Glow-Up
+                    const gateSvgStr = drawAnsiGate(stage1GateType, stage1X, gateY, stage1GateW, stage1GateH, gateStroke, gateOutputVal, 'stage1-gate-body');
                     g.innerHTML += gateSvgStr;
                     // Group Term Badge Label
                     g.innerHTML += `
@@ -4150,7 +4305,7 @@
                 g.innerHTML += `
                     <line x1="${stage1X + stage1GateW}" y1="${outY}" x2="${probeX}" y2="${outY}" class="${outWireClass}" />
                     <g transform="translate(${probeX}, ${outY - 25})">
-                        <rect width="115" height="50" class="probe-box sig-${finalCircuitOutput}" />
+                        <rect width="115" height="50" class="probe-box sig-${finalCircuitOutput}" data-out-val="${finalCircuitOutput}" />
                         <circle cx="24" cy="25" r="7.5" class="probe-led sig-${finalCircuitOutput}" />
                         <text x="48" y="24" class="probe-text">F</text>
                         <text x="48" y="40" class="probe-val">= ${finalCircuitOutput} (${finalCircuitOutput ? 'HIGH' : 'LOW'})</text>
@@ -4175,9 +4330,9 @@
                     `;
                 });
 
-                // Render Stage 2 Gate
+                // Render Stage 2 Gate with Stage 2 Identifier and data-out-val for Wave Glow-Up
                 const stage2Stroke = finalCircuitOutput === 1 ? '#10b981' : '#ef4444';
-                g.innerHTML += drawAnsiGate(stage2GateType, stage2X, stage2Y, stage2GateW, stage2GateH, stage2Stroke, finalCircuitOutput);
+                g.innerHTML += drawAnsiGate(stage2GateType, stage2X, stage2Y, stage2GateW, stage2GateH, stage2Stroke, finalCircuitOutput, 'stage2-gate-body');
                 g.innerHTML += `
                     <text x="${stage2X + stage2GateW/2}" y="${stage2Y - stage2GateH/2 - 7}" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="#38bdf8">
                         Output Stage (${stage2GateType})
@@ -4195,7 +4350,7 @@
                 g.innerHTML += `
                     <line x1="${stage2X + stage2GateW + (stage2GateType.includes('N') ? 8 : 0)}" y1="${stage2Y}" x2="${probeX}" y2="${stage2Y}" class="${finalWireClass}" />
                     <g transform="translate(${probeX}, ${stage2Y - 25})">
-                        <rect width="115" height="50" class="probe-box sig-${finalCircuitOutput}" />
+                        <rect width="115" height="50" class="probe-box sig-${finalCircuitOutput}" data-out-val="${finalCircuitOutput}" />
                         <circle cx="24" cy="25" r="7.5" class="probe-led sig-${finalCircuitOutput}" />
                         <text x="48" y="24" class="probe-text">F</text>
                         <text x="48" y="40" class="probe-val">= ${finalCircuitOutput} (${finalCircuitOutput ? 'HIGH' : 'LOW'})</text>
@@ -4335,21 +4490,22 @@
             updateCircuitStats(numVarsXor - 1, 0, numVarsXor - 1, { [gateType]: numVarsXor - 1 });
         }
 
-        function drawAnsiGate(type, x, y, w, h, strokeColor, activeSignal) {
+        function drawAnsiGate(type, x, y, w, h, strokeColor, activeSignal, extraClass = '') {
             let svgStr = '';
             const isActive = activeSignal === 1;
-            const activeClass = isActive ? 'sig-active' : '';
+            const activeClass = isActive ? 'sig-active' : 'sig-inactive';
             const gateClass = `gate-${type.toLowerCase()}`;
+            const combinedClass = `gate-body ${gateClass} ${activeClass} ${extraClass}`.trim();
 
             if (type === 'AND' || type === 'NAND') {
                 const path = `M ${x} ${y - h/2} L ${x + w/2} ${y - h/2} A ${h/2} ${h/2} 0 0 1 ${x + w/2} ${y + h/2} L ${x} ${y + h/2} Z`;
-                svgStr += `<path d="${path}" class="gate-body ${gateClass} ${activeClass}" stroke="${strokeColor}" />`;
+                svgStr += `<path d="${path}" class="${combinedClass}" data-out-val="${activeSignal}" stroke="${strokeColor}" />`;
                 if (type === 'NAND') {
                     svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
                 }
             } else if (type === 'OR' || type === 'NOR') {
                 const path = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
-                svgStr += `<path d="${path}" class="gate-body ${gateClass} ${activeClass}" stroke="${strokeColor}" />`;
+                svgStr += `<path d="${path}" class="${combinedClass}" data-out-val="${activeSignal}" stroke="${strokeColor}" />`;
                 if (type === 'NOR') {
                     svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
                 }
@@ -4357,13 +4513,13 @@
                 const backArc = `M ${x - 8} ${y - h/2} Q ${x - 8 + w * 0.28} ${y} ${x - 8} ${y + h/2}`;
                 const body = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
                 svgStr += `<path d="${backArc}" fill="none" stroke="${strokeColor}" stroke-width="2" />`;
-                svgStr += `<path d="${body}" class="gate-body ${gateClass} ${activeClass}" stroke="${strokeColor}" />`;
+                svgStr += `<path d="${body}" class="${combinedClass}" data-out-val="${activeSignal}" stroke="${strokeColor}" />`;
                 if (type === 'XNOR') {
                     svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
                 }
             } else if (type === 'NOT') {
                 const path = `M ${x} ${y - h/2} L ${x + w - 8} ${y} L ${x} ${y + h/2} Z`;
-                svgStr += `<path d="${path}" class="gate-body ${gateClass} ${activeClass}" stroke="${strokeColor}" />`;
+                svgStr += `<path d="${path}" class="${combinedClass}" data-out-val="${activeSignal}" stroke="${strokeColor}" />`;
                 svgStr += `<circle cx="${x + w - 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
             }
 
