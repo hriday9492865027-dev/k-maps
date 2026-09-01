@@ -1398,8 +1398,8 @@
         #vizSection { display: none; }
         #vizSection.shown { display: block; }
 
-        /* ========================================================================= */
-        /* LOGIC GATE CONNECTION DIAGRAM PANEL STYLES (CLEAN & ANIMATED) */
+                /* ========================================================================= */
+        /* LOGIC GATE CONNECTION DIAGRAM PANEL STYLES (CLEAN NEUTRAL & SLOW COLOR FILL) */
         /* ========================================================================= */
         .circuit-panel {
             background: var(--panel);
@@ -1419,7 +1419,7 @@
         }
 
         .circuit-action-btn {
-            padding: 5px 11px;
+            padding: 5px 12px;
             font-size: 11.5px;
             font-family: var(--code-font);
             border-radius: 5px;
@@ -1440,16 +1440,21 @@
             box-shadow: 0 2px 8px var(--teal-glow);
         }
 
-        .circuit-action-btn.btn-play-formation {
-            background: rgba(45, 212, 191, 0.15);
-            border-color: var(--teal);
-            color: var(--teal);
-            font-weight: 600;
+        .circuit-action-btn.btn-play-flow {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+            color: #10b981;
+            font-weight: 700;
         }
 
-        .circuit-action-btn.btn-play-formation:hover {
-            background: var(--teal);
-            color: #06221c;
+        .circuit-action-btn.btn-play-flow.playing {
+            background: rgba(244, 63, 94, 0.18);
+            border-color: #f43f5e;
+            color: #f43f5e;
+        }
+
+        .circuit-action-btn.btn-play-flow:hover {
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
         }
 
         .circuit-toolbar {
@@ -1559,14 +1564,12 @@
             background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
             border: 1px solid #ef4444;
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.45);
         }
 
         .input-pin-toggle.val-1 .val-pill {
             background: rgba(16, 185, 129, 0.25);
             color: var(--emerald);
             border: 1px solid var(--emerald);
-            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
         }
 
         .circuit-zoom-controls {
@@ -1630,7 +1633,7 @@
             min-height: 380px;
             max-height: 600px;
             overflow: auto;
-            background: radial-gradient(circle at 50% 50%, #151922 0%, #0c0f15 100%);
+            background: radial-gradient(circle at 50% 50%, #131720 0%, #0a0d13 100%);
             border: 1px solid var(--border);
             border-radius: 10px;
             position: relative;
@@ -1652,179 +1655,88 @@
             overflow: visible;
         }
 
-        /* ⚡ ANIMATED SIGNAL FLOW & PARTICLES */
-        @keyframes signalPulseFlow {
-            0% { stroke-dashoffset: 24; }
-            100% { stroke-dashoffset: 0; }
+        /* ------------------------------------------------------------- */
+        /* SCHEMATIC CIRCUIT GRAPHICS: NEUTRAL BASE + SLOW FILL OVERLAY */
+        /* ------------------------------------------------------------- */
+        .wire-base {
+            fill: none;
+            stroke: #2a3342;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
-        @keyframes gatePopIn {
-            0% { opacity: 0; transform: scale(0.7); }
-            70% { opacity: 1; transform: scale(1.05); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes probeBeacon {
-            0%, 100% { filter: drop-shadow(0 0 6px #10b981); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 14px #10b981) drop-shadow(0 0 24px #2dd4bf); transform: scale(1.03); }
-        }
-
-        .circuit-wire {
+        .wire-fill {
             fill: none;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: stroke 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
+            transition: stroke-dashoffset 1.1s linear, opacity 0.25s ease;
         }
 
-        /* 🌟 GATE GLOW-UP & WAVE PROPAGATION ANIMATIONS (RED/GREEN) */
-        @keyframes signalFlowGreen {
-            0% { stroke-dashoffset: 24; }
-            100% { stroke-dashoffset: 0; }
-        }
-
-        @keyframes signalFlowRed {
-            0% { stroke-dashoffset: 24; }
-            100% { stroke-dashoffset: 0; }
-        }
-
-        @keyframes gateGlowBurstGreen {
-            0% { transform: scale(1); filter: drop-shadow(0 0 4px #10b981); }
-            45% { transform: scale(1.14); filter: drop-shadow(0 0 22px #10b981) drop-shadow(0 0 38px #34d399); fill: #14382e; stroke: #34d399; }
-            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.6)); fill: #181d28; stroke: #10b981; }
-        }
-
-        @keyframes gateGlowBurstRed {
-            0% { transform: scale(1); filter: drop-shadow(0 0 4px #ef4444); }
-            45% { transform: scale(1.14); filter: drop-shadow(0 0 22px #ef4444) drop-shadow(0 0 38px #f43f5e); fill: #351418; stroke: #f87171; }
-            100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5)); fill: #181d28; stroke: #ef4444; }
-        }
-
-        @keyframes probeIgniteGreen {
-            0% { transform: scale(0.95); filter: drop-shadow(0 0 4px #10b981); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 25px #10b981) drop-shadow(0 0 45px #2dd4bf); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(16, 185, 129, 0.7)); }
-        }
-
-        @keyframes probeIgniteRed {
-            0% { transform: scale(0.95); filter: drop-shadow(0 0 4px #ef4444); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 25px #ef4444) drop-shadow(0 0 45px #f43f5e); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 14px rgba(239, 68, 68, 0.7)); }
-        }
-
-        @keyframes wireProgress {
-            0% { stroke-dashoffset: 300; opacity: 0.3; }
-            100% { stroke-dashoffset: 0; opacity: 1; }
-        }
-
-        .gate-body.glow-burst-green {
-            animation: gateGlowBurstGreen 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        .gate-body.glow-burst-red {
-            animation: gateGlowBurstRed 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        .probe-box.ignite-green {
-            animation: probeIgniteGreen 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        .probe-box.ignite-red {
-            animation: probeIgniteRed 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-        }
-
-        .circuit-action-btn.btn-play-pulse {
-            background: rgba(16, 185, 129, 0.18);
-            border-color: #10b981;
-            color: #10b981;
-            font-weight: 700;
-        }
-
-        .circuit-action-btn.btn-play-pulse.playing {
-            background: rgba(244, 63, 94, 0.2);
-            border-color: #f43f5e;
-            color: #f43f5e;
-        }
-
-        .circuit-action-btn.btn-play-pulse:hover {
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
-        }
-
-        /* ⚡ ANIMATED SIGNAL FLOW: RED for 0 (LOW), GREEN for 1 (HIGH) */
-        @keyframes signalFlowGreen {
-            0% { stroke-dashoffset: 24; }
-            100% { stroke-dashoffset: 0; }
-        }
-
-        @keyframes signalFlowRed {
-            0% { stroke-dashoffset: 24; }
-            100% { stroke-dashoffset: 0; }
-        }
-
-        @keyframes probeBeaconGreen {
-            0%, 100% { filter: drop-shadow(0 0 6px #10b981); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 14px #10b981) drop-shadow(0 0 24px #2dd4bf); transform: scale(1.03); }
-        }
-
-        @keyframes probeBeaconRed {
-            0%, 100% { filter: drop-shadow(0 0 6px #ef4444); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 14px #ef4444) drop-shadow(0 0 22px #f43f5e); transform: scale(1.03); }
-        }
-
-        .circuit-wire {
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-dasharray: 7 4;
-            transition: stroke 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
-        }
-
-        .circuit-wire.sig-0 {
+        .wire-fill.sig-0 {
             stroke: #ef4444;
             stroke-width: 2.2;
-            filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.8));
-            animation: signalFlowRed 1.1s linear infinite;
+            filter: drop-shadow(0 0 3px rgba(239, 68, 68, 0.8));
         }
 
-        .circuit-wire.sig-1 {
+        .wire-fill.sig-1 {
             stroke: #10b981;
-            stroke-width: 2.6;
-            filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.9));
-            animation: signalFlowGreen 0.7s linear infinite;
+            stroke-width: 2.4;
+            filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.85));
         }
 
         .junction-dot {
-            transition: all 0.25s ease;
+            transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
+            fill: #3b465c;
+            stroke: #1b202c;
+            stroke-width: 1.5;
         }
 
-        .junction-dot.sig-0 {
+        .junction-dot.active-0 {
             fill: #ef4444;
             stroke: #fca5a5;
-            stroke-width: 1.5;
-            filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.9));
+            filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.9));
         }
 
-        .junction-dot.sig-1 {
+        .junction-dot.active-1 {
             fill: #10b981;
             stroke: #6ee7b7;
-            stroke-width: 1.5;
-            filter: drop-shadow(0 0 6px #10b981);
+            filter: drop-shadow(0 0 5px #10b981);
         }
 
+        /* Logic Gates: Smooth stroke color transition (NO SCALE / JUMP) */
         .gate-body {
             stroke-width: 2.2;
-            transition: all 0.25s ease;
-            fill: #181d28;
-            transform-origin: center;
+            fill: #151a24;
+            stroke: #475569;
+            transition: stroke 0.35s ease, fill 0.35s ease, filter 0.35s ease;
         }
 
-        .gate-body.sig-active {
-            fill: #1a2530;
-            filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.45));
+        .gate-body.lit-0 {
+            stroke: #ef4444 !important;
+            fill: #1f1418 !important;
+            filter: drop-shadow(0 0 7px rgba(239, 68, 68, 0.5));
+        }
+
+        .gate-body.lit-1 {
+            stroke: #10b981 !important;
+            fill: #12211c !important;
+            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.55));
         }
 
         .gate-bubble {
-            fill: #181d28;
+            fill: #151a24;
+            stroke: #475569;
             stroke-width: 2;
+            transition: stroke 0.35s ease;
+        }
+
+        .gate-bubble.lit-0 {
+            stroke: #ef4444 !important;
+        }
+
+        .gate-bubble.lit-1 {
+            stroke: #10b981 !important;
         }
 
         .gate-label {
@@ -1833,6 +1745,7 @@
             font-weight: 700;
             fill: #94a3b8;
             user-select: none;
+            transition: fill 0.35s ease;
         }
 
         .pin-label {
@@ -1843,59 +1756,111 @@
             user-select: none;
         }
 
+        /* Input Pads */
+        .input-pad-box {
+            fill: #181e2a;
+            stroke: #3e485e;
+            stroke-width: 1.8;
+            transition: stroke 0.3s ease, fill 0.3s ease;
+        }
+
+        .input-pad-box.lit-0 {
+            stroke: #ef4444;
+        }
+
+        .input-pad-box.lit-1 {
+            stroke: #10b981;
+        }
+
+        .input-pad-text {
+            font-family: var(--code-font);
+            font-size: 12px;
+            font-weight: 700;
+            fill: #94a3b8;
+            transition: fill 0.3s ease;
+            user-select: none;
+        }
+
+        .input-pad-text.lit-0 { fill: #ef4444; }
+        .input-pad-text.lit-1 { fill: #10b981; }
+
+        .input-pad-dot {
+            fill: #3b465c;
+            transition: fill 0.3s ease, filter 0.3s ease;
+        }
+
+        .input-pad-dot.lit-0 {
+            fill: #ef4444;
+            filter: drop-shadow(0 0 4px #ef4444);
+        }
+
+        .input-pad-dot.lit-1 {
+            fill: #10b981;
+            filter: drop-shadow(0 0 5px #10b981);
+        }
+
+        /* Output Probe */
         .probe-box {
             rx: 8;
             ry: 8;
+            fill: #161b24;
+            stroke: #3e485e;
             stroke-width: 2;
-            transition: all 0.25s ease;
+            transition: stroke 0.35s ease, fill 0.35s ease, filter 0.35s ease;
         }
 
-        .probe-box.sig-0 {
+        .probe-box.lit-0 {
             fill: #221217;
             stroke: #ef4444;
-            filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.55));
+            filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.5));
         }
 
-        .probe-box.sig-1 {
+        .probe-box.lit-1 {
             fill: #064e3b;
             stroke: #10b981;
-            filter: drop-shadow(0 0 14px rgba(16, 185, 129, 0.7));
+            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.6));
         }
 
         .probe-led {
-            transition: all 0.25s ease;
+            fill: #334155;
+            stroke: #1e293b;
+            stroke-width: 1.5;
+            transition: fill 0.35s ease, stroke 0.35s ease, filter 0.35s ease;
         }
 
-        .probe-led.sig-0 {
+        .probe-led.lit-0 {
             fill: #ef4444;
             stroke: #fca5a5;
-            stroke-width: 2;
-            filter: drop-shadow(0 0 8px #ef4444);
-            animation: probeBeaconRed 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 0 7px #ef4444);
         }
 
-        .probe-led.sig-1 {
+        .probe-led.lit-1 {
             fill: #10b981;
             stroke: #6ee7b7;
-            stroke-width: 2;
-            filter: drop-shadow(0 0 10px #10b981);
-            animation: probeBeaconGreen 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px #10b981);
         }
 
         .probe-text {
             font-family: var(--code-font);
             font-size: 14px;
             font-weight: 700;
-            fill: #ffffff;
+            fill: #94a3b8;
             user-select: none;
+            transition: fill 0.3s ease;
         }
+
+        .probe-text.lit-0, .probe-text.lit-1 { fill: #ffffff; }
 
         .probe-val {
             font-family: var(--code-font);
             font-size: 11px;
-            fill: #cbd5e1;
+            fill: #64748b;
             user-select: none;
+            transition: fill 0.3s ease;
         }
+
+        .probe-val.lit-0 { fill: #fca5a5; }
+        .probe-val.lit-1 { fill: #a7f3d0; }
 
         /* IC Bill of Materials */
         .circuit-metrics-bar {
@@ -2128,11 +2093,11 @@
                         <span class="badge" id="circuitModeBadge">Basic Gates (AND / OR / NOT)</span>
                     </div>
                     <div class="circuit-header-actions">
-                        <button class="circuit-action-btn btn-play-pulse" id="btnCircuitPlayPulse" onclick="toggleCircuitPlayPulse()" title="Play continuous signal propagation wave through all gates">
+                        <button class="circuit-action-btn btn-play-flow" id="btnCircuitPlayFlow" onclick="toggleCircuitPlayFlow()" title="Start/Pause progressive color filling animation">
                             ▶ Play Animation
                         </button>
-                        <button class="circuit-action-btn" id="btnCircuitResetPulse" onclick="triggerCircuitWavePulse()" title="Replay signal wave from start to end">
-                            ⚡ Trigger Wave
+                        <button class="circuit-action-btn" id="btnCircuitResetFlow" onclick="resetCircuitToNeutral()" title="Reset circuit to clean neutral state">
+                            ⏮ Reset
                         </button>
                         <button class="ghost circuit-action-btn" onclick="exportCircuitSvg()" title="Download as SVG">
                             📥 SVG
@@ -3762,14 +3727,15 @@
         });
 
                 // =========================================================================
-        // LOGIC GATE CONNECTION DIAGRAM GENERATOR (CLEAN, STREAMLINED & ANIMATED)
+        // LOGIC GATE CONNECTION DIAGRAM GENERATOR (CLEAN NEUTRAL & SLOW COLOR FILL)
         // =========================================================================
         let circuitGateMode = 'basic'; // 'basic', 'all', 'nand', 'nor'
         let circuitInputs = { A: 0, B: 0, C: 0, D: 0 };
         let circuitZoom = 1.0;
         let autoSimTimer = null;
-        let circuitWaveTimer = null;
-        let isCircuitPlaying = true; // Auto-play continuous pulse wave by default
+        let circuitAnimProgressTimer = null;
+        let isCircuitPlaying = false; // Starts neutral/uncolored before clicking Play
+        let circuitAnimStep = 0; // 0: Neutral, 1: Inputs lit & filling wires, 2: Stage 1 lit & filling wires, 3: Stage 2 lit & filling wires, 4: Probe lit
         let formationStep = 3;
         let formationAnimTimer = null;
 
@@ -3790,15 +3756,23 @@
             const badge = document.getElementById('circuitModeBadge');
             if (badge) badge.textContent = badgeMap[mode] || 'Basic Gates';
 
-            renderCircuitDiagram();
-            triggerCircuitWavePulse();
+            if (isCircuitPlaying) {
+                renderCircuitDiagram();
+                startProgressiveColorFill();
+            } else {
+                renderCircuitDiagram();
+            }
         }
 
         function toggleCircuitInput(varName) {
             circuitInputs[varName] = circuitInputs[varName] === 1 ? 0 : 1;
             updateInputTogglesUI();
-            renderCircuitDiagram();
-            triggerCircuitWavePulse();
+            if (isCircuitPlaying) {
+                renderCircuitDiagram();
+                startProgressiveColorFill();
+            } else {
+                renderCircuitDiagram();
+            }
         }
 
         function updateInputTogglesUI() {
@@ -3838,6 +3812,7 @@
                 if (btn) btn.textContent = '⏸ Stop Test';
                 let step = 0;
                 const total = 1 << numVars;
+                if (!isCircuitPlaying) toggleCircuitPlayFlow();
                 autoSimTimer = setInterval(() => {
                     const vars = VAR_NAMES.slice(0, numVars);
                     for (let i = 0; i < numVars; i++) {
@@ -3846,28 +3821,37 @@
                     }
                     updateInputTogglesUI();
                     renderCircuitDiagram();
-                    triggerCircuitWavePulse();
+                    startProgressiveColorFill();
                     step = (step + 1) % total;
-                }, 1400);
+                }, 3800);
             }
         }
 
         // =========================================================================
-        // LEFT-TO-RIGHT PROPAGATION WAVE ANIMATION & GATE GLOW BURSTS
+        // PROGRESSIVE COLOR-FILLING ANIMATION ENGINE (START TO END, NO JUMPING)
         // =========================================================================
-        function toggleCircuitPlayPulse() {
+        function toggleCircuitPlayFlow() {
             isCircuitPlaying = !isCircuitPlaying;
             updatePlayBtnUI();
 
             if (isCircuitPlaying) {
-                startContinuousPulseWave();
+                renderCircuitDiagram();
+                startProgressiveColorFill();
             } else {
-                stopContinuousPulseWave();
+                pauseProgressiveColorFill();
             }
         }
 
+        function resetCircuitToNeutral() {
+            isCircuitPlaying = false;
+            if (circuitAnimProgressTimer) clearTimeout(circuitAnimProgressTimer);
+            updatePlayBtnUI();
+            circuitAnimStep = 0;
+            renderCircuitDiagram();
+        }
+
         function updatePlayBtnUI() {
-            const btn = document.getElementById('btnCircuitPlayPulse');
+            const btn = document.getElementById('btnCircuitPlayFlow');
             if (!btn) return;
             if (isCircuitPlaying) {
                 btn.innerHTML = '⏸ Pause';
@@ -3878,111 +3862,113 @@
             }
         }
 
-        function startContinuousPulseWave() {
-            if (circuitWaveTimer) clearInterval(circuitWaveTimer);
-            triggerCircuitWavePulse();
-            circuitWaveTimer = setInterval(() => {
-                triggerCircuitWavePulse();
-            }, 2400);
-        }
-
-        function stopContinuousPulseWave() {
-            if (circuitWaveTimer) {
-                clearInterval(circuitWaveTimer);
-                circuitWaveTimer = null;
-            }
-        }
-
-        function triggerCircuitWavePulse() {
+        function pauseProgressiveColorFill() {
+            if (circuitAnimProgressTimer) clearTimeout(circuitAnimProgressTimer);
             const svg = document.getElementById('logicCircuitSvg');
-            if (!svg || typeof svg.querySelectorAll !== 'function') return;
-
-            // Reset glow classes
-            try {
-                svg.querySelectorAll('.gate-body').forEach(el => {
-                    el.classList?.remove('glow-burst-green', 'glow-burst-red');
-                });
-                svg.querySelectorAll('.probe-box').forEach(el => {
-                    el.classList?.remove('ignite-green', 'ignite-red');
-                });
-            } catch (e) {}
-
-            // Stage 1: Wave reaches Inverters & Stage 1 Gates at 420ms -> Gates Glow Up!
-            setTimeout(() => {
-                try {
-                    if (typeof svg.querySelectorAll !== 'function') return;
-                    svg.querySelectorAll('.stage1-gate-body').forEach(el => {
-                        const outVal = el.dataset?.outVal || el.getAttribute?.('data-out-val');
-                        el.classList?.add(outVal === '1' ? 'glow-burst-green' : 'glow-burst-red');
-                    });
-                    svg.querySelectorAll('.gate-not').forEach(el => {
-                        el.classList?.add('glow-burst-green');
-                    });
-                } catch (e) {}
-            }, 420);
-
-            // Stage 2: Wave passes through intermediate wires into Stage 2 Gate at 1050ms -> Stage 2 Gate Glows Up!
-            setTimeout(() => {
-                try {
-                    if (typeof svg.querySelectorAll !== 'function') return;
-                    svg.querySelectorAll('.stage2-gate-body').forEach(el => {
-                        const outVal = el.dataset?.outVal || el.getAttribute?.('data-out-val');
-                        el.classList?.add(outVal === '1' ? 'glow-burst-green' : 'glow-burst-red');
-                    });
-                } catch (e) {}
-            }, 1050);
-
-            // Stage 3: Wave reaches Output Probe F at 1550ms -> Probe Ignites!
-            setTimeout(() => {
-                try {
-                    if (typeof svg.querySelectorAll !== 'function') return;
-                    svg.querySelectorAll('.probe-box').forEach(el => {
-                        const outVal = el.dataset?.outVal || el.getAttribute?.('data-out-val');
-                        el.classList?.add(outVal === '1' ? 'ignite-green' : 'ignite-red');
-                    });
-                } catch (e) {}
-            }, 1550);
+            if (svg) svg.style.animationPlayState = 'paused';
         }
 
-        function detectXorXnorSynthesis(sol, nVars) {
-            const groups = sol.selectedGroups;
-            const vars = VAR_NAMES.slice(0, nVars);
+        function startProgressiveColorFill() {
+            if (circuitAnimProgressTimer) clearTimeout(circuitAnimProgressTimer);
+            circuitAnimStep = 1;
+            const svg = document.getElementById('logicCircuitSvg');
+            if (!svg) return;
 
-            // 2-variable XOR: A'B + AB'
-            if (nVars === 2 && groups.length === 2) {
-                const terms = groups.map(g => g.term).sort();
-                if ((terms[0] === "A'B" && terms[1] === "AB'") || (terms[0] === "AB'" && terms[1] === "A'B")) {
-                    return { type: 'XOR2', vars: ['A', 'B'], expr: 'A ⊕ B' };
-                }
-                // 2-variable XNOR: A'B' + AB
-                if ((terms[0] === "A'B'" && terms[1] === "AB") || (terms[0] === "AB" && terms[1] === "A'B'")) {
-                    return { type: 'XNOR2', vars: ['A', 'B'], expr: 'A ⊙ B' };
-                }
-            }
+            // STEP 1: Light up Input Pads with Red (0) / Green (1)
+            svg.querySelectorAll('.input-pad-box').forEach(el => {
+                const val = el.dataset.val;
+                el.classList.add(`lit-${val}`);
+            });
+            svg.querySelectorAll('.input-pad-text').forEach(el => {
+                const val = el.dataset.val;
+                el.classList.add(`lit-${val}`);
+            });
+            svg.querySelectorAll('.input-pad-dot').forEach(el => {
+                const val = el.dataset.val;
+                el.classList.add(`lit-${val}`);
+            });
 
-            // 3-variable XOR parity: A ⊕ B ⊕ C (minterms: 1, 2, 4, 7)
-            if (nVars === 3 && groups.length === 4) {
-                const ms = groups.map(g => g.minterms[0]).sort((a,b)=>a-b);
-                if (ms.join(',') === '1,2,4,7') {
-                    return { type: 'XOR3', vars: ['A', 'B', 'C'], expr: 'A ⊕ B ⊕ C' };
-                }
-                if (ms.join(',') === '0,3,5,6') {
-                    return { type: 'XNOR3', vars: ['A', 'B', 'C'], expr: 'A ⊙ B ⊙ C' };
-                }
-            }
+            // Trigger Stage 1 wire fill (draws from input letters to stage 1 gates)
+            setTimeout(() => {
+                svg.querySelectorAll('.wire-fill-stage1').forEach(el => {
+                    el.style.strokeDashoffset = '0';
+                    el.style.opacity = '1';
+                });
+                svg.querySelectorAll('.junction-dot-stage1').forEach(el => {
+                    const val = el.dataset.val;
+                    el.classList.add(`active-${val}`);
+                });
+            }, 100);
 
-            // 4-variable XOR parity: A ⊕ B ⊕ C ⊕ D (odd parity)
-            if (nVars === 4 && groups.length === 8) {
-                const ms = groups.map(g => g.minterms[0]).sort((a,b)=>a-b);
-                if (ms.join(',') === '1,2,4,7,8,11,13,14') {
-                    return { type: 'XOR4', vars: ['A', 'B', 'C', 'D'], expr: 'A ⊕ B ⊕ C ⊕ D' };
-                }
-                if (ms.join(',') === '0,3,5,6,9,10,12,15') {
-                    return { type: 'XNOR4', vars: ['A', 'B', 'C', 'D'], expr: 'A ⊙ B ⊙ C ⊙ D' };
-                }
-            }
+            // STEP 2: At 1200ms, colors reach Stage 1 Inverters & Gates -> Smoothly light up gates! (NO JUMPING)
+            circuitAnimProgressTimer = setTimeout(() => {
+                svg.querySelectorAll('.gate-not').forEach(el => {
+                    const outVal = el.dataset.outVal;
+                    el.classList.add(`lit-${outVal}`);
+                });
+                svg.querySelectorAll('.gate-not-bubble').forEach(el => {
+                    const outVal = el.dataset.outVal;
+                    el.classList.add(`lit-${outVal}`);
+                });
+                svg.querySelectorAll('.stage1-gate-body').forEach(el => {
+                    const outVal = el.dataset.outVal;
+                    el.classList.add(`lit-${outVal}`);
+                });
+                svg.querySelectorAll('.stage1-gate-bubble').forEach(el => {
+                    const outVal = el.dataset.outVal;
+                    el.classList.add(`lit-${outVal}`);
+                });
 
-            return null;
+                // Trigger Stage 2 wire fill (from Stage 1 to Stage 2 Gate)
+                setTimeout(() => {
+                    svg.querySelectorAll('.wire-fill-stage2').forEach(el => {
+                        el.style.strokeDashoffset = '0';
+                        el.style.opacity = '1';
+                    });
+                }, 150);
+
+                // STEP 3: At 2400ms, colors reach Stage 2 Combining Gate -> Smoothly light up Output Stage Gate!
+                circuitAnimProgressTimer = setTimeout(() => {
+                    svg.querySelectorAll('.stage2-gate-body').forEach(el => {
+                        const outVal = el.dataset.outVal;
+                        el.classList.add(`lit-${outVal}`);
+                    });
+                    svg.querySelectorAll('.stage2-gate-bubble').forEach(el => {
+                        const outVal = el.dataset.outVal;
+                        el.classList.add(`lit-${outVal}`);
+                    });
+
+                    // Trigger Stage 3 final wire fill (to Probe F)
+                    setTimeout(() => {
+                        svg.querySelectorAll('.wire-fill-stage3').forEach(el => {
+                            el.style.strokeDashoffset = '0';
+                            el.style.opacity = '1';
+                        });
+                    }, 150);
+
+                    // STEP 4: At 3400ms, colors reach Output Probe F -> Light up Probe F!
+                    circuitAnimProgressTimer = setTimeout(() => {
+                        svg.querySelectorAll('.probe-box').forEach(el => {
+                            const outVal = el.dataset.outVal;
+                            el.classList.add(`lit-${outVal}`);
+                        });
+                        svg.querySelectorAll('.probe-led').forEach(el => {
+                            const outVal = el.dataset.outVal;
+                            el.classList.add(`lit-${outVal}`);
+                        });
+                        svg.querySelectorAll('.probe-text').forEach(el => {
+                            const outVal = el.dataset.outVal;
+                            el.classList.add(`lit-${outVal}`);
+                        });
+                        svg.querySelectorAll('.probe-val').forEach(el => {
+                            const outVal = el.dataset.outVal;
+                            el.classList.add(`lit-${outVal}`);
+                        });
+                    }, 850);
+
+                }, 1150);
+
+            }, 1200);
         }
 
         function renderCircuitDiagram() {
@@ -4022,24 +4008,6 @@
                 if (eqTextEl) eqTextEl.textContent = `F = ${sol.expression}`;
             }
 
-            // Defs for glowing filters
-            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-            defs.innerHTML = `
-                <filter id="glowGreen" x="-30%" y="-30%" width="160%" height="160%">
-                    <feGaussianBlur stdDeviation="4" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-                <filter id="glowRed" x="-30%" y="-30%" width="160%" height="160%">
-                    <feGaussianBlur stdDeviation="4" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-                <filter id="glowTeal" x="-30%" y="-30%" width="160%" height="160%">
-                    <feGaussianBlur stdDeviation="5" result="blur" />
-                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-            `;
-            svg.appendChild(defs);
-
             // SPECIAL CASE 1: Constant 0 or Constant 1
             if (sol.selectedGroups.length === 0 || sol.expression === '0' || sol.expression === '1') {
                 const constVal = sol.expression === '1' ? 1 : 0;
@@ -4054,7 +4022,7 @@
                 return;
             }
 
-            // STANDARD CLEAN CANONICAL CIRCUIT GENERATION (SOP / POS / NAND / NOR)
+            // STANDARD CLEAN CANONICAL CIRCUIT GENERATION
             renderCleanCanonicalGateCircuit(svg, sol, varStates);
         }
 
@@ -4065,44 +4033,42 @@
             svg.setAttribute('height', `${H}px`);
 
             const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-            const wireClass = constVal === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
+            const wireLen = 204;
+            const isLit = isCircuitPlaying;
 
             if (constVal === 1) {
-                // VCC Symbol (+5V)
                 g.innerHTML += `
-                    <circle cx="120" cy="100" r="16" fill="#1e293b" stroke="#10b981" stroke-width="2.2"/>
-                    <text x="120" y="104" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="#10b981">VCC</text>
+                    <circle cx="120" cy="100" r="16" class="gate-body ${isLit ? 'lit-1' : ''}" data-out-val="1"/>
+                    <text x="120" y="104" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="${isLit ? '#10b981' : '#94a3b8'}">VCC</text>
                     <text x="120" y="74" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="600" fill="#94a3b8">+5V (Logic 1)</text>
-                    <line x1="136" y1="100" x2="340" y2="100" class="${wireClass}" />
+                    <line x1="136" y1="100" x2="340" y2="100" class="wire-base" />
+                    <line x1="136" y1="100" x2="340" y2="100" class="wire-fill wire-fill-stage3 sig-1" style="stroke-dasharray: ${wireLen}; stroke-dashoffset: ${isLit ? '0' : wireLen}; opacity: ${isLit ? '1' : '0'};" />
                 `;
             } else {
-                // GND Symbol (0V)
                 g.innerHTML += `
-                    <circle cx="120" cy="100" r="16" fill="#1e293b" stroke="#475569" stroke-width="2.2"/>
-                    <text x="120" y="104" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="#94a3b8">GND</text>
+                    <circle cx="120" cy="100" r="16" class="gate-body ${isLit ? 'lit-0' : ''}" data-out-val="0"/>
+                    <text x="120" y="104" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="${isLit ? '#ef4444' : '#94a3b8'}">GND</text>
                     <line x1="104" y1="124" x2="136" y2="124" stroke="#64748b" stroke-width="2.5" />
                     <line x1="110" y1="129" x2="130" y2="129" stroke="#64748b" stroke-width="2" />
                     <line x1="116" y1="134" x2="124" y2="134" stroke="#64748b" stroke-width="1.5" />
                     <text x="120" y="74" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="600" fill="#94a3b8">GND (Logic 0)</text>
-                    <line x1="136" y1="100" x2="340" y2="100" class="${wireClass}" />
+                    <line x1="136" y1="100" x2="340" y2="100" class="wire-base" />
+                    <line x1="136" y1="100" x2="340" y2="100" class="wire-fill wire-fill-stage3 sig-0" style="stroke-dasharray: ${wireLen}; stroke-dashoffset: ${isLit ? '0' : wireLen}; opacity: ${isLit ? '1' : '0'};" />
                 `;
             }
 
             // Output Probe F
             g.innerHTML += `
                 <g transform="translate(340, 75)">
-                    <rect width="115" height="50" class="probe-box sig-${constVal}" />
-                    <circle cx="24" cy="25" r="7.5" class="probe-led sig-${constVal}" />
-                    <text x="48" y="24" class="probe-text">F</text>
-                    <text x="48" y="40" class="probe-val">= ${constVal} (${constVal ? 'HIGH' : 'LOW'})</text>
+                    <rect width="115" height="50" class="probe-box ${isLit ? 'lit-' + constVal : ''}" data-out-val="${constVal}" />
+                    <circle cx="24" cy="25" r="7.5" class="probe-led ${isLit ? 'lit-' + constVal : ''}" data-out-val="${constVal}" />
+                    <text x="48" y="24" class="probe-text ${isLit ? 'lit-' + constVal : ''}">F</text>
+                    <text x="48" y="40" class="probe-val ${isLit ? 'lit-' + constVal : ''}">= ${constVal} (${constVal ? 'HIGH' : 'LOW'})</text>
                 </g>
             `;
             svg.appendChild(g);
         }
 
-        // =========================================================================
-        // STREAMLINED, UNCLUTTERED SCHEMATIC RENDERER WITH INLINE INVERTERS & CLEAN BRANCHES
-        // =========================================================================
         function renderCleanCanonicalGateCircuit(svg, sol, varStates) {
             const vars = VAR_NAMES.slice(0, numVars);
             const groups = sol.selectedGroups;
@@ -4124,10 +4090,10 @@
             });
 
             // Layout Column Positions
-            const trunkBranchX = 140; // Where main vertical distribution stem sits
+            const trunkBranchX = 140;
             const stage1GateW = 54;
             const stage1GateH = 46;
-            const stage1X = 360;      // First-stage logic gates X
+            const stage1X = 360;
 
             const stage2GateW = 60;
             const stage2GateH = Math.max(50, Math.min(120, 32 + numTerms * 16));
@@ -4143,75 +4109,61 @@
 
             const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 
-            // 1. DRAW CLEAN INPUT PADS (On Left)
+            // 1. DRAW INPUT TERMINALS (On Left)
             vars.forEach((v, idx) => {
                 const y = inputYCoords[v];
                 const sig = varStates[v].trueVal;
-                const wireClass = sig === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
+                const trunkEndX = trunkBranchX + idx * 24;
+                const wireLen = trunkEndX - (inputPadX + 44);
 
-                // Input Terminal Tag
                 g.innerHTML += `
                     <!-- Input Pad ${v} -->
                     <g transform="translate(${inputPadX}, ${y - 14})" style="cursor: pointer;" onclick="toggleCircuitInput('${v}')">
-                        <rect width="44" height="28" rx="6" fill="#1b212d" stroke="${sig === 1 ? '#10b981' : '#ef4444'}" stroke-width="2" />
-                        <text x="14" y="18" font-family="var(--code-font)" font-size="12" font-weight="700" fill="${sig === 1 ? '#10b981' : '#ef4444'}">${v}</text>
-                        <circle cx="34" cy="14" r="4.5" fill="${sig === 1 ? '#10b981' : '#ef4444'}" filter="${sig === 1 ? 'url(#glowGreen)' : 'url(#glowRed)'}" />
+                        <rect width="44" height="28" rx="6" class="input-pad-box" data-val="${sig}" />
+                        <text x="14" y="18" class="input-pad-text" data-val="${sig}">${v}</text>
+                        <circle cx="34" cy="14" r="4.5" class="input-pad-dot" data-val="${sig}" />
                     </g>
-                `;
 
-                // Main feeder trunk line to branch point
-                g.innerHTML += `
-                    <line x1="${inputPadX + 44}" y1="${y}" x2="${trunkBranchX + idx * 24}" y2="${y}" class="${wireClass}" />
+                    <!-- Feeder trunk base + fill overlay -->
+                    <line x1="${inputPadX + 44}" y1="${y}" x2="${trunkEndX}" y2="${y}" class="wire-base" />
+                    <line x1="${inputPadX + 44}" y1="${y}" x2="${trunkEndX}" y2="${y}" class="wire-fill wire-fill-stage1 sig-${sig}" style="stroke-dasharray: ${wireLen}; stroke-dashoffset: ${wireLen}; opacity: 0;" />
                 `;
             });
-
-            // If in formation animation phase 0, stop after inputs
-            if (formationStep === 0) {
-                svg.appendChild(g);
-                return;
-            }
 
             // IC & Gate Counter Trackers
             let totalInverters = 0;
             let stage1GatesCount = 0;
             let stage2GatesCount = (numTerms > 1) ? 1 : 0;
             const gateTypesTally = {};
-
             const stage1Outputs = [];
 
             // 2. DRAW STAGE 1 GATES & INLINE INPUT CONNECTIONS
             groups.forEach((group, gIdx) => {
                 const gateY = topMargin + (gIdx * termRowSpacing) + 20;
                 const termAnalysis = deriveGroupTermLiterals(group, numVars, optMode);
-                const literals = termAnalysis.literals; // Array of { varName, inverted, value }
+                const literals = termAnalysis.literals;
 
-                // Calculate gate output signal
                 let gateOutputVal = 0;
                 if (isSOP) {
-                    // AND: 1 if all literal signals are 1
                     gateOutputVal = literals.every(lit => (lit.inverted ? varStates[lit.varName].invVal : varStates[lit.varName].trueVal) === 1) ? 1 : 0;
                     if (isNAND) gateOutputVal = 1 - gateOutputVal;
                 } else {
-                    // POS: 1 if at least one literal is 1
                     gateOutputVal = literals.some(lit => (lit.inverted ? varStates[lit.varName].invVal : varStates[lit.varName].trueVal) === 1) ? 1 : 0;
                     if (isNOR) gateOutputVal = 1 - gateOutputVal;
                 }
 
                 stage1Outputs.push({ y: gateY, val: gateOutputVal, colorClass: group.colorClass || `color-${gIdx % 8}` });
 
-                // Gate Type
                 let stage1GateType = isSOP ? (isNAND ? 'NAND' : 'AND') : (isNOR ? 'NOR' : 'OR');
                 if (literals.length > 1) {
                     stage1GatesCount++;
                     gateTypesTally[stage1GateType] = (gateTypesTally[stage1GateType] || 0) + 1;
                 }
 
-                // Input Pins on Gate
                 const numInputs = Math.max(1, literals.length);
                 const pinSpacing = numInputs > 1 ? (stage1GateH - 12) / (numInputs - 1) : 0;
                 const pinStartY = numInputs > 1 ? gateY - (stage1GateH - 12) / 2 : gateY;
 
-                // Route each literal cleanly from its variable trunk with inline inverter if needed!
                 literals.forEach((lit, inIdx) => {
                     const pinY = pinStartY + inIdx * pinSpacing;
                     const vIdx = vars.indexOf(lit.varName);
@@ -4220,58 +4172,62 @@
                     const litSig = lit.inverted ? varStates[lit.varName].invVal : varStates[lit.varName].trueVal;
                     const trueSig = varStates[lit.varName].trueVal;
 
-                    const wireClassTrue = trueSig === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
-                    const wireClassLit = litSig === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
-
-                    // Solder junction dot at input trunk
+                    // Solder dot at trunk
                     g.innerHTML += `
-                        <circle cx="${stemX}" cy="${stemY}" r="3.5" class="junction-dot sig-${trueSig}" />
+                        <circle cx="${stemX}" cy="${stemY}" r="3.5" class="junction-dot junction-dot-stage1" data-val="${trueSig}" />
                     `;
 
                     if (lit.inverted) {
                         totalInverters++;
-                        // Place an inline compact NOT gate at x ≈ 280
                         const notX = stage1X - 60;
                         const notW = 22, notH = 18;
+                        const pathD1 = `M ${stemX} ${stemY} L ${stemX} ${pinY} L ${notX - notW/2} ${pinY}`;
+                        const estLen1 = Math.abs(pinY - stemY) + Math.abs(notX - notW/2 - stemX);
+                        const estLen2 = stage1X - (notX + notW/2 + 3);
 
-                        // Route from trunk stem to NOT gate input
                         g.innerHTML += `
-                            <!-- Smooth Orthogonal Route from ${lit.varName} to NOT Gate -->
-                            <path d="M ${stemX} ${stemY} L ${stemX} ${pinY} L ${notX - notW/2} ${pinY}" class="${wireClassTrue}" />
+                            <!-- Neutral wire base -->
+                            <path d="${pathD1}" class="wire-base" />
+                            <!-- Progressive filling line to NOT gate -->
+                            <path d="${pathD1}" class="wire-fill wire-fill-stage1 sig-${trueSig}" style="stroke-dasharray: ${estLen1}; stroke-dashoffset: ${estLen1}; opacity: 0;" />
+
                             <!-- Inline NOT Inverter -->
-                            <path d="M ${notX - notW/2} ${pinY - notH/2} L ${notX + notW/2 - 4} ${pinY} L ${notX - notW/2} ${pinY + notH/2} Z" class="gate-body gate-not ${litSig === 1 ? 'sig-active' : ''}" stroke="${litSig === 1 ? '#10b981' : '#ef4444'}" />
-                            <circle cx="${notX + notW/2}" cy="${pinY}" r="3" class="gate-bubble" stroke="${litSig === 1 ? '#10b981' : '#ef4444'}" />
-                            <!-- NOT output to Gate Input Pin -->
-                            <line x1="${notX + notW/2 + 3}" y1="${pinY}" x2="${stage1X}" y2="${pinY}" class="${wireClassLit}" />
-                            <text x="${notX - notW/2 - 4}" y="${pinY - 4}" text-anchor="end" font-family="var(--code-font)" font-size="9" fill="#94a3b8">${lit.varName}'</text>
+                            <path d="M ${notX - notW/2} ${pinY - notH/2} L ${notX + notW/2 - 4} ${pinY} L ${notX - notW/2} ${pinY + notH/2} Z" class="gate-body gate-not" data-out-val="${litSig}" />
+                            <circle cx="${notX + notW/2}" cy="${pinY}" r="3" class="gate-bubble gate-not-bubble" data-out-val="${litSig}" />
+
+                            <!-- Neutral wire base from NOT to Gate pin -->
+                            <line x1="${notX + notW/2 + 3}" y1="${pinY}" x2="${stage1X}" y2="${pinY}" class="wire-base" />
+                            <line x1="${notX + notW/2 + 3}" y1="${pinY}" x2="${stage1X}" y2="${pinY}" class="wire-fill wire-fill-stage1 sig-${litSig}" style="stroke-dasharray: ${estLen2}; stroke-dashoffset: ${estLen2}; opacity: 0;" />
+
+                            <text x="${notX - notW/2 - 4}" y="${pinY - 4}" text-anchor="end" class="pin-label">${lit.varName}'</text>
                         `;
                     } else {
-                        // Direct clean route from trunk stem to Gate Input Pin
+                        const pathD = `M ${stemX} ${stemY} L ${stemX} ${pinY} L ${stage1X} ${pinY}`;
+                        const estLen = Math.abs(pinY - stemY) + Math.abs(stage1X - stemX);
+
                         g.innerHTML += `
-                            <path d="M ${stemX} ${stemY} L ${stemX} ${pinY} L ${stage1X} ${pinY}" class="${wireClassLit}" />
-                            <text x="${stage1X - 8}" y="${pinY - 4}" text-anchor="end" font-family="var(--code-font)" font-size="9" fill="#94a3b8">${lit.varName}</text>
+                            <path d="${pathD}" class="wire-base" />
+                            <path d="${pathD}" class="wire-fill wire-fill-stage1 sig-${litSig}" style="stroke-dasharray: ${estLen}; stroke-dashoffset: ${estLen}; opacity: 0;" />
+                            <text x="${stage1X - 8}" y="${pinY - 4}" text-anchor="end" class="pin-label">${lit.varName}</text>
                         `;
                     }
                 });
 
                 // Draw Gate Body & Color Accent
                 const colorHex = getGroupColorHex(gIdx);
-                const gateStroke = gateOutputVal === 1 ? '#10b981' : '#ef4444';
 
                 if (literals.length === 1) {
-                    // Single literal pass-through
-                    const outWireClass = gateOutputVal === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
+                    const wireLen = stage1GateW;
                     g.innerHTML += `
-                        <line x1="${stage1X}" y1="${gateY}" x2="${stage1X + stage1GateW}" y2="${gateY}" class="${outWireClass}" />
+                        <line x1="${stage1X}" y1="${gateY}" x2="${stage1X + stage1GateW}" y2="${gateY}" class="wire-base" />
+                        <line x1="${stage1X}" y1="${gateY}" x2="${stage1X + stage1GateW}" y2="${gateY}" class="wire-fill wire-fill-stage1 sig-${gateOutputVal}" style="stroke-dasharray: ${wireLen}; stroke-dashoffset: ${wireLen}; opacity: 0;" />
                         <text x="${stage1X + stage1GateW/2}" y="${gateY - 6}" text-anchor="middle" font-family="var(--code-font)" font-size="10" font-weight="700" fill="${colorHex}">
                             ${group.term}
                         </text>
                     `;
                 } else {
-                    // Render ANSI Gate with Stage 1 Identifier and data-out-val for Wave Glow-Up
-                    const gateSvgStr = drawAnsiGate(stage1GateType, stage1X, gateY, stage1GateW, stage1GateH, gateStroke, gateOutputVal, 'stage1-gate-body');
+                    const gateSvgStr = drawAnsiGate(stage1GateType, stage1X, gateY, stage1GateW, stage1GateH, '#475569', gateOutputVal, 'stage1-gate-body', 'stage1-gate-bubble');
                     g.innerHTML += gateSvgStr;
-                    // Group Term Badge Label
                     g.innerHTML += `
                         <text x="${stage1X + stage1GateW/2}" y="${gateY - stage1GateH/2 - 6}" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="${colorHex}">
                             G${gIdx + 1}: ${group.term}
@@ -4280,13 +4236,7 @@
                 }
             });
 
-            // If in formation animation phase 1, stop here
-            if (formationStep === 1) {
-                svg.appendChild(g);
-                return;
-            }
-
-            // 3. DRAW STAGE 2 (COMBINING OUTPUT GATE: OR / AND / NAND / NOR)
+            // 3. DRAW STAGE 2 COMBINING GATE
             let finalCircuitOutput = 0;
             if (isSOP) {
                 const termOrVal = stage1Outputs.some(st => st.val === 1) ? 1 : 0;
@@ -4297,73 +4247,141 @@
             }
 
             if (numTerms === 1) {
-                // Single term direct route to Output Probe
                 finalCircuitOutput = stage1Outputs[0].val;
                 const outY = stage1Outputs[0].y;
-                const outWireClass = finalCircuitOutput === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
+                const wireLen = probeX - (stage1X + stage1GateW);
 
                 g.innerHTML += `
-                    <line x1="${stage1X + stage1GateW}" y1="${outY}" x2="${probeX}" y2="${outY}" class="${outWireClass}" />
+                    <line x1="${stage1X + stage1GateW}" y1="${outY}" x2="${probeX}" y2="${outY}" class="wire-base" />
+                    <line x1="${stage1X + stage1GateW}" y1="${outY}" x2="${probeX}" y2="${outY}" class="wire-fill wire-fill-stage3 sig-${finalCircuitOutput}" style="stroke-dasharray: ${wireLen}; stroke-dashoffset: ${wireLen}; opacity: 0;" />
                     <g transform="translate(${probeX}, ${outY - 25})">
-                        <rect width="115" height="50" class="probe-box sig-${finalCircuitOutput}" data-out-val="${finalCircuitOutput}" />
-                        <circle cx="24" cy="25" r="7.5" class="probe-led sig-${finalCircuitOutput}" />
-                        <text x="48" y="24" class="probe-text">F</text>
-                        <text x="48" y="40" class="probe-val">= ${finalCircuitOutput} (${finalCircuitOutput ? 'HIGH' : 'LOW'})</text>
+                        <rect width="115" height="50" class="probe-box" data-out-val="${finalCircuitOutput}" />
+                        <circle cx="24" cy="25" r="7.5" class="probe-led" data-out-val="${finalCircuitOutput}" />
+                        <text x="48" y="24" class="probe-text" data-out-val="${finalCircuitOutput}">F</text>
+                        <text x="48" y="40" class="probe-val" data-out-val="${finalCircuitOutput}">= ${finalCircuitOutput} (${finalCircuitOutput ? 'HIGH' : 'LOW'})</text>
                     </g>
                 `;
             } else {
-                // Multiple terms -> Stage 2 Combining Gate
                 let stage2GateType = isSOP ? (isNAND ? 'NAND' : 'OR') : (isNOR ? 'NOR' : 'AND');
                 gateTypesTally[stage2GateType] = (gateTypesTally[stage2GateType] || 0) + 1;
 
                 const stage2InputSpacing = (stage2GateH - 14) / (numTerms - 1);
                 const stage2InputStartY = stage2Y - (stage2GateH - 14) / 2;
 
-                // Route Stage 1 outputs to Stage 2 inputs with clean step routing
                 stage1Outputs.forEach((st, idx) => {
                     const pinY = stage2InputStartY + idx * stage2InputSpacing;
                     const midX = stage1X + stage1GateW + 35 + (idx % 2 === 0 ? 0 : 18);
-                    const wireClass = st.val === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
+                    const pathD = `M ${stage1X + stage1GateW} ${st.y} L ${midX} ${st.y} L ${midX} ${pinY} L ${stage2X} ${pinY}`;
+                    const estLen = Math.abs(midX - (stage1X + stage1GateW)) + Math.abs(pinY - st.y) + Math.abs(stage2X - midX);
 
                     g.innerHTML += `
-                        <path d="M ${stage1X + stage1GateW} ${st.y} L ${midX} ${st.y} L ${midX} ${pinY} L ${stage2X} ${pinY}" class="${wireClass}" />
+                        <path d="${pathD}" class="wire-base" />
+                        <path d="${pathD}" class="wire-fill wire-fill-stage2 sig-${st.val}" style="stroke-dasharray: ${estLen}; stroke-dashoffset: ${estLen}; opacity: 0;" />
                     `;
                 });
 
-                // Render Stage 2 Gate with Stage 2 Identifier and data-out-val for Wave Glow-Up
-                const stage2Stroke = finalCircuitOutput === 1 ? '#10b981' : '#ef4444';
-                g.innerHTML += drawAnsiGate(stage2GateType, stage2X, stage2Y, stage2GateW, stage2GateH, stage2Stroke, finalCircuitOutput, 'stage2-gate-body');
+                g.innerHTML += drawAnsiGate(stage2GateType, stage2X, stage2Y, stage2GateW, stage2GateH, '#475569', finalCircuitOutput, 'stage2-gate-body', 'stage2-gate-bubble');
                 g.innerHTML += `
                     <text x="${stage2X + stage2GateW/2}" y="${stage2Y - stage2GateH/2 - 7}" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="#38bdf8">
                         Output Stage (${stage2GateType})
                     </text>
                 `;
 
-                // If in formation animation phase 2, stop before probe
-                if (formationStep === 2) {
-                    svg.appendChild(g);
-                    return;
-                }
+                // Connect Stage 2 Output to Probe F
+                const outStartX = stage2X + stage2GateW + (stage2GateType.includes('N') ? 8 : 0);
+                const wireLen = probeX - outStartX;
 
-                // Connect to Probe
-                const finalWireClass = finalCircuitOutput === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
                 g.innerHTML += `
-                    <line x1="${stage2X + stage2GateW + (stage2GateType.includes('N') ? 8 : 0)}" y1="${stage2Y}" x2="${probeX}" y2="${stage2Y}" class="${finalWireClass}" />
+                    <line x1="${outStartX}" y1="${stage2Y}" x2="${probeX}" y2="${stage2Y}" class="wire-base" />
+                    <line x1="${outStartX}" y1="${stage2Y}" x2="${probeX}" y2="${stage2Y}" class="wire-fill wire-fill-stage3 sig-${finalCircuitOutput}" style="stroke-dasharray: ${wireLen}; stroke-dashoffset: ${wireLen}; opacity: 0;" />
                     <g transform="translate(${probeX}, ${stage2Y - 25})">
-                        <rect width="115" height="50" class="probe-box sig-${finalCircuitOutput}" data-out-val="${finalCircuitOutput}" />
-                        <circle cx="24" cy="25" r="7.5" class="probe-led sig-${finalCircuitOutput}" />
-                        <text x="48" y="24" class="probe-text">F</text>
-                        <text x="48" y="40" class="probe-val">= ${finalCircuitOutput} (${finalCircuitOutput ? 'HIGH' : 'LOW'})</text>
+                        <rect width="115" height="50" class="probe-box" data-out-val="${finalCircuitOutput}" />
+                        <circle cx="24" cy="25" r="7.5" class="probe-led" data-out-val="${finalCircuitOutput}" />
+                        <text x="48" y="24" class="probe-text" data-out-val="${finalCircuitOutput}">F</text>
+                        <text x="48" y="40" class="probe-val" data-out-val="${finalCircuitOutput}">= ${finalCircuitOutput} (${finalCircuitOutput ? 'HIGH' : 'LOW'})</text>
                     </g>
                 `;
             }
 
             svg.appendChild(g);
 
-            // Update Circuit Metrics & Bill of Materials
             const totalGates = stage1GatesCount + stage2GatesCount + totalInverters;
             const logicLevels = numTerms > 1 ? 2 : 1;
             updateCircuitStats(totalGates, totalInverters, logicLevels, gateTypesTally);
+        }
+
+        function drawAnsiGate(type, x, y, w, h, strokeColor, activeSignal, extraClass = '', bubbleClass = '') {
+            let svgStr = '';
+            const gateClass = `gate-${type.toLowerCase()}`;
+            const combinedClass = `gate-body ${gateClass} ${extraClass}`.trim();
+            const combinedBubbleClass = `gate-bubble ${bubbleClass}`.trim();
+
+            if (type === 'AND' || type === 'NAND') {
+                const path = `M ${x} ${y - h/2} L ${x + w/2} ${y - h/2} A ${h/2} ${h/2} 0 0 1 ${x + w/2} ${y + h/2} L ${x} ${y + h/2} Z`;
+                svgStr += `<path d="${path}" class="${combinedClass}" data-out-val="${activeSignal}" />`;
+                if (type === 'NAND') {
+                    svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="${combinedBubbleClass}" data-out-val="${activeSignal}" />`;
+                }
+            } else if (type === 'OR' || type === 'NOR') {
+                const path = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
+                svgStr += `<path d="${path}" class="${combinedClass}" data-out-val="${activeSignal}" />`;
+                if (type === 'NOR') {
+                    svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="${combinedBubbleClass}" data-out-val="${activeSignal}" />`;
+                }
+            } else if (type === 'XOR' || type === 'XNOR') {
+                const backArc = `M ${x - 8} ${y - h/2} Q ${x - 8 + w * 0.28} ${y} ${x - 8} ${y + h/2}`;
+                const body = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
+                svgStr += `<path d="${backArc}" fill="none" stroke="#475569" stroke-width="2" />`;
+                svgStr += `<path d="${body}" class="${combinedClass}" data-out-val="${activeSignal}" />`;
+                if (type === 'XNOR') {
+                    svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="${combinedBubbleClass}" data-out-val="${activeSignal}" />`;
+                }
+            } else if (type === 'NOT') {
+                const path = `M ${x} ${y - h/2} L ${x + w - 8} ${y} L ${x} ${y + h/2} Z`;
+                svgStr += `<path d="${path}" class="${combinedClass}" data-out-val="${activeSignal}" />`;
+                svgStr += `<circle cx="${x + w - 4}" cy="${y}" r="4" class="${combinedBubbleClass}" data-out-val="${activeSignal}" />`;
+            }
+
+            return svgStr;
+        }
+
+        function detectXorXnorSynthesis(sol, nVars) {
+            const groups = sol.selectedGroups;
+            const vars = VAR_NAMES.slice(0, nVars);
+
+            // 2-variable XOR: A'B + AB'
+            if (nVars === 2 && groups.length === 2) {
+                const terms = groups.map(g => g.term).sort();
+                if ((terms[0] === "A'B" && terms[1] === "AB'") || (terms[0] === "AB'" && terms[1] === "A'B")) {
+                    return { type: 'XOR2', vars: ['A', 'B'], expr: 'A ⊕ B' };
+                }
+                // 2-variable XNOR: A'B' + AB
+                if ((terms[0] === "A'B'" && terms[1] === "AB") || (terms[0] === "AB" && terms[1] === "A'B'")) {
+                    return { type: 'XNOR2', vars: ['A', 'B'], expr: 'A ⊙ B' };
+                }
+            }
+
+            // 3-variable XOR parity
+            if (nVars === 3 && groups.length === 4) {
+                const terms = groups.map(g => g.term);
+                const hasA_BC = terms.some(t => t.includes("A'") && t.includes("B'") && t.includes("C"));
+                const hasAB_C = terms.some(t => t.includes("A'") && t.includes("B") && t.includes("C'"));
+                const hasA_B_C = terms.some(t => t.includes("A") && t.includes("B'") && t.includes("C'"));
+                const hasABC = terms.some(t => !t.includes("'"));
+                if (hasA_BC && hasAB_C && hasA_B_C && hasABC) {
+                    return { type: 'XOR3', vars: ['A', 'B', 'C'], expr: 'A ⊕ B ⊕ C' };
+                }
+            }
+
+            // 4-variable XOR parity
+            if (nVars === 4 && groups.length === 8) {
+                const isOddParity = groups.every(g => g.term.split("'").length % 2 === (nVars % 2 === 0 ? 0 : 1));
+                if (isOddParity) {
+                    return { type: 'XOR4', vars: ['A', 'B', 'C', 'D'], expr: 'A ⊕ B ⊕ C ⊕ D' };
+                }
+            }
+
+            return null;
         }
 
         function renderXorCircuit(svg, xorSynth, varStates) {
@@ -4385,20 +4403,20 @@
 
             const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 
-            // Draw Input Pads & Rails
             const railCoords = {};
             vars.forEach((v, idx) => {
                 const rx = leftMargin + idx * railSpacing;
                 railCoords[v] = rx;
                 const sig = varStates[v].trueVal;
-                const wireClass = sig === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
+                const wireLen = circuitH - 72;
 
                 g.innerHTML += `
                     <g transform="translate(${rx - 16}, 16)" style="cursor: pointer;" onclick="toggleCircuitInput('${v}')">
-                        <rect width="32" height="22" rx="4" fill="#1b212d" stroke="${sig === 1 ? '#10b981' : '#ef4444'}" stroke-width="2" />
-                        <text x="16" y="15" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="${sig === 1 ? '#10b981' : '#ef4444'}">${v}=${sig}</text>
+                        <rect width="32" height="22" rx="4" class="input-pad-box" data-val="${sig}" />
+                        <text x="16" y="15" text-anchor="middle" class="input-pad-text" data-val="${sig}">${v}</text>
                     </g>
-                    <line x1="${rx}" y1="42" x2="${rx}" y2="${circuitH - 30}" class="${wireClass}" />
+                    <line x1="${rx}" y1="42" x2="${rx}" y2="${circuitH - 30}" class="wire-base" />
+                    <line x1="${rx}" y1="42" x2="${rx}" y2="${circuitH - 30}" class="wire-fill wire-fill-stage1 sig-${sig}" style="stroke-dasharray: ${wireLen}; stroke-dashoffset: ${wireLen}; opacity: 0;" />
                 `;
             });
 
@@ -4411,119 +4429,40 @@
                 finalOut = gateType === 'XOR' ? (valA ^ valB) : (1 - (valA ^ valB));
 
                 const gateY = 140;
-                const wireClassA = valA === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
-                const wireClassB = valB === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
+                const lenA = gateX - railCoords[vars[0]];
+                const lenB = gateX - railCoords[vars[1]];
 
-                // Connect A & B to XOR Gate
                 g.innerHTML += `
-                    <circle cx="${railCoords[vars[0]]}" cy="${gateY - 12}" r="3.5" class="junction-dot sig-${valA}" />
-                    <line x1="${railCoords[vars[0]]}" y1="${gateY - 12}" x2="${gateX}" y2="${gateY - 12}" class="${wireClassA}" />
-                    <circle cx="${railCoords[vars[1]]}" cy="${gateY + 12}" r="3.5" class="junction-dot sig-${valB}" />
-                    <line x1="${railCoords[vars[1]]}" y1="${gateY + 12}" x2="${gateX}" y2="${gateY + 12}" class="${wireClassB}" />
+                    <circle cx="${railCoords[vars[0]]}" cy="${gateY - 12}" r="3.5" class="junction-dot junction-dot-stage1" data-val="${valA}" />
+                    <line x1="${railCoords[vars[0]]}" y1="${gateY - 12}" x2="${gateX}" y2="${gateY - 12}" class="wire-base" />
+                    <line x1="${railCoords[vars[0]]}" y1="${gateY - 12}" x2="${gateX}" y2="${gateY - 12}" class="wire-fill wire-fill-stage1 sig-${valA}" style="stroke-dasharray: ${lenA}; stroke-dashoffset: ${lenA}; opacity: 0;" />
+
+                    <circle cx="${railCoords[vars[1]]}" cy="${gateY + 12}" r="3.5" class="junction-dot junction-dot-stage1" data-val="${valB}" />
+                    <line x1="${railCoords[vars[1]]}" y1="${gateY + 12}" x2="${gateX}" y2="${gateY + 12}" class="wire-base" />
+                    <line x1="${railCoords[vars[1]]}" y1="${gateY + 12}" x2="${gateX}" y2="${gateY + 12}" class="wire-fill wire-fill-stage1 sig-${valB}" style="stroke-dasharray: ${lenB}; stroke-dashoffset: ${lenB}; opacity: 0;" />
                 `;
 
-                // Render Gate
-                g.innerHTML += drawAnsiGate(gateType, gateX, gateY, gateW, gateH, finalOut === 1 ? '#10b981' : '#a855f7', finalOut);
+                g.innerHTML += drawAnsiGate(gateType, gateX, gateY, gateW, gateH, '#475569', finalOut, 'stage1-gate-body', 'stage1-gate-bubble');
                 g.innerHTML += `<text x="${gateX + gateW/2}" y="${gateY - gateH/2 - 6}" text-anchor="middle" font-family="var(--code-font)" font-size="11" font-weight="700" fill="#a855f7">${gateType} Gate (74LS86)</text>`;
 
-                // Probe
                 const probeX = gateX + gateW + 60;
-                const wireClassOut = finalOut === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
+                const outStartX = gateX + gateW + (gateType === 'XNOR' ? 8 : 0);
+                const outLen = probeX - outStartX;
 
                 g.innerHTML += `
-                    <line x1="${gateX + gateW + (gateType === 'XNOR' ? 8 : 0)}" y1="${gateY}" x2="${probeX}" y2="${gateY}" class="${wireClassOut}" />
+                    <line x1="${outStartX}" y1="${gateY}" x2="${probeX}" y2="${gateY}" class="wire-base" />
+                    <line x1="${outStartX}" y1="${gateY}" x2="${probeX}" y2="${gateY}" class="wire-fill wire-fill-stage3 sig-${finalOut}" style="stroke-dasharray: ${outLen}; stroke-dashoffset: ${outLen}; opacity: 0;" />
                     <g transform="translate(${probeX}, ${gateY - 25})">
-                        <rect width="115" height="50" class="probe-box sig-${finalOut}" />
-                        <circle cx="24" cy="25" r="7.5" class="probe-led sig-${finalOut}" />
-                        <text x="48" y="24" class="probe-text">F</text>
-                        <text x="48" y="40" class="probe-val">= ${finalOut} (${finalOut ? 'HIGH' : 'LOW'})</text>
-                    </g>
-                `;
-            } else {
-                // Cascaded XORs for 3 or 4 variables
-                const valA = varStates[vars[0]].trueVal;
-                const valB = varStates[vars[1]].trueVal;
-                const stage1Val = valA ^ valB;
-                const valC = varStates[vars[2]].trueVal;
-                finalOut = gateType === 'XOR' ? (stage1Val ^ valC) : (1 - (stage1Val ^ valC));
-
-                const g1Y = 105;
-                const g2Y = 175;
-                const g2X = gateX + gateW + 40;
-
-                const wireClassA = valA === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
-                const wireClassB = valB === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
-                const wireClassS1 = stage1Val === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
-                const wireClassC = valC === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
-                const wireClassOut = finalOut === 1 ? 'circuit-wire sig-1 flowing' : 'circuit-wire sig-0';
-
-                // Gate 1 (A ⊕ B)
-                g.innerHTML += `
-                    <circle cx="${railCoords[vars[0]]}" cy="${g1Y - 12}" r="3.5" class="junction-dot sig-${valA}" />
-                    <line x1="${railCoords[vars[0]]}" y1="${g1Y - 12}" x2="${gateX}" y2="${g1Y - 12}" class="${wireClassA}" />
-                    <circle cx="${railCoords[vars[1]]}" cy="${g1Y + 12}" r="3.5" class="junction-dot sig-${valB}" />
-                    <line x1="${railCoords[vars[1]]}" y1="${g1Y + 12}" x2="${gateX}" y2="${gateY + 12}" class="${wireClassB}" />
-                `;
-                g.innerHTML += drawAnsiGate('XOR', gateX, g1Y, gateW, gateH, '#a855f7', stage1Val);
-
-                // Gate 2 (Stage1 ⊕ C)
-                g.innerHTML += `
-                    <path d="M ${gateX + gateW} ${g1Y} L ${g2X - 20} ${g1Y} L ${g2X - 20} ${g2Y - 12} L ${g2X} ${g2Y - 12}" class="${wireClassS1}" />
-                    <circle cx="${railCoords[vars[2]]}" cy="${g2Y + 12}" r="3.5" class="junction-dot sig-${valC}" />
-                    <line x1="${railCoords[vars[2]]}" y1="${g2Y + 12}" x2="${g2X}" y2="${g2Y + 12}" class="${wireClassC}" />
-                `;
-                g.innerHTML += drawAnsiGate(gateType, g2X, g2Y, gateW, gateH, finalOut === 1 ? '#10b981' : '#a855f7', finalOut);
-
-                const probeX = g2X + gateW + 50;
-                g.innerHTML += `
-                    <line x1="${g2X + gateW + (gateType === 'XNOR' ? 8 : 0)}" y1="${g2Y}" x2="${probeX}" y2="${g2Y}" class="${wireClassOut}" />
-                    <g transform="translate(${probeX}, ${g2Y - 25})">
-                        <rect width="115" height="50" class="probe-box sig-${finalOut}" />
-                        <circle cx="24" cy="25" r="7.5" class="probe-led sig-${finalOut}" />
-                        <text x="48" y="24" class="probe-text">F</text>
-                        <text x="48" y="40" class="probe-val">= ${finalOut} (${finalOut ? 'HIGH' : 'LOW'})</text>
+                        <rect width="115" height="50" class="probe-box" data-out-val="${finalOut}" />
+                        <circle cx="24" cy="25" r="7.5" class="probe-led" data-out-val="${finalOut}" />
+                        <text x="48" y="24" class="probe-text" data-out-val="${finalOut}">F</text>
+                        <text x="48" y="40" class="probe-val" data-out-val="${finalOut}">= ${finalOut} (${finalOut ? 'HIGH' : 'LOW'})</text>
                     </g>
                 `;
             }
 
             svg.appendChild(g);
-            updateCircuitStats(numVarsXor - 1, 0, numVarsXor - 1, { [gateType]: numVarsXor - 1 });
-        }
-
-        function drawAnsiGate(type, x, y, w, h, strokeColor, activeSignal, extraClass = '') {
-            let svgStr = '';
-            const isActive = activeSignal === 1;
-            const activeClass = isActive ? 'sig-active' : 'sig-inactive';
-            const gateClass = `gate-${type.toLowerCase()}`;
-            const combinedClass = `gate-body ${gateClass} ${activeClass} ${extraClass}`.trim();
-
-            if (type === 'AND' || type === 'NAND') {
-                const path = `M ${x} ${y - h/2} L ${x + w/2} ${y - h/2} A ${h/2} ${h/2} 0 0 1 ${x + w/2} ${y + h/2} L ${x} ${y + h/2} Z`;
-                svgStr += `<path d="${path}" class="${combinedClass}" data-out-val="${activeSignal}" stroke="${strokeColor}" />`;
-                if (type === 'NAND') {
-                    svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
-                }
-            } else if (type === 'OR' || type === 'NOR') {
-                const path = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
-                svgStr += `<path d="${path}" class="${combinedClass}" data-out-val="${activeSignal}" stroke="${strokeColor}" />`;
-                if (type === 'NOR') {
-                    svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
-                }
-            } else if (type === 'XOR' || type === 'XNOR') {
-                const backArc = `M ${x - 8} ${y - h/2} Q ${x - 8 + w * 0.28} ${y} ${x - 8} ${y + h/2}`;
-                const body = `M ${x} ${y - h/2} Q ${x + w * 0.28} ${y} ${x} ${y + h/2} Q ${x + w * 0.6} ${y + h/2} ${x + w} ${y} Q ${x + w * 0.6} ${y - h/2} ${x} ${y - h/2} Z`;
-                svgStr += `<path d="${backArc}" fill="none" stroke="${strokeColor}" stroke-width="2" />`;
-                svgStr += `<path d="${body}" class="${combinedClass}" data-out-val="${activeSignal}" stroke="${strokeColor}" />`;
-                if (type === 'XNOR') {
-                    svgStr += `<circle cx="${x + w + 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
-                }
-            } else if (type === 'NOT') {
-                const path = `M ${x} ${y - h/2} L ${x + w - 8} ${y} L ${x} ${y + h/2} Z`;
-                svgStr += `<path d="${path}" class="${combinedClass}" data-out-val="${activeSignal}" stroke="${strokeColor}" />`;
-                svgStr += `<circle cx="${x + w - 4}" cy="${y}" r="4" class="gate-bubble" stroke="${strokeColor}" />`;
-            }
-
-            return svgStr;
+            updateCircuitStats(1, 0, 1, { [gateType]: 1 });
         }
 
         function deriveGroupTermLiterals(group, nVars, mode) {
