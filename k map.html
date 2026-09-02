@@ -2036,13 +2036,21 @@
         }
 
         /* ═════════════════════════════════════════════════════════════════ */
-        /* 1'S & 2'S COMPLEMENT CALCULATOR STYLES                           */
+        /* 1'S & 2'S COMPLEMENT & CONVERTER CALCULATOR STYLES              */
         /* ═════════════════════════════════════════════════════════════════ */
         .tab-btn.active-comp {
             background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(147, 51, 234, 0.08) 100%);
             color: #c084fc;
             border: 1px solid rgba(168, 85, 247, 0.45);
             box-shadow: 0 4px 14px rgba(168, 85, 247, 0.22), inset 0 1px 0 rgba(168, 85, 247, 0.35);
+            font-weight: 700;
+        }
+
+        .tab-btn.active-convert {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(14, 165, 233, 0.08) 100%);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.22), inset 0 1px 0 rgba(56, 189, 248, 0.35);
             font-weight: 700;
         }
 
@@ -2369,6 +2377,9 @@
                 </button>
                 <button class="tab-btn" id="tabBtnComplement" onclick="switchTab('complement')">
                     <span class="tab-icon">⚡</span> 1's & 2's Complement
+                </button>
+                <button class="tab-btn" id="tabBtnConvert" onclick="switchTab('convert')">
+                    <span class="tab-icon">🔄</span> Number Conversion
                 </button>
             </div>
         </div>
@@ -2992,13 +3003,78 @@
             </details>
         </div>
 
+        <!-- ========================================================================= -->
+        <!-- TAB 4: NUMBER CONVERSION (RADIX / BASE CONVERTER FOR RATIONAL NUMBERS) -->
+        <!-- ========================================================================= -->
+        <div id="paneConvert" class="tab-pane">
+            <div class="eyebrow" style="color: #38bdf8;">// Radix & Base System Converter</div>
+            <h1 style="font-size: 22px;">Number Conversion Calculator</h1>
+            <div class="sub" style="max-width: 650px;">
+                Convert rational numbers (with decimals/fractions) between 
+                <code>Binary (2)</code>, <code>Octal (8)</code>, <code>Decimal (10)</code>, and <code>Hexadecimal (16)</code> 
+                with instant validation and step-by-step mathematical proofs.
+            </div>
+
+            <!-- ─── CONVERSION INPUT & CONFIGURATION PANEL ─── -->
+            <div class="panel" style="max-width: 750px;">
+                <div class="kmap-config-grid" style="grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                    <div class="config-block">
+                        <label>Convert From (Source Base)</label>
+                        <div class="pill-group">
+                            <button id="btnFromBin" class="active teal-mode" onclick="setFromBase(2)">Binary (2)</button>
+                            <button id="btnFromOct" onclick="setFromBase(8)">Octal (8)</button>
+                            <button id="btnFromDec" onclick="setFromBase(10)">Decimal (10)</button>
+                            <button id="btnFromHex" onclick="setFromBase(16)">Hex (16)</button>
+                        </div>
+                    </div>
+                    <div class="config-block">
+                        <label>Convert To (Target Base)</label>
+                        <div class="pill-group">
+                            <button id="btnToBin" onclick="setToBase(2)">Binary (2)</button>
+                            <button id="btnToOct" class="active amber-mode" onclick="setToBase(8)">Octal (8)</button>
+                            <button id="btnToDec" onclick="setToBase(10)">Decimal (10)</button>
+                            <button id="btnToHex" onclick="setToBase(16)">Hex (16)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Row -->
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 220px; position: relative;">
+                        <span id="convertInputSymbol" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #38bdf8; font-family: var(--code-font); font-weight: 700; font-size: 13px; pointer-events: none;">Input (Base 2):</span>
+                        <input type="text" id="convertInputVal" value="1101.101" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter') calculateConversion();"
+                            style="width: 100%; padding: 12px 14px 12px 115px; font-size: 16px; font-family: var(--code-font); font-weight: 700; border-radius: 10px; background: rgba(11, 15, 24, 0.9); border: 1px solid rgba(255,255,255,0.1); color: #f1f5f9;"
+                            placeholder="e.g. 1101.101, -13.625, 75.64, AF.4B">
+                    </div>
+                    <button onclick="calculateConversion()" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; border: 1px solid #38bdf8; padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);">
+                        Convert ⚡
+                    </button>
+                </div>
+
+                <!-- Quick Presets -->
+                <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center;">
+                    <span style="font-size: 11px; color: var(--muted); font-family: var(--code-font);">QUICK PRESETS:</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('1101.101', 2, 8)">1101.101₂ ➔ Octal</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('1101.101', 2, 10)">1101.101₂ ➔ Decimal</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('-13.625', 10, 2)">-13.625₁₀ ➔ Binary</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('-13.625', 10, 16)">-13.625₁₀ ➔ Hex</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('75.64', 8, 10)">75.64₈ ➔ Decimal</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('AF.4B', 16, 2)">AF.4B₁₆ ➔ Binary</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('3F.A', 16, 8)">3F.A₁₆ ➔ Octal</span>
+                </div>
+            </div>
+
+            <!-- ─── RESULT & STEP CONTAINER ─── -->
+            <div id="convertResultContainer" style="max-width: 750px;"></div>
+        </div>
+
 
     <!-- ========================================================================= -->
     <!-- JAVASCRIPT LOGIC ENGINE -->
     <!-- ========================================================================= -->
     <script>
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'active-matrix', 'active-comp'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'active-matrix', 'active-comp', 'active-convert'));
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
 
             if (tabId === 'kmap') {
@@ -3012,6 +3088,10 @@
                 document.getElementById('tabBtnComplement')?.classList.add('active', 'active-comp');
                 document.getElementById('paneComplement')?.classList.add('active');
                 calculateComplement();
+            } else if (tabId === 'convert') {
+                document.getElementById('tabBtnConvert')?.classList.add('active', 'active-convert');
+                document.getElementById('paneConvert')?.classList.add('active');
+                calculateConversion();
             }
         }
 
@@ -5841,6 +5921,355 @@
                     </div>
                 </div>
             `;
+        }
+
+        // =========================================================================
+        // RATIONAL NUMBER BASE CONVERTER ENGINE
+        // =========================================================================
+        let convertFromBase = 2;
+        let convertToBase = 8;
+
+        const BASE_NAMES = {
+            2: 'Binary',
+            8: 'Octal',
+            10: 'Decimal',
+            16: 'Hexadecimal'
+        };
+
+        const BASE_SUB = {
+            2: '₂',
+            8: '₈',
+            10: '₁₀',
+            16: '₁₆'
+        };
+
+        const DIGIT_CHARS = '0123456789ABCDEF';
+
+        function setFromBase(base) {
+            convertFromBase = base;
+            [2, 8, 10, 16].forEach(b => {
+                const el = document.getElementById(`btnFrom${b === 2 ? 'Bin' : b === 8 ? 'Oct' : b === 10 ? 'Dec' : 'Hex'}`);
+                if (el) el.className = (base === b) ? 'active teal-mode' : '';
+            });
+            const symbol = document.getElementById('convertInputSymbol');
+            if (symbol) symbol.textContent = `Input (Base ${base}):`;
+            calculateConversion();
+        }
+
+        function setToBase(base) {
+            convertToBase = base;
+            [2, 8, 10, 16].forEach(b => {
+                const el = document.getElementById(`btnTo${b === 2 ? 'Bin' : b === 8 ? 'Oct' : b === 10 ? 'Dec' : 'Hex'}`);
+                if (el) el.className = (base === b) ? 'active amber-mode' : '';
+            });
+            calculateConversion();
+        }
+
+        function loadConvertPreset(val, fromB, toB) {
+            const input = document.getElementById('convertInputVal');
+            if (input) input.value = val;
+            setFromBase(fromB);
+            setToBase(toB);
+        }
+
+        function validateNumberForBase(str, base) {
+            str = (str || '').trim();
+            if (!str) return { valid: false, error: 'Please enter a number to convert.' };
+
+            let isNeg = false;
+            let cleanStr = str;
+            if (cleanStr.startsWith('-')) {
+                isNeg = true;
+                cleanStr = cleanStr.slice(1).trim();
+            } else if (cleanStr.startsWith('+')) {
+                cleanStr = cleanStr.slice(1).trim();
+            }
+
+            if (!cleanStr) return { valid: false, error: 'No digits entered.' };
+
+            const parts = cleanStr.split('.');
+            if (parts.length > 2) return { valid: false, error: 'Multiple radix points (.) found.' };
+
+            const allowedDigits = DIGIT_CHARS.slice(0, base);
+            const invalidChars = [];
+
+            for (let i = 0; i < cleanStr.length; i++) {
+                const ch = cleanStr[i].toUpperCase();
+                if (ch === '.') continue;
+                if (!allowedDigits.includes(ch)) {
+                    if (!invalidChars.includes(cleanStr[i])) invalidChars.push(cleanStr[i]);
+                }
+            }
+
+            if (invalidChars.length > 0) {
+                return {
+                    valid: false,
+                    invalidChars,
+                    rawStr: str
+                };
+            }
+
+            return {
+                valid: true,
+                isNeg,
+                intStr: (parts[0] || '0').toUpperCase(),
+                fracStr: (parts[1] || '').toUpperCase(),
+                hasFrac: parts.length === 2 && parts[1].length > 0,
+                rawClean: cleanStr
+            };
+        }
+
+        function convertBaseToDecimal(intStr, fracStr, base) {
+            let intDec = 0;
+            const intTrace = [];
+            for (let i = 0; i < intStr.length; i++) {
+                const d = DIGIT_CHARS.indexOf(intStr[i]);
+                const p = intStr.length - 1 - i;
+                const val = d * Math.pow(base, p);
+                intDec += val;
+                intTrace.push({ char: intStr[i], digitVal: d, power: p, termVal: val });
+            }
+
+            let fracDec = 0;
+            const fracTrace = [];
+            for (let j = 0; j < fracStr.length; j++) {
+                const d = DIGIT_CHARS.indexOf(fracStr[j]);
+                const p = -(j + 1);
+                const val = d * Math.pow(base, p);
+                fracDec += val;
+                fracTrace.push({ char: fracStr[j], digitVal: d, power: j + 1, termVal: val });
+            }
+
+            return {
+                intDec,
+                fracDec,
+                totalDec: intDec + fracDec,
+                intTrace,
+                fracTrace
+            };
+        }
+
+        function convertDecimalToBase(intDec, fracDec, targetBase, fracLimit = 8) {
+            // Integer Part Conversion
+            let intTarget = '';
+            const intDivTrace = [];
+            let tempInt = Math.floor(Math.abs(intDec));
+
+            if (tempInt === 0) {
+                intTarget = '0';
+            } else {
+                while (tempInt > 0) {
+                    const q = Math.floor(tempInt / targetBase);
+                    const r = tempInt % targetBase;
+                    const rChar = DIGIT_CHARS[r];
+                    intDivTrace.push({ dividend: tempInt, quotient: q, remainder: r, rChar });
+                    intTarget = rChar + intTarget;
+                    tempInt = q;
+                }
+            }
+
+            // Fractional Part Conversion
+            let fracTarget = '';
+            const fracMultTrace = [];
+            let tempFrac = Math.abs(fracDec);
+            let stepCount = 0;
+
+            while (tempFrac > 0 && stepCount < fracLimit) {
+                stepCount++;
+                const prod = tempFrac * targetBase;
+                const dVal = Math.floor(prod);
+                const rem = prod - dVal;
+                const dChar = DIGIT_CHARS[dVal];
+
+                fracMultTrace.push({ iter: stepCount, frac: tempFrac, prod, dVal, dChar, rem });
+                fracTarget += dChar;
+                tempFrac = rem;
+                if (Math.abs(tempFrac) < 1e-9) break;
+            }
+
+            const full = fracTarget ? `${intTarget}.${fracTarget}` : intTarget;
+
+            return {
+                intTarget,
+                fracTarget,
+                fullStr: full,
+                intDivTrace,
+                fracMultTrace
+            };
+        }
+
+        function calculateConversion() {
+            const container = document.getElementById('convertResultContainer');
+            if (!container) return;
+
+            const rawVal = (document.getElementById('convertInputVal')?.value || '').trim();
+            const valRes = validateNumberForBase(rawVal, convertFromBase);
+
+            // ❌ INVALID CONVERSION CASE
+            if (!valRes.valid) {
+                const allowed = DIGIT_CHARS.slice(0, convertFromBase).split('').join(', ');
+                container.innerHTML = `
+                    <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.35); border-radius: 14px; padding: 22px; margin-top: 16px;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                            <span style="font-size: 24px;">❌</span>
+                            <div style="font-size: 16px; font-weight: 800; color: #fb7185;">Conversion is Not Possible</div>
+                        </div>
+                        <div style="font-size: 13.5px; color: #fca5a5; line-height: 1.6;">
+                            The entered number <code style="background: rgba(0,0,0,0.4); color: #ffffff; padding: 2px 8px; border-radius: 4px; font-family: var(--code-font);">${rawVal}</code> contains invalid characters for <strong>${BASE_NAMES[convertFromBase]} (Base ${convertFromBase})</strong>.
+                        </div>
+                        <div style="margin-top: 12px; padding: 12px; background: rgba(15, 20, 30, 0.9); border-radius: 8px; font-family: var(--code-font); font-size: 12.5px; border: 1px solid var(--border);">
+                            • Invalid Character(s): <strong style="color: #fb7185;">${(valRes.invalidChars || []).join(', ')}</strong><br>
+                            • Allowed Digits for Base ${convertFromBase}: <strong style="color: #34d399;">${allowed}</strong>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // ✅ VALID CONVERSION CASE
+            const signPrefix = valRes.isNeg ? '-' : '';
+            const decData = convertBaseToDecimal(valRes.intStr, valRes.fracStr, convertFromBase);
+            const targetData = convertDecimalToBase(decData.intDec, decData.fracDec, convertToBase);
+            const finalResultStr = signPrefix + targetData.fullStr;
+
+            // Generate Summary in All 4 Bases
+            const allBases = {};
+            [2, 8, 10, 16].forEach(b => {
+                if (b === convertFromBase && b === 10) {
+                    allBases[b] = signPrefix + (valRes.hasFrac ? `${valRes.intStr}.${valRes.fracStr}` : valRes.intStr);
+                } else if (b === convertFromBase) {
+                    allBases[b] = signPrefix + (valRes.hasFrac ? `${valRes.intStr}.${valRes.fracStr}` : valRes.intStr);
+                } else {
+                    const resB = convertDecimalToBase(decData.intDec, decData.fracDec, b);
+                    allBases[b] = signPrefix + resB.fullStr;
+                }
+            });
+
+            let html = `
+                <!-- ─── HERO ANSWER CARD ─── -->
+                <div style="background: linear-gradient(145deg, rgba(56, 189, 248, 0.08), rgba(15, 18, 28, 0.95)); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 14px; padding: 22px; margin-top: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                        <div style="font-size: 12px; color: #38bdf8; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.06em;">CONVERSION RESULT</div>
+                        <button class="secondary" onclick="navigator.clipboard.writeText('${finalResultStr}'); alert('Result copied to clipboard!');" style="padding: 4px 10px; font-size: 11px;">📋 Copy Answer</button>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px;">
+                        <span style="font-family: var(--code-font); font-size: 20px; font-weight: 700; color: #94a3b8;">
+                            ${signPrefix}${valRes.intStr}${valRes.hasFrac ? '.' + valRes.fracStr : ''}<sub style="font-size: 12px; color: var(--teal);">${BASE_SUB[convertFromBase]}</sub>
+                        </span>
+                        <span style="font-size: 22px; color: #38bdf8;">➔</span>
+                        <span style="font-family: var(--code-font); font-size: 28px; font-weight: 800; color: #38bdf8; letter-spacing: 0.05em;">
+                            ${finalResultStr}<sub style="font-size: 14px; color: #38bdf8;">${BASE_SUB[convertToBase]}</sub>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- ─── ALL 4 BASES SUMMARY GRID (Extra Feature) ─── -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0;">
+                    ${[2, 8, 10, 16].map(b => `
+                        <div style="background: var(--panel); border: 1px solid ${b === convertToBase ? '#38bdf8' : 'var(--border)'}; border-radius: 10px; padding: 12px; text-align: center;">
+                            <div style="font-size: 10.5px; color: var(--muted); font-family: var(--code-font); text-transform: uppercase;">${BASE_NAMES[b]} (${b})</div>
+                            <div style="font-family: var(--code-font); font-size: 15px; font-weight: 700; color: ${b === convertToBase ? '#38bdf8' : 'var(--text)'}; margin-top: 4px; word-break: break-all;">
+                                ${allBases[b]}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Bit Grouping Visualizer (for Binary ↔ Octal/Hex)
+            if ((convertFromBase === 2 && (convertToBase === 8 || convertToBase === 16)) || (convertToBase === 2 && (convertFromBase === 8 || convertFromBase === 16))) {
+                const groupSize = (convertToBase === 8 || convertFromBase === 8) ? 3 : 4;
+                const targetName = groupSize === 3 ? 'Octal (3-bit groups)' : 'Hexadecimal (4-bit groups)';
+
+                html += `
+                    <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--teal); margin-bottom: 8px;">
+                            🧩 Binary Bit-Grouping Visualizer (${groupSize}-Bit Blocks ➔ ${targetName})
+                        </div>
+                        <div style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">
+                            Direct conversion rule: Every <strong>${groupSize} binary bits</strong> map to exactly <strong>1 ${groupSize === 3 ? 'octal' : 'hex'} digit</strong> ($2^{${groupSize}} = ${groupSize === 3 ? 8 : 16}$).
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Step-by-Step Educational Proofs
+            html += `
+                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 12px;">📖 Step-by-Step Conversion Working</div>
+
+                <!-- STEP 1 -->
+                <details class="step-details" open>
+                    <summary>Step 1 — Input Analysis & Decimal Evaluation</summary>
+                    <div style="padding: 12px 0;">
+                        <div style="font-size: 12.5px; color: #cbd5e1; line-height: 1.6;">
+                            Source Base: <strong>${BASE_NAMES[convertFromBase]} (Base ${convertFromBase})</strong>
+                            <br>
+                            Each digit position represents a power of ${convertFromBase}:
+                        </div>
+                        <table class="calc-table" style="margin-top: 10px;">
+                            <thead><tr><th>Part</th><th>Digit</th><th>Position Power</th><th>Value ($Digit \times ${convertFromBase}^{Power}$)</th></tr></thead>
+                            <tbody>
+                                ${decData.intTrace.map(t => `<tr><td>Integer</td><td><strong>${t.char}</strong></td><td>${convertFromBase}<sup>${t.power}</sup></td><td style="color: var(--teal);">${t.termVal}</td></tr>`).join('')}
+                                ${decData.fracTrace.map(t => `<tr><td>Fraction</td><td><strong>${t.char}</strong></td><td>${convertFromBase}<sup>-${t.power}</sup></td><td style="color: #c084fc;">${t.termVal}</td></tr>`).join('')}
+                            </tbody>
+                        </table>
+                        <div style="margin-top: 10px; font-family: var(--code-font); font-size: 13px; color: var(--teal);">
+                            ➜ Normalized Decimal Equivalent = <strong>${signPrefix}${decData.totalDec}₁₀</strong>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- STEP 2 -->
+                <details class="step-details">
+                    <summary>Step 2 — Integer Part Conversion (${decData.intDec}₁₀ ➔ Base ${convertToBase})</summary>
+                    <div style="padding: 12px 0;">
+                        <div style="font-size: 12.5px; color: #cbd5e1; margin-bottom: 8px;">
+                            Successive division by target base <strong>${convertToBase}</strong>:
+                        </div>
+                        ${targetData.intDivTrace.length > 0 ? `
+                        <table class="calc-table">
+                            <thead><tr><th>Step</th><th>Division</th><th>Quotient</th><th>Remainder (Digit)</th></tr></thead>
+                            <tbody>
+                                ${targetData.intDivTrace.map((d, idx) => `<tr><td>${idx + 1}</td><td>${d.dividend} ÷ ${convertToBase}</td><td>${d.quotient}</td><td><strong style="color: #38bdf8;">${d.rChar}</strong> (${d.remainder})</td></tr>`).join('')}
+                            </tbody>
+                        </table>
+                        <div style="font-size: 12px; color: var(--muted); margin-top: 6px;">↑ Read remainders bottom-to-top: <strong style="color: #38bdf8;">${targetData.intTarget}</strong></div>
+                        ` : `<div>Integer part is 0.</div>`}
+                    </div>
+                </details>
+
+                <!-- STEP 3 -->
+                <details class="step-details">
+                    <summary>Step 3 — Fractional Part Conversion (${decData.fracDec}₁₀ ➔ Base ${convertToBase})</summary>
+                    <div style="padding: 12px 0;">
+                        ${targetData.fracMultTrace.length > 0 ? `
+                        <div style="font-size: 12.5px; color: #cbd5e1; margin-bottom: 8px;">
+                            Successive multiplication by target base <strong>${convertToBase}</strong>:
+                        </div>
+                        <table class="calc-table">
+                            <thead><tr><th>Step</th><th>Fraction × ${convertToBase}</th><th>Product</th><th>Extracted Digit</th><th>Remaining Fraction</th></tr></thead>
+                            <tbody>
+                                ${targetData.fracMultTrace.map(m => `<tr><td>${m.iter}</td><td>${m.frac.toFixed(6)} × ${convertToBase}</td><td>${m.prod.toFixed(6)}</td><td><strong style="color: #c084fc;">${m.dChar}</strong> (${m.dVal})</td><td>${m.rem.toFixed(6)}</td></tr>`).join('')}
+                            </tbody>
+                        </table>
+                        <div style="font-size: 12px; color: var(--muted); margin-top: 6px;">→ Read digits top-to-bottom: <strong style="color: #c084fc;">.${targetData.fracTarget}</strong></div>
+                        ` : `<div style="font-size: 12.5px; color: var(--muted);">No fractional part present.</div>`}
+                    </div>
+                </details>
+
+                <!-- STEP 4 -->
+                <details class="step-details">
+                    <summary>Step 4 — Final Assembly & All-Bases Verification</summary>
+                    <div style="padding: 12px 0; font-size: 12.5px; color: #cbd5e1;">
+                        Combining Integer and Fractional parts yields:
+                        <div style="font-family: var(--code-font); font-size: 18px; font-weight: 800; color: #38bdf8; margin: 8px 0;">
+                            ${finalResultStr}<sub>${convertToBase}</sub>
+                        </div>
+                    </div>
+                </details>
+            `;
+
+            container.innerHTML = html;
         }
 
     </script>
