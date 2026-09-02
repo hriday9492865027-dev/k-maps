@@ -1315,9 +1315,26 @@
             font-family: var(--code-font);
             font-size: 11px;
             color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .matrix-field input[type=number] { width: 68px; }
+        .matrix-field input[type=number] {
+            width: 72px;
+            height: 40px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 4px 8px;
+            box-sizing: border-box;
+            -moz-appearance: textfield;
+        }
+
+        .matrix-field input[type=number]::-webkit-outer-spin-button,
+        .matrix-field input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
         .matrix-msg {
             font-family: var(--code-font);
@@ -1342,7 +1359,8 @@
 
         .editor-label {
             font-family: var(--code-font);
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 700;
             color: var(--text);
             display: flex;
             align-items: center;
@@ -1350,35 +1368,55 @@
         }
 
         .dim-badge {
-            font-size: 10px;
-            color: var(--muted);
-            background: var(--panel-2);
-            padding: 2px 6px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--teal);
+            background: rgba(45, 212, 191, 0.12);
+            padding: 3px 8px;
+            border-radius: 5px;
+            border: 1px solid rgba(45, 212, 191, 0.3);
         }
 
         .mat-grid {
             display: grid;
-            gap: 6px;
-            background: var(--panel-2);
-            padding: 10px;
-            border-radius: 8px;
+            gap: 8px;
+            background: rgba(13, 17, 23, 0.9);
+            padding: 12px;
+            border-radius: 10px;
             border: 1px solid var(--border);
             width: fit-content;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
         }
 
         .mat-grid input {
-            width: 48px;
-            height: 38px;
+            width: 54px;
+            height: 46px;
             text-align: center;
             font-family: var(--code-font);
-            font-size: 14px;
-            font-weight: 600;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            color: var(--text);
-            border-radius: 5px;
+            font-size: 17px;
+            font-weight: 800;
+            background: rgba(22, 28, 40, 0.95);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff !important;
+            border-radius: 7px;
+            padding: 2px 4px !important;
+            box-sizing: border-box !important;
+            line-height: 1;
+            transition: all 0.18s ease;
+            -moz-appearance: textfield;
+        }
+
+        .mat-grid input::-webkit-outer-spin-button,
+        .mat-grid input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .mat-grid input:focus {
+            border-color: var(--teal);
+            background: rgba(45, 212, 191, 0.15);
+            box-shadow: 0 0 10px rgba(45, 212, 191, 0.35);
+            color: #5eead4 !important;
         }
 
         .viz-layout {
@@ -1416,59 +1454,68 @@
 
         .mat-display-name {
             font-family: var(--code-font);
-            font-size: 11px;
+            font-size: 12px;
+            font-weight: 700;
             color: var(--muted);
         }
 
         .op-sym {
             font-family: var(--code-font);
-            font-size: 18px;
+            font-size: 20px;
             color: var(--muted);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .mgrid {
             display: grid;
-            gap: 4px;
-            padding: 6px;
-            border-left: 2px solid var(--border-highlight);
-            border-right: 2px solid var(--border-highlight);
-            border-radius: 3px;
+            gap: 6px;
+            padding: 8px;
+            border-left: 3px solid var(--border-highlight);
+            border-right: 3px solid var(--border-highlight);
+            border-radius: 4px;
         }
 
         .mcell {
-            width: 42px;
-            height: 36px;
+            width: 48px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: var(--code-font);
-            font-size: 13px;
-            background: var(--panel);
-            border-radius: 4px;
-            color: var(--text);
+            font-size: 15px;
+            font-weight: 700;
+            background: rgba(15, 20, 30, 0.9);
+            border-radius: 6px;
+            color: #f1f5f9;
+            border: 1px solid rgba(255, 255, 255, 0.06);
             transition: background .15s ease, color .15s ease, transform .15s ease;
         }
 
         .mcell.active-a {
             background: var(--amber);
-            color: #241a05;
-            font-weight: 700;
-            transform: scale(1.08);
+            color: #1a1200;
+            font-weight: 800;
+            transform: scale(1.1);
+            border-color: #fbbf24;
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
         }
 
         .mcell.active-b {
             background: var(--teal);
-            color: #06221c;
-            font-weight: 700;
-            transform: scale(1.08);
+            color: #03201a;
+            font-weight: 800;
+            transform: scale(1.1);
+            border-color: #2dd4bf;
+            box-shadow: 0 0 12px rgba(45, 212, 191, 0.5);
         }
 
         .mcell.active-c {
             background: var(--coral);
             color: #fff;
-            font-weight: 700;
-            box-shadow: 0 0 10px var(--coral);
+            font-weight: 800;
+            transform: scale(1.1);
+            border-color: #f43f5e;
+            box-shadow: 0 0 14px rgba(244, 63, 94, 0.7);
         }
 
         .mcell.filled-c {
@@ -4069,7 +4116,7 @@
 
         function buildEditor(gridEl, rows, cols, values, name) {
             gridEl.innerHTML = '';
-            gridEl.style.gridTemplateColumns = `repeat(${cols}, 48px)`;
+            gridEl.style.gridTemplateColumns = `repeat(${cols}, 54px)`;
             for (let i = 0; i < rows; i++) {
                 for (let j = 0; j < cols; j++) {
                     const inp = document.createElement('input');
@@ -4179,7 +4226,7 @@
 
         function buildStaticMat(el, mat, rows, cols, prefix) {
             el.innerHTML = '';
-            el.style.gridTemplateColumns = `repeat(${cols}, 42px)`;
+            el.style.gridTemplateColumns = `repeat(${cols}, 48px)`;
             for (let i = 0; i < rows; i++) {
                 for (let j = 0; j < cols; j++) {
                     const c = document.createElement('div');
@@ -4193,7 +4240,7 @@
 
         function buildCMat(el, rows, cols) {
             el.innerHTML = '';
-            el.style.gridTemplateColumns = `repeat(${cols}, 42px)`;
+            el.style.gridTemplateColumns = `repeat(${cols}, 48px)`;
             for (let i = 0; i < rows; i++) {
                 for (let j = 0; j < cols; j++) {
                     const c = document.createElement('div');
