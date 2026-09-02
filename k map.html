@@ -6518,26 +6518,33 @@
         }
 
         function updateXorStepUI() {
-            const { steps, currentStep, inputStr, outputStr } = xorAnimState;
+            const { steps, currentStep, inputStr, outputStr, mode } = xorAnimState;
             if (!steps || steps.length === 0) return;
 
             const step = steps[currentStep];
             const n = inputStr.length;
+            const isGrayToBin = mode === 'grayToBin';
 
             const badge = document.getElementById('xorStepBadge');
             if (badge) badge.textContent = `Step ${currentStep + 1} / ${steps.length}`;
 
+            // Top Row (INPUT: Binary for binToGray, Gray Code for grayToBin)
             const inputRow = document.getElementById('xorInputBitRow');
             if (inputRow) {
                 inputRow.innerHTML = inputStr.split('').map((ch, idx) => {
                     const isMSB = step.type === 'MSB' && idx === 0;
-                    const isPrimary = step.inBit1Idx === idx;
-                    const isSecondary = step.inBit2Idx === idx;
                     
                     let cls = 'xor-bit-box';
-                    if (isPrimary) cls += ' active-primary';
-                    else if (isSecondary) cls += ' active-secondary';
-                    else if (isMSB) cls += ' active-primary';
+                    if (!isGrayToBin) {
+                        // Binary to Gray Code: adjacent binary bits in top row
+                        if (step.inBit1Idx === idx) cls += ' active-primary';
+                        else if (step.inBit2Idx === idx) cls += ' active-secondary';
+                        else if (isMSB) cls += ' active-primary';
+                    } else {
+                        // Gray Code to Binary: Input 2 (current Gray Code bit) is in top row
+                        if (step.inBit2Idx === idx) cls += ' active-secondary';
+                        else if (isMSB) cls += ' active-primary';
+                    }
 
                     return `
                         <div class="${cls}">
@@ -6548,6 +6555,7 @@
                 }).join('');
             }
 
+            // Bottom Row (OUTPUT: Gray Code for binToGray, Binary for grayToBin)
             const outputRow = document.getElementById('xorOutputBitRow');
             if (outputRow) {
                 outputRow.innerHTML = Array.from({ length: n }).map((_, idx) => {
@@ -6556,7 +6564,12 @@
                     const isCurrentOutput = idx === currentStep;
 
                     let cls = 'xor-bit-box';
-                    if (isCurrentOutput) cls += ' result-active';
+                    if (isCurrentOutput) {
+                        cls += ' result-active';
+                    } else if (isGrayToBin && step.type === 'XOR' && step.inBit1Idx === idx) {
+                        // Gray Code to Binary: Input 1 (previously calculated binary bit) is in the bottom output row!
+                        cls += ' active-primary';
+                    }
 
                     return `
                         <div class="${cls}" style="${!hasValue ? 'opacity: 0.3;' : ''}">
