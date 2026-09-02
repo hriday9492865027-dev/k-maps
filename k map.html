@@ -2105,6 +2105,187 @@
             padding: 0 18px 16px;
         }
 
+        /* ─── XOR ANIMATED VISUALIZER STYLES ─── */
+        .xor-anim-card {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(11, 15, 25, 0.98));
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-radius: 16px;
+            padding: 22px;
+            margin: 20px 0;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .xor-control-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: rgba(15, 20, 30, 0.75);
+            border: 1px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .xor-btn-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .xor-ctrl-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f1f5f9;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .xor-ctrl-btn:hover {
+            background: rgba(51, 65, 85, 1);
+            border-color: #38bdf8;
+            transform: translateY(-1px);
+        }
+        .xor-ctrl-btn.primary {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            border-color: #38bdf8;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+        }
+
+        .xor-speed-selector {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0,0,0,0.3);
+            padding: 3px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .xor-speed-btn {
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            padding: 4px 8px;
+            font-size: 11px;
+            font-family: var(--code-font);
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .xor-speed-btn.active {
+            background: #38bdf8;
+            color: #0b0e14;
+        }
+
+        .xor-bit-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+
+        .xor-bit-box {
+            min-width: 44px;
+            height: 48px;
+            padding: 0 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            font-family: var(--code-font);
+            font-size: 18px;
+            font-weight: 800;
+            color: #94a3b8;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .xor-bit-box .bit-label {
+            font-size: 9px;
+            color: var(--muted);
+            font-weight: 600;
+            margin-top: -2px;
+        }
+        .xor-bit-box.active-primary {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.2);
+            color: #38bdf8;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+            transform: scale(1.1);
+        }
+        .xor-bit-box.active-secondary {
+            border-color: #c084fc;
+            background: rgba(192, 132, 252, 0.2);
+            color: #c084fc;
+            box-shadow: 0 0 16px rgba(192, 132, 252, 0.4);
+            transform: scale(1.1);
+        }
+        .xor-bit-box.result-active {
+            border-color: #34d399;
+            background: rgba(52, 211, 153, 0.25);
+            color: #34d399;
+            box-shadow: 0 0 18px rgba(52, 211, 153, 0.5);
+            animation: popBit 0.4s ease forwards;
+        }
+
+        @keyframes popBit {
+            0% { transform: scale(0.7); opacity: 0.5; }
+            50% { transform: scale(1.18); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .xor-gate-display {
+            background: rgba(8, 12, 20, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 16px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .xor-eq-badge {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(192, 132, 252, 0.2));
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-family: var(--code-font);
+            font-size: 16px;
+            font-weight: 800;
+            color: #f8fafc;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+        }
+
+        .xor-tt-table {
+            border-collapse: collapse;
+            font-family: var(--code-font);
+            font-size: 11px;
+        }
+        .xor-tt-table th, .xor-tt-table td {
+            padding: 3px 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .xor-tt-table tr.active-row {
+            background: rgba(56, 189, 248, 0.25);
+            color: #38bdf8;
+            font-weight: 800;
+        }
+
         .comp-dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -3025,6 +3206,7 @@
                             <button id="btnFromOct" onclick="setFromBase(8)">Octal (8)</button>
                             <button id="btnFromDec" onclick="setFromBase(10)">Decimal (10)</button>
                             <button id="btnFromHex" onclick="setFromBase(16)">Hex (16)</button>
+                            <button id="btnFromGray" onclick="setFromBase('gray')">Gray Code</button>
                         </div>
                     </div>
                     <div class="config-block">
@@ -3034,6 +3216,7 @@
                             <button id="btnToOct" class="active amber-mode" onclick="setToBase(8)">Octal (8)</button>
                             <button id="btnToDec" onclick="setToBase(10)">Decimal (10)</button>
                             <button id="btnToHex" onclick="setToBase(16)">Hex (16)</button>
+                            <button id="btnToGray" onclick="setToBase('gray')">Gray Code</button>
                         </div>
                     </div>
                 </div>
@@ -3044,7 +3227,7 @@
                         <span id="convertInputSymbol" style="position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #38bdf8; font-family: var(--code-font); font-weight: 700; font-size: 13px; pointer-events: none;">Input (Base 2):</span>
                         <input type="text" id="convertInputVal" value="1101.101" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter') calculateConversion();"
                             style="width: 100%; padding: 12px 14px 12px 115px; font-size: 16px; font-family: var(--code-font); font-weight: 700; border-radius: 10px; background: rgba(11, 15, 24, 0.9); border: 1px solid rgba(255,255,255,0.1); color: #f1f5f9;"
-                            placeholder="e.g. 1101.101, -13.625, 75.64, AF.4B">
+                            placeholder="e.g. 1101, 1011, 1101.101, -13.625, AF.4B">
                     </div>
                     <button onclick="calculateConversion()" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff; border: 1px solid #38bdf8; padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);">
                         Convert ⚡
@@ -3054,13 +3237,13 @@
                 <!-- Quick Presets -->
                 <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center;">
                     <span style="font-size: 11px; color: var(--muted); font-family: var(--code-font);">QUICK PRESETS:</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('1101', 2, 'gray')">1101₂ ➔ Gray</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('1011', 'gray', 2)">1011 (Gray) ➔ Binary</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('10101', 2, 'gray')">10101₂ ➔ Gray</span>
+                    <span class="preset-chip" onclick="loadConvertPreset('11110', 'gray', 2)">11110 (Gray) ➔ Binary</span>
                     <span class="preset-chip" onclick="loadConvertPreset('1101.101', 2, 8)">1101.101₂ ➔ Octal</span>
-                    <span class="preset-chip" onclick="loadConvertPreset('1101.101', 2, 10)">1101.101₂ ➔ Decimal</span>
                     <span class="preset-chip" onclick="loadConvertPreset('-13.625', 10, 2)">-13.625₁₀ ➔ Binary</span>
-                    <span class="preset-chip" onclick="loadConvertPreset('-13.625', 10, 16)">-13.625₁₀ ➔ Hex</span>
-                    <span class="preset-chip" onclick="loadConvertPreset('75.64', 8, 10)">75.64₈ ➔ Decimal</span>
                     <span class="preset-chip" onclick="loadConvertPreset('AF.4B', 16, 2)">AF.4B₁₆ ➔ Binary</span>
-                    <span class="preset-chip" onclick="loadConvertPreset('3F.A', 16, 8)">3F.A₁₆ ➔ Octal</span>
                 </div>
             </div>
 
@@ -5933,33 +6116,37 @@
             2: 'Binary',
             8: 'Octal',
             10: 'Decimal',
-            16: 'Hexadecimal'
+            16: 'Hexadecimal',
+            'gray': 'Gray Code'
         };
 
         const BASE_SUB = {
             2: '₂',
             8: '₈',
             10: '₁₀',
-            16: '₁₆'
+            16: '₁₆',
+            'gray': ' (Gray)'
         };
 
         const DIGIT_CHARS = '0123456789ABCDEF';
 
         function setFromBase(base) {
             convertFromBase = base;
-            [2, 8, 10, 16].forEach(b => {
-                const el = document.getElementById(`btnFrom${b === 2 ? 'Bin' : b === 8 ? 'Oct' : b === 10 ? 'Dec' : 'Hex'}`);
+            [2, 8, 10, 16, 'gray'].forEach(b => {
+                const idStr = b === 2 ? 'Bin' : b === 8 ? 'Oct' : b === 10 ? 'Dec' : b === 16 ? 'Hex' : 'Gray';
+                const el = document.getElementById(`btnFrom${idStr}`);
                 if (el) el.className = (base === b) ? 'active teal-mode' : '';
             });
             const symbol = document.getElementById('convertInputSymbol');
-            if (symbol) symbol.textContent = `Input (Base ${base}):`;
+            if (symbol) symbol.textContent = `Input (${BASE_NAMES[base] || ('Base ' + base)}):`;
             calculateConversion();
         }
 
         function setToBase(base) {
             convertToBase = base;
-            [2, 8, 10, 16].forEach(b => {
-                const el = document.getElementById(`btnTo${b === 2 ? 'Bin' : b === 8 ? 'Oct' : b === 10 ? 'Dec' : 'Hex'}`);
+            [2, 8, 10, 16, 'gray'].forEach(b => {
+                const idStr = b === 2 ? 'Bin' : b === 8 ? 'Oct' : b === 10 ? 'Dec' : b === 16 ? 'Hex' : 'Gray';
+                const el = document.getElementById(`btnTo${idStr}`);
                 if (el) el.className = (base === b) ? 'active amber-mode' : '';
             });
             calculateConversion();
@@ -5990,7 +6177,11 @@
             const parts = cleanStr.split('.');
             if (parts.length > 2) return { valid: false, error: 'Multiple radix points (.) found.' };
 
-            const allowedDigits = DIGIT_CHARS.slice(0, base);
+            if (base === 'gray' && parts.length > 1 && parts[1].length > 0) {
+                return { valid: false, invalidChars: ['. (Fractional Gray Code not supported)'], rawStr: str };
+            }
+
+            const allowedDigits = (base === 'gray') ? '01' : DIGIT_CHARS.slice(0, base);
             const invalidChars = [];
 
             for (let i = 0; i < cleanStr.length; i++) {
@@ -6098,7 +6289,386 @@
             };
         }
 
+        // ─── GRAY CODE CONVERSION & INTERACTIVE XOR ANIMATION ENGINE ───
+        let xorAnimState = {
+            steps: [],
+            currentStep: 0,
+            isPlaying: false,
+            speedMs: 1200,
+            timer: null,
+            mode: '',
+            inputStr: '',
+            outputStr: ''
+        };
+
+        function binaryToGray(binStr) {
+            const steps = [];
+            let grayResult = '';
+            const n = binStr.length;
+
+            const msb = binStr[0];
+            grayResult += msb;
+            steps.push({
+                stepIdx: 0,
+                type: 'MSB',
+                inBit1: msb,
+                inBit1Idx: 0,
+                inBit2: null,
+                inBit2Idx: null,
+                outBit: msb,
+                outBitIdx: 0,
+                eqStr: `G[${n - 1}] = B[${n - 1}] = ${msb}`,
+                explanation: `Step 1 (MSB Pass-through): The Most Significant Bit (MSB) passes directly from Binary to Gray Code without XOR modification: <strong>G[${n - 1}] = B[${n - 1}] = ${msb}</strong>.`
+            });
+
+            for (let i = 1; i < n; i++) {
+                const bPrev = parseInt(binStr[i - 1], 10);
+                const bCurr = parseInt(binStr[i], 10);
+                const gBit = (bPrev ^ bCurr).toString();
+                grayResult += gBit;
+                steps.push({
+                    stepIdx: i,
+                    type: 'XOR',
+                    inBit1: bPrev.toString(),
+                    inBit1Idx: i - 1,
+                    inBit2: bCurr.toString(),
+                    inBit2Idx: i,
+                    outBit: gBit,
+                    outBitIdx: i,
+                    eqStr: `${bPrev} ⊕ ${bCurr} = ${gBit}`,
+                    explanation: `Step ${i + 1} (XOR Adjacent Bits): XOR Binary bit B[${n - i}] (${bPrev}) with Binary bit B[${n - 1 - i}] (${bCurr}): <strong>G[${n - 1 - i}] = ${bPrev} ⊕ ${bCurr} = ${gBit}</strong>.`
+                });
+            }
+
+            return { grayResult, steps };
+        }
+
+        function grayToBinary(grayStr) {
+            const steps = [];
+            let binResult = '';
+            const n = grayStr.length;
+
+            const msb = grayStr[0];
+            binResult += msb;
+            steps.push({
+                stepIdx: 0,
+                type: 'MSB',
+                inBit1: msb,
+                inBit1Idx: 0,
+                inBit2: null,
+                inBit2Idx: null,
+                outBit: msb,
+                outBitIdx: 0,
+                eqStr: `B[${n - 1}] = G[${n - 1}] = ${msb}`,
+                explanation: `Step 1 (MSB Pass-through): The Most Significant Bit (MSB) passes directly from Gray Code to Binary without XOR modification: <strong>B[${n - 1}] = G[${n - 1}] = ${msb}</strong>.`
+            });
+
+            for (let i = 1; i < n; i++) {
+                const bPrev = parseInt(binResult[i - 1], 10);
+                const gCurr = parseInt(grayStr[i], 10);
+                const bBit = (bPrev ^ gCurr).toString();
+                binResult += bBit;
+                steps.push({
+                    stepIdx: i,
+                    type: 'XOR',
+                    inBit1: bPrev.toString(),
+                    inBit1Idx: i - 1,
+                    inBit2: gCurr.toString(),
+                    inBit2Idx: i,
+                    outBit: bBit,
+                    outBitIdx: i,
+                    eqStr: `${bPrev} ⊕ ${gCurr} = ${bBit}`,
+                    explanation: `Step ${i + 1} (XOR Derived Binary with Gray Bit): XOR previously computed Binary bit B[${n - i}] (${bPrev}) with Gray Code bit G[${n - 1 - i}] (${gCurr}): <strong>B[${n - 1 - i}] = ${bPrev} ⊕ ${gCurr} = ${bBit}</strong>.`
+                });
+            }
+
+            return { binResult, steps };
+        }
+
+        function renderXorAnimationContainer(steps, mode, inputStr, outputStr) {
+            xorAnimState = {
+                steps,
+                currentStep: 0,
+                isPlaying: false,
+                speedMs: 1200,
+                timer: null,
+                mode,
+                inputStr,
+                outputStr
+            };
+
+            const isBinToGray = mode === 'binToGray';
+            const inputTitle = isBinToGray ? 'Binary Input Bits (B)' : 'Gray Code Input Bits (G)';
+            const outputTitle = isBinToGray ? 'Generated Gray Code Bits (G)' : 'Generated Binary Bits (B)';
+
+            return `
+                <div class="xor-anim-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+                        <div>
+                            <div style="font-size: 11px; color: #38bdf8; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
+                                ⚡ INTERACTIVE XOR LOGIC GATE CONVERTER
+                            </div>
+                            <h2 style="font-size: 18px; margin: 4px 0 0 0; color: #f8fafc;">
+                                ${isBinToGray ? 'Binary ➔ Gray Code Animation' : 'Gray Code ➔ Binary Animation'}
+                            </h2>
+                        </div>
+                        <div style="font-size: 12px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; padding: 6px 14px; border-radius: 20px; font-family: var(--code-font); font-weight: 700;">
+                            Formula: ${isBinToGray ? 'Gᵢ = Bᵢ₊₁ ⊕ Bᵢ' : 'Bᵢ = Bᵢ₊₁ ⊕ Gᵢ'}
+                        </div>
+                    </div>
+
+                    <!-- Playback Controls -->
+                    <div class="xor-control-bar">
+                        <div class="xor-btn-group">
+                            <button class="xor-ctrl-btn" onclick="prevXorStep()">⏮ Prev</button>
+                            <button id="xorPlayBtn" class="xor-ctrl-btn primary" onclick="toggleXorPlay()">▶ Play</button>
+                            <button class="xor-ctrl-btn" onclick="nextXorStep()">Next ⏭</button>
+                            <button class="xor-ctrl-btn" onclick="restartXorAnim()">🔄 Reset</button>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <div style="font-size: 12px; color: var(--muted); font-family: var(--code-font);">
+                                Speed:
+                            </div>
+                            <div class="xor-speed-selector">
+                                <button id="xorSpeed05" class="xor-speed-btn" onclick="setXorSpeed(0.5, 2400)">0.5x</button>
+                                <button id="xorSpeed1" class="xor-speed-btn active" onclick="setXorSpeed(1, 1200)">1x</button>
+                                <button id="xorSpeed2" class="xor-speed-btn" onclick="setXorSpeed(2, 600)">2x</button>
+                            </div>
+
+                            <div id="xorStepBadge" style="font-family: var(--code-font); font-size: 12px; font-weight: 700; color: #38bdf8; background: rgba(15, 23, 42, 0.9); padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.3);">
+                                Step 1 / ${steps.length}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Bit Row -->
+                    <div style="margin-bottom: 8px; font-size: 12px; font-weight: 700; color: #94a3b8; font-family: var(--code-font);">
+                        INPUT: ${inputTitle}
+                    </div>
+                    <div id="xorInputBitRow" class="xor-bit-row"></div>
+
+                    <!-- Logic Gate Visualizer Area -->
+                    <div class="xor-gate-display" style="margin: 16px 0;">
+                        <!-- Left Input Labels / Values -->
+                        <div style="display: flex; flex-direction: column; gap: 8px; font-family: var(--code-font);">
+                            <div style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; padding: 6px 12px; border-radius: 8px; font-size: 13px;">
+                                Input 1: <strong id="xorGateIn1" style="color: #38bdf8; font-size: 15px;">-</strong>
+                            </div>
+                            <div style="background: rgba(192, 132, 252, 0.15); border: 1px solid #c084fc; padding: 6px 12px; border-radius: 8px; font-size: 13px;">
+                                Input 2: <strong id="xorGateIn2" style="color: #c084fc; font-size: 15px;">-</strong>
+                            </div>
+                        </div>
+
+                        <!-- SVG XOR Gate Graphic -->
+                        <div style="text-align: center; position: relative;">
+                            <svg width="120" height="70" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 20 H35" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M10 50 H35" stroke="#c084fc" stroke-width="3" stroke-linecap="round"/>
+                                <path d="M95 35 H115" stroke="#34d399" stroke-width="3.5" stroke-linecap="round"/>
+                                <path d="M30 10 C40 25 40 45 30 60" stroke="#38bdf8" stroke-width="2.5" fill="none"/>
+                                <path d="M36 10 C46 25 46 45 36 60 C65 60 85 50 95 35 C85 20 65 10 36 10 Z" fill="rgba(15, 23, 42, 0.9)" stroke="#38bdf8" stroke-width="2.5"/>
+                                <text x="56" y="41" fill="#f8fafc" font-family="JetBrains Mono" font-weight="bold" font-size="16">⊕</text>
+                            </svg>
+                            <div style="font-size: 11px; font-family: var(--code-font); color: var(--muted); margin-top: 2px;">
+                                XOR Gate (Logic)
+                            </div>
+                        </div>
+
+                        <!-- Equation Pill & Output Result -->
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                            <div id="xorEqBadge" class="xor-eq-badge">- ⊕ - = -</div>
+                            <div style="font-size: 12px; font-family: var(--code-font); color: #34d399; font-weight: 700;">
+                                Output Bit: <span id="xorGateOut" style="font-size: 16px;">-</span>
+                            </div>
+                        </div>
+
+                        <!-- XOR Truth Table Reference Badge -->
+                        <div style="background: rgba(11, 15, 24, 0.9); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px;">
+                            <div style="font-size: 10.5px; font-weight: 700; color: var(--muted); font-family: var(--code-font); margin-bottom: 4px; text-transform: uppercase; text-align: center;">
+                                XOR Truth Table
+                            </div>
+                            <table class="xor-tt-table">
+                                <thead><tr><th>A</th><th>B</th><th>A ⊕ B</th></tr></thead>
+                                <tbody>
+                                    <tr id="xorTtRow00"><td>0</td><td>0</td><td style="color:#34d399; font-weight:800;">0</td></tr>
+                                    <tr id="xorTtRow01"><td>0</td><td>1</td><td style="color:#34d399; font-weight:800;">1</td></tr>
+                                    <tr id="xorTtRow10"><td>1</td><td>0</td><td style="color:#34d399; font-weight:800;">1</td></tr>
+                                    <tr id="xorTtRow11"><td>1</td><td>1</td><td style="color:#34d399; font-weight:800;">0</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Output Bit Row -->
+                    <div style="margin-bottom: 8px; font-size: 12px; font-weight: 700; color: #34d399; font-family: var(--code-font);">
+                        OUTPUT: ${outputTitle}
+                    </div>
+                    <div id="xorOutputBitRow" class="xor-bit-row"></div>
+
+                    <!-- Step Explanation Box -->
+                    <div id="xorStepExplanation" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 14px 18px; margin-top: 14px; font-size: 13.5px; color: #e2e8f0; line-height: 1.6;">
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateXorStepUI() {
+            const { steps, currentStep, inputStr, outputStr } = xorAnimState;
+            if (!steps || steps.length === 0) return;
+
+            const step = steps[currentStep];
+            const n = inputStr.length;
+
+            const badge = document.getElementById('xorStepBadge');
+            if (badge) badge.textContent = `Step ${currentStep + 1} / ${steps.length}`;
+
+            const inputRow = document.getElementById('xorInputBitRow');
+            if (inputRow) {
+                inputRow.innerHTML = inputStr.split('').map((ch, idx) => {
+                    const isMSB = step.type === 'MSB' && idx === 0;
+                    const isPrimary = step.inBit1Idx === idx;
+                    const isSecondary = step.inBit2Idx === idx;
+                    
+                    let cls = 'xor-bit-box';
+                    if (isPrimary) cls += ' active-primary';
+                    else if (isSecondary) cls += ' active-secondary';
+                    else if (isMSB) cls += ' active-primary';
+
+                    return `
+                        <div class="${cls}">
+                            <span>${ch}</span>
+                            <span class="bit-label">Bit ${n - 1 - idx}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            const outputRow = document.getElementById('xorOutputBitRow');
+            if (outputRow) {
+                outputRow.innerHTML = Array.from({ length: n }).map((_, idx) => {
+                    const hasValue = idx <= currentStep;
+                    const val = hasValue ? outputStr[idx] : '?';
+                    const isCurrentOutput = idx === currentStep;
+
+                    let cls = 'xor-bit-box';
+                    if (isCurrentOutput) cls += ' result-active';
+
+                    return `
+                        <div class="${cls}" style="${!hasValue ? 'opacity: 0.3;' : ''}">
+                            <span>${val}</span>
+                            <span class="bit-label">Bit ${n - 1 - idx}</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            const in1El = document.getElementById('xorGateIn1');
+            const in2El = document.getElementById('xorGateIn2');
+            const outEl = document.getElementById('xorGateOut');
+            const eqBadge = document.getElementById('xorEqBadge');
+
+            if (step.type === 'MSB') {
+                if (in1El) in1El.textContent = `${step.inBit1} (MSB)`;
+                if (in2El) in2El.textContent = 'None (Direct Pass)';
+                if (outEl) outEl.textContent = `${step.outBit}`;
+                if (eqBadge) eqBadge.textContent = step.eqStr;
+            } else {
+                if (in1El) in1El.textContent = step.inBit1;
+                if (in2El) in2El.textContent = step.inBit2;
+                if (outEl) outEl.textContent = step.outBit;
+                if (eqBadge) eqBadge.textContent = step.eqStr;
+            }
+
+            ['00', '01', '10', '11'].forEach(pair => {
+                const rowEl = document.getElementById(`xorTtRow${pair}`);
+                if (rowEl) rowEl.className = '';
+            });
+
+            if (step.type === 'XOR') {
+                const pairKey = `${step.inBit1}${step.inBit2}`;
+                const activeRow = document.getElementById(`xorTtRow${pairKey}`);
+                if (activeRow) activeRow.className = 'active-row';
+            }
+
+            const expEl = document.getElementById('xorStepExplanation');
+            if (expEl) expEl.innerHTML = step.explanation;
+        }
+
+        function playXorAnim() {
+            if (xorAnimState.isPlaying) return;
+            xorAnimState.isPlaying = true;
+            const playBtn = document.getElementById('xorPlayBtn');
+            if (playBtn) playBtn.innerHTML = '⏸ Pause';
+
+            xorAnimState.timer = setInterval(() => {
+                if (xorAnimState.currentStep < xorAnimState.steps.length - 1) {
+                    xorAnimState.currentStep++;
+                    updateXorStepUI();
+                } else {
+                    pauseXorAnim();
+                }
+            }, xorAnimState.speedMs);
+        }
+
+        function pauseXorAnim() {
+            xorAnimState.isPlaying = false;
+            if (xorAnimState.timer) clearInterval(xorAnimState.timer);
+            xorAnimState.timer = null;
+            const playBtn = document.getElementById('xorPlayBtn');
+            if (playBtn) playBtn.innerHTML = '▶ Play';
+        }
+
+        function toggleXorPlay() {
+            if (xorAnimState.isPlaying) {
+                pauseXorAnim();
+            } else {
+                if (xorAnimState.currentStep >= xorAnimState.steps.length - 1) {
+                    xorAnimState.currentStep = 0;
+                }
+                playXorAnim();
+            }
+        }
+
+        function nextXorStep() {
+            pauseXorAnim();
+            if (xorAnimState.currentStep < xorAnimState.steps.length - 1) {
+                xorAnimState.currentStep++;
+                updateXorStepUI();
+            }
+        }
+
+        function prevXorStep() {
+            pauseXorAnim();
+            if (xorAnimState.currentStep > 0) {
+                xorAnimState.currentStep--;
+                updateXorStepUI();
+            }
+        }
+
+        function restartXorAnim() {
+            pauseXorAnim();
+            xorAnimState.currentStep = 0;
+            updateXorStepUI();
+        }
+
+        function setXorSpeed(mult, ms) {
+            xorAnimState.speedMs = ms;
+            ['05', '1', '2'].forEach(s => {
+                const btn = document.getElementById(`xorSpeed${s}`);
+                if (btn) btn.className = 'xor-speed-btn';
+            });
+            const activeBtn = document.getElementById(`xorSpeed${mult === 0.5 ? '05' : mult}`);
+            if (activeBtn) activeBtn.className = 'xor-speed-btn active';
+
+            if (xorAnimState.isPlaying) {
+                pauseXorAnim();
+                playXorAnim();
+            }
+        }
+
         function calculateConversion() {
+            pauseXorAnim();
             const container = document.getElementById('convertResultContainer');
             if (!container) return;
 
@@ -6107,7 +6677,7 @@
 
             // ❌ INVALID CONVERSION CASE
             if (!valRes.valid) {
-                const allowed = DIGIT_CHARS.slice(0, convertFromBase).split('').join(', ');
+                const allowed = (convertFromBase === 'gray') ? '0, 1' : DIGIT_CHARS.slice(0, convertFromBase).split('').join(', ');
                 container.innerHTML = `
                     <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.35); border-radius: 14px; padding: 22px; margin-top: 16px;">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
@@ -6115,19 +6685,191 @@
                             <div style="font-size: 16px; font-weight: 800; color: #fb7185;">Conversion is Not Possible</div>
                         </div>
                         <div style="font-size: 13.5px; color: #fca5a5; line-height: 1.6;">
-                            The entered number <code style="background: rgba(0,0,0,0.4); color: #ffffff; padding: 2px 8px; border-radius: 4px; font-family: var(--code-font);">${rawVal}</code> contains invalid characters for <strong>${BASE_NAMES[convertFromBase]} (Base ${convertFromBase})</strong>.
+                            The entered number <code style="background: rgba(0,0,0,0.4); color: #ffffff; padding: 2px 8px; border-radius: 4px; font-family: var(--code-font);">${rawVal}</code> contains invalid characters for <strong>${BASE_NAMES[convertFromBase]}</strong>.
                         </div>
                         <div style="margin-top: 12px; padding: 12px; background: rgba(15, 20, 30, 0.9); border-radius: 8px; font-family: var(--code-font); font-size: 12.5px; border: 1px solid var(--border);">
                             • Invalid Character(s): <strong style="color: #fb7185;">${(valRes.invalidChars || []).join(', ')}</strong><br>
-                            • Allowed Digits for Base ${convertFromBase}: <strong style="color: #34d399;">${allowed}</strong>
+                            • Allowed Digits for ${BASE_NAMES[convertFromBase]}: <strong style="color: #34d399;">${allowed}</strong>
                         </div>
                     </div>
                 `;
                 return;
             }
 
-            // ✅ VALID CONVERSION CASE
             const signPrefix = valRes.isNeg ? '-' : '';
+
+            // ─── GRAY CODE SPECIAL CONVERSION CASES ───
+            if (convertFromBase === 'gray' || convertToBase === 'gray') {
+                let finalResultStr = '';
+                let animHtml = '';
+                let steps = [];
+                let animMode = '';
+                let animInput = '';
+                let animOutput = '';
+                let proofStepsHtml = '';
+
+                if (convertFromBase === 2 && convertToBase === 'gray') {
+                    const res = binaryToGray(valRes.intStr);
+                    finalResultStr = signPrefix + res.grayResult;
+                    steps = res.steps;
+                    animMode = 'binToGray';
+                    animInput = valRes.intStr;
+                    animOutput = res.grayResult;
+
+                    proofStepsHtml = `
+                        <details class="step-details" open>
+                            <summary>Step 1 — MSB Pass Through</summary>
+                            <div style="padding: 12px 0; font-size: 13px;">
+                                Most Significant Bit (MSB): G[${valRes.intStr.length - 1}] = B[${valRes.intStr.length - 1}] = <strong>${valRes.intStr[0]}</strong>.
+                            </div>
+                        </details>
+                        <details class="step-details">
+                            <summary>Step 2 — XOR Adjacent Binary Bit Operations (Gᵢ = Bᵢ₊₁ ⊕ Bᵢ)</summary>
+                            <div style="padding: 12px 0;">
+                                <table class="calc-table">
+                                    <thead><tr><th>Gray Bit Index</th><th>Binary Pair (Bᵢ₊₁ ⊕ Bᵢ)</th><th>XOR Logic Gate Calculation</th><th>Resulting Gray Bit (Gᵢ)</th></tr></thead>
+                                    <tbody>
+                                        ${steps.map(s => `
+                                            <tr>
+                                                <td>Bit ${valRes.intStr.length - 1 - s.stepIdx}</td>
+                                                <td>${s.type === 'MSB' ? `B[${valRes.intStr.length - 1}]` : `B[${valRes.intStr.length - s.stepIdx}] ⊕ B[${valRes.intStr.length - 1 - s.stepIdx}]`}</td>
+                                                <td>${s.eqStr}</td>
+                                                <td><strong style="color: #34d399;">${s.outBit}</strong></td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+                    `;
+
+                } else if (convertFromBase === 'gray' && convertToBase === 2) {
+                    const res = grayToBinary(valRes.intStr);
+                    finalResultStr = signPrefix + res.binResult;
+                    steps = res.steps;
+                    animMode = 'grayToBin';
+                    animInput = valRes.intStr;
+                    animOutput = res.binResult;
+
+                    proofStepsHtml = `
+                        <details class="step-details" open>
+                            <summary>Step 1 — MSB Pass Through</summary>
+                            <div style="padding: 12px 0; font-size: 13px;">
+                                Most Significant Bit (MSB): B[${valRes.intStr.length - 1}] = G[${valRes.intStr.length - 1}] = <strong>${valRes.intStr[0]}</strong>.
+                            </div>
+                        </details>
+                        <details class="step-details">
+                            <summary>Step 2 — XOR Derived Binary with Gray Bit Operations (Bᵢ = Bᵢ₊₁ ⊕ Gᵢ)</summary>
+                            <div style="padding: 12px 0;">
+                                <table class="calc-table">
+                                    <thead><tr><th>Binary Bit Index</th><th>XOR Pair (Prev Bᵢ₊₁ ⊕ Current Gᵢ)</th><th>XOR Logic Gate Calculation</th><th>Resulting Binary Bit (Bᵢ)</th></tr></thead>
+                                    <tbody>
+                                        ${steps.map(s => `
+                                            <tr>
+                                                <td>Bit ${valRes.intStr.length - 1 - s.stepIdx}</td>
+                                                <td>${s.type === 'MSB' ? `G[${valRes.intStr.length - 1}]` : `B[${valRes.intStr.length - s.stepIdx}] ⊕ G[${valRes.intStr.length - 1 - s.stepIdx}]`}</td>
+                                                <td>${s.eqStr}</td>
+                                                <td><strong style="color: #34d399;">${s.outBit}</strong></td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+                    `;
+
+                } else if (convertFromBase === 'gray' && convertToBase !== 'gray') {
+                    const grayRes = grayToBinary(valRes.intStr);
+                    const binStr = grayRes.binResult;
+                    steps = grayRes.steps;
+                    animMode = 'grayToBin';
+                    animInput = valRes.intStr;
+                    animOutput = binStr;
+
+                    const decData = convertBaseToDecimal(binStr, '', 2);
+                    const targetData = convertDecimalToBase(decData.intDec, 0, convertToBase);
+                    finalResultStr = signPrefix + targetData.fullStr;
+
+                    proofStepsHtml = `
+                        <details class="step-details" open>
+                            <summary>Phase 1 — Gray Code ➔ Intermediate Binary Conversion</summary>
+                            <div style="padding: 12px 0; font-size: 13px;">
+                                Converting Gray Code <code>${valRes.intStr}</code> ➔ Binary <code>${binStr}₂</code>.
+                            </div>
+                        </details>
+                        <details class="step-details">
+                            <summary>Phase 2 — Binary ➔ ${BASE_NAMES[convertToBase]} (Base ${convertToBase}) Conversion</summary>
+                            <div style="padding: 12px 0; font-size: 13px;">
+                                Decimal value: <strong>${decData.intDec}₁₀</strong><br>
+                                Target Base Output: <strong style="color: #38bdf8;">${finalResultStr}<sub>${BASE_SUB[convertToBase]}</sub></strong>
+                            </div>
+                        </details>
+                    `;
+
+                } else if (convertFromBase !== 'gray' && convertToBase === 'gray') {
+                    const decData = convertBaseToDecimal(valRes.intStr, valRes.fracStr, convertFromBase);
+                    const targetData = convertDecimalToBase(decData.intDec, 0, 2);
+                    const binStr = targetData.intTarget || '0';
+
+                    const grayRes = binaryToGray(binStr);
+                    finalResultStr = signPrefix + grayRes.grayResult;
+                    steps = grayRes.steps;
+                    animMode = 'binToGray';
+                    animInput = binStr;
+                    animOutput = grayRes.grayResult;
+
+                    proofStepsHtml = `
+                        <details class="step-details" open>
+                            <summary>Phase 1 — ${BASE_NAMES[convertFromBase]} ➔ Intermediate Binary Conversion</summary>
+                            <div style="padding: 12px 0; font-size: 13px;">
+                                Input <code>${valRes.intStr}</code><sub>${BASE_SUB[convertFromBase]}</sub> ➔ Decimal <strong>${decData.intDec}₁₀</strong> ➔ Binary <code>${binStr}₂</code>.
+                            </div>
+                        </details>
+                        <details class="step-details">
+                            <summary>Phase 2 — Binary ➔ Gray Code Conversion</summary>
+                            <div style="padding: 12px 0; font-size: 13px;">
+                                Intermediate Binary <code>${binStr}₂</code> ➔ Gray Code <strong style="color: #38bdf8;">${finalResultStr} (Gray)</strong>.
+                            </div>
+                        </details>
+                    `;
+                } else {
+                    finalResultStr = signPrefix + valRes.intStr;
+                }
+
+                if (steps.length > 0) {
+                    animHtml = renderXorAnimationContainer(steps, animMode, animInput, animOutput);
+                }
+
+                container.innerHTML = `
+                    <div style="background: linear-gradient(145deg, rgba(56, 189, 248, 0.08), rgba(15, 18, 28, 0.95)); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 14px; padding: 22px; margin-top: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                            <div style="font-size: 12px; color: #38bdf8; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.06em;">GRAY CODE CONVERSION RESULT</div>
+                            <button class="secondary" onclick="navigator.clipboard.writeText('${finalResultStr}'); alert('Result copied to clipboard!');" style="padding: 4px 10px; font-size: 11px;">📋 Copy Answer</button>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px;">
+                            <span style="font-family: var(--code-font); font-size: 20px; font-weight: 700; color: #94a3b8;">
+                                ${signPrefix}${valRes.intStr}<sub style="font-size: 12px; color: var(--teal);">${BASE_SUB[convertFromBase]}</sub>
+                            </span>
+                            <span style="font-size: 22px; color: #38bdf8;">➔</span>
+                            <span style="font-family: var(--code-font); font-size: 28px; font-weight: 800; color: #38bdf8; letter-spacing: 0.05em;">
+                                ${finalResultStr}<sub style="font-size: 14px; color: #38bdf8;">${BASE_SUB[convertToBase]}</sub>
+                            </span>
+                        </div>
+                    </div>
+
+                    ${animHtml}
+
+                    <div style="font-size: 13px; font-weight: 700; color: var(--text); margin: 16px 0 12px;">📖 Step-by-Step Conversion Proof</div>
+                    ${proofStepsHtml}
+                `;
+
+                if (steps.length > 0) {
+                    updateXorStepUI();
+                }
+                return;
+            }
+
+            // ✅ STANDARD CONVERSION CASE (Bases 2, 8, 10, 16)
             const decData = convertBaseToDecimal(valRes.intStr, valRes.fracStr, convertFromBase);
             const targetData = convertDecimalToBase(decData.intDec, decData.fracDec, convertToBase);
             const finalResultStr = signPrefix + targetData.fullStr;
@@ -6163,7 +6905,7 @@
                     </div>
                 </div>
 
-                <!-- ─── ALL 4 BASES SUMMARY GRID (Extra Feature) ─── -->
+                <!-- ─── ALL 4 BASES SUMMARY GRID ─── -->
                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0;">
                     ${[2, 8, 10, 16].map(b => `
                         <div style="background: var(--panel); border: 1px solid ${b === convertToBase ? '#38bdf8' : 'var(--border)'}; border-radius: 10px; padding: 12px; text-align: center;">
