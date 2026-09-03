@@ -7413,22 +7413,6 @@
             mini:   { name: 'Mini-Float (8-bit 1-4-3)', totalBits: 8, expBits: 4, mantBits: 3, bias: 7 }
         };
 
-        let floatAnimState = {
-            steps: [],
-            currentStep: 0,
-            isPlaying: false,
-            speedMs: 1400,
-            timer: null
-        };
-
-        let fixAnimState = {
-            steps: [],
-            currentStep: 0,
-            isPlaying: false,
-            speedMs: 1400,
-            timer: null
-        };
-
         function initFloatFixTab() {
             setFloatFixSubTab(currentFloatFixSubTab);
             if (currentFloatFixSubTab === 'float') {
@@ -7482,7 +7466,6 @@
             let isNaNVal = false;
             let numVal = 0;
 
-            // Handle special string formats
             if (str.toLowerCase() === 'nan') {
                 isNaNVal = true;
             } else if (str.toLowerCase() === 'infinity' || str.toLowerCase() === '+infinity') {
@@ -7520,18 +7503,16 @@
             let caseType = 'Normal Number';
             let unbiasedExp = 0;
             let biasedExp = 0;
-            let shiftSteps = [];
             let unnormBin = '';
             let normBin = '';
 
             if (isNaNVal) {
                 caseType = 'NaN (Not-a-Number)';
                 expBits = '1'.repeat(spec.expBits);
-                mantBits = '1' + '0'.repeat(spec.mantBits - 1); // Quiet NaN default
+                mantBits = '1' + '0'.repeat(spec.mantBits - 1);
                 steps.push({
-                    title: 'Special Case: NaN',
-                    desc: 'Input is Not-a-Number. In IEEE-754, NaN is represented with all 1s in the Exponent field and a non-zero Mantissa.',
-                    bits: { sign: signBit, exp: expBits, mant: mantBits }
+                    title: 'Special Case: NaN (Not-a-Number)',
+                    desc: 'Input is Not-a-Number. In IEEE-754 standard, NaN is represented with all 1s in the Exponent field and a non-zero Mantissa fraction.'
                 });
             } else if (isInf) {
                 caseType = isNeg ? '-Infinity' : '+Infinity';
@@ -7539,8 +7520,7 @@
                 mantBits = '0'.repeat(spec.mantBits);
                 steps.push({
                     title: 'Special Case: Infinity',
-                    desc: `Input magnitude overflowed to ${caseType}. Represented with all 1s in the Exponent field and all 0s in the Mantissa.`,
-                    bits: { sign: signBit, exp: expBits, mant: mantBits }
+                    desc: `Input value overflowed to <strong>${caseType}</strong>. Represented with all 1s in the Exponent field and all 0s in the Mantissa fraction.`
                 });
             } else if (isZero) {
                 caseType = isNeg ? '-Zero (-0.0)' : '+Zero (+0.0)';
@@ -7548,11 +7528,9 @@
                 mantBits = '0'.repeat(spec.mantBits);
                 steps.push({
                     title: 'Special Case: Zero',
-                    desc: `Input is zero (${isNeg ? '-0.0' : '+0.0'}). Represented with all 0s in both Exponent and Mantissa.`,
-                    bits: { sign: signBit, exp: expBits, mant: mantBits }
+                    desc: `Input is zero (<strong>${isNeg ? '-0.0' : '+0.0'}</strong>). Represented with all 0s in both Exponent and Mantissa fraction fields.`
                 });
             } else {
-                // Normal or Subnormal
                 const absVal = Math.abs(numVal);
                 const intPart = Math.floor(absVal);
                 let fracPart = absVal - intPart;
@@ -7560,7 +7538,7 @@
                 // Convert Integer to Binary
                 let intBin = intPart.toString(2);
 
-                // Convert Fraction to Binary (up to 80 bits for precision)
+                // Convert Fraction to Binary
                 let fracBin = '';
                 let tempF = fracPart;
                 for (let k = 0; k < 75; k++) {
@@ -7575,44 +7553,32 @@
 
                 // Step 1: Sign
                 steps.push({
-                    stepIdx: 0,
                     title: 'Step 1 — Sign Bit Determination',
-                    desc: `The number is <strong>${isNeg ? 'Negative (< 0)' : 'Positive (≥ 0)'}</strong>. Therefore, Sign Bit $S = ${signBit}$.`,
-                    signBit,
-                    activeField: 'sign'
+                    desc: `The input number is <strong>${isNeg ? 'Negative (< 0)' : 'Positive (≥ 0)'}</strong>.<br>` +
+                          `Therefore, <strong>Sign Bit S = <code>${signBit}</code></strong> (1 bit).`
                 });
 
-                // Step 2: Convert to Unnormalized Binary
+                // Step 2: Decimal to Binary
                 steps.push({
-                    stepIdx: 1,
                     title: 'Step 2 — Decimal to Binary Conversion',
                     desc: `Convert integer part (${intPart}₁₀ = <code>${intBin}₂</code>) and fractional part (0.${fracPart.toString().slice(2) || '0'}₁₀ ≈ <code>0.${fracBin}₂</code>):<br>` +
-                          `<div style="font-family: var(--code-font); font-size: 15px; color: #38bdf8; margin-top: 8px;">|${numVal}| = ${unnormBin}₂</div>`,
-                    unnormBin,
-                    activeField: 'unnorm'
+                          `<div style="font-family: var(--code-font); font-size: 15px; color: #38bdf8; margin-top: 8px;">|${numVal}| = <strong>${unnormBin}₂</strong></div>`
                 });
 
                 // Step 3: Scientific Normalization
                 if (intPart > 0) {
-                    // Shift radix point left
                     unbiasedExp = intBin.length - 1;
                     const combined = intBin.slice(1) + fracBin;
                     normBin = `1.${combined}`;
                     mantBits = combined.padEnd(spec.mantBits, '0').slice(0, spec.mantBits);
 
                     steps.push({
-                        stepIdx: 2,
-                        title: 'Step 3 — Scientific Normalization & Shift Animation',
-                        desc: `Shift the binary radix point <strong>${unbiasedExp} positions to the LEFT</strong> to create the standard scientific normalized format $1.M \times 2^E$:<br>` +
+                        title: 'Step 3 — Scientific Normalization',
+                        desc: `Shift the binary radix point <strong>${unbiasedExp} positions to the LEFT</strong> to format as standard scientific binary <code>1.M × 2<sup>E</sup></code>:<br>` +
                               `<div style="font-family: var(--code-font); font-size: 16px; color: #f472b6; margin: 8px 0;">${unnormBin}₂ ➔ <strong>1.${mantBits}₂ × 2<sup>${unbiasedExp}</sup></strong></div>` +
-                              `Unbiased Exponent $E = ${unbiasedExp}$, Leading Hidden Bit = <code>1</code>.`,
-                        normBin,
-                        shiftCount: unbiasedExp,
-                        shiftDir: 'left',
-                        activeField: 'norm'
+                              `Unbiased Exponent <strong>E = ${unbiasedExp}</strong>, Implicit Leading Bit = <code>1</code>.`
                     });
                 } else {
-                    // Shift radix point right
                     const firstOneIdx = fracBin.indexOf('1');
                     if (firstOneIdx === -1) {
                         unbiasedExp = 0;
@@ -7625,20 +7591,15 @@
                         mantBits = combined.padEnd(spec.mantBits, '0').slice(0, spec.mantBits);
 
                         steps.push({
-                            stepIdx: 2,
-                            title: 'Step 3 — Scientific Normalization & Shift Animation',
+                            title: 'Step 3 — Scientific Normalization',
                             desc: `Shift the binary radix point <strong>${Math.abs(unbiasedExp)} positions to the RIGHT</strong> to locate the first non-zero bit:<br>` +
                                   `<div style="font-family: var(--code-font); font-size: 16px; color: #f472b6; margin: 8px 0;">${unnormBin}₂ ➔ <strong>1.${mantBits}₂ × 2<sup>${unbiasedExp}</sup></strong></div>` +
-                                  `Unbiased Exponent $E = ${unbiasedExp}$, Leading Hidden Bit = <code>1</code>.`,
-                            normBin,
-                            shiftCount: Math.abs(unbiasedExp),
-                            shiftDir: 'right',
-                            activeField: 'norm'
+                                  `Unbiased Exponent <strong>E = ${unbiasedExp}</strong>, Implicit Leading Bit = <code>1</code>.`
                         });
                     }
                 }
 
-                // Check for Denormal / Subnormal
+                // Step 4: Exponent Biasing
                 biasedExp = unbiasedExp + spec.bias;
                 const minBiasedExp = 1;
                 const maxBiasedExp = (1 << spec.expBits) - 2;
@@ -7647,46 +7608,34 @@
                     caseType = 'Subnormal / Denormal Number';
                     biasedExp = 0;
                     expBits = '0'.repeat(spec.expBits);
-                    // Denormal mantissa adjustment
                     const denormShift = 1 - (unbiasedExp + spec.bias);
                     mantBits = ('0'.repeat(denormShift - 1) + '1' + mantBits).slice(0, spec.mantBits);
                     steps.push({
-                        stepIdx: 3,
                         title: 'Step 4 — Subnormal Exponent Handling',
-                        desc: `Biased exponent falls below 1 ($E_{biased} \\le 0$). Stored as a <strong>Subnormal Number</strong> with Exponent = <code>${expBits}</code> and no implicit leading 1 bit.`,
-                        activeField: 'exp'
+                        desc: `Biased exponent falls below 1 (E_biased ≤ 0). Stored as a <strong>Subnormal Number</strong> with Exponent = <code>${expBits}</code> and no implicit leading 1 bit.`
                     });
                 } else if (biasedExp > maxBiasedExp) {
                     caseType = isNeg ? '-Infinity (Overflow)' : '+Infinity (Overflow)';
                     expBits = '1'.repeat(spec.expBits);
                     mantBits = '0'.repeat(spec.mantBits);
                     steps.push({
-                        stepIdx: 3,
                         title: 'Step 4 — Exponent Overflow to Infinity',
-                        desc: `Biased exponent exceeds maximum capacity ($E_{biased} > ${maxBiasedExp}$). Overflowed to <strong>${caseType}</strong>.`,
-                        activeField: 'exp'
+                        desc: `Biased exponent exceeds maximum capacity (${biasedExp} > ${maxBiasedExp}). Overflowed to <strong>${caseType}</strong>.`
                     });
                 } else {
                     expBits = biasedExp.toString(2).padStart(spec.expBits, '0');
                     steps.push({
-                        stepIdx: 3,
-                        title: 'Step 4 — Exponent Biasing ($E_{biased} = E + Bias$)',
-                        desc: `Add the format bias ($+${spec.bias}$) to the unbiased exponent:<br>` +
-                              `<div style="font-family: var(--code-font); font-size: 15px; color: #38bdf8; margin: 8px 0;">E<sub>biased</sub> = ${unbiasedExp} + ${spec.bias} = <strong>${biasedExp}₁₀</strong> = <code>${expBits}₂</code></div>`,
-                        biasedExp,
-                        expBits,
-                        activeField: 'exp'
+                        title: 'Step 4 — Exponent Biasing (E_biased = E + Bias)',
+                        desc: `Add the precision bias (+${spec.bias}) to the unbiased exponent (E = ${unbiasedExp}):<br>` +
+                              `<div style="font-family: var(--code-font); font-size: 15px; color: #38bdf8; margin: 8px 0;">E<sub>biased</sub> = ${unbiasedExp} + ${spec.bias} = <strong>${biasedExp}₁₀</strong> = <code>${expBits}₂</code> (${spec.expBits} bits)</div>`
                     });
                 }
 
-                // Step 5: Mantissa Assembly
+                // Step 5: Mantissa Extraction
                 steps.push({
-                    stepIdx: 4,
                     title: `Step 5 — Mantissa Extraction (${spec.mantBits}-bit Fraction)`,
-                    desc: `Drop the implicit leading <code>1.</code> bit and truncate/zero-pad the fraction to exactly <strong>${spec.mantBits} bits</strong>:<br>` +
-                          `<div style="font-family: var(--code-font); font-size: 14px; color: #34d399; margin: 8px 0; word-break: break-all;">Mantissa (M) = <strong>${mantBits}</strong></div>`,
-                    mantBits,
-                    activeField: 'mant'
+                    desc: `Drop the implicit leading <code>1.</code> bit and truncate / zero-pad the fraction to exactly <strong>${spec.mantBits} bits</strong>:<br>` +
+                          `<div style="font-family: var(--code-font); font-size: 14px; color: #34d399; margin: 8px 0; word-break: break-all;">Mantissa (M) = <strong>${mantBits}</strong></div>`
                 });
             }
 
@@ -7699,18 +7648,13 @@
                 hexStr += parseInt(chunk, 2).toString(16).toUpperCase();
             }
 
-            // Step 6: Full Assembly
+            // Final Step: Complete Assembly
             steps.push({
-                stepIdx: steps.length,
                 title: `Final Step — Complete ${spec.totalBits}-bit Word & Hex Encoding`,
-                desc: `Concatenate Sign (${signBit}) + Exponent (${expBits}) + Mantissa (${mantBits}):<br>` +
-                      `<div style="font-family: var(--code-font); font-size: 18px; font-weight: 800; color: #f472b6; margin: 10px 0;">0x${hexStr}</div>`,
-                hexStr,
-                fullBitStr,
-                activeField: 'full'
+                desc: `Concatenate Sign (<code>${signBit}</code>) + Exponent (<code>${expBits}</code>) + Mantissa (<code>${mantBits}</code>):<br>` +
+                      `<div style="font-family: var(--code-font); font-size: 18px; font-weight: 800; color: #f472b6; margin: 10px 0;">0x${hexStr}</div>`
             });
 
-            // Reconstruct Real Value from Bits for verification
             const recon = reconstructFloatFromBits(signBit, expBits, mantBits, precisionKey);
 
             return {
@@ -7760,11 +7704,9 @@
             }
 
             if (allExpZeros) {
-                // Subnormal
                 const val = (isNeg ? -1 : 1) * mantVal * Math.pow(2, 1 - spec.bias);
                 return { val, str: val.toExponential(8) };
             } else {
-                // Normal
                 const val = (isNeg ? -1 : 1) * (1 + mantVal) * Math.pow(2, expVal - spec.bias);
                 return { val, str: val.toString() };
             }
@@ -7833,22 +7775,12 @@
         }
 
         function calculateFloatingPoint() {
-            pauseFloatAnim();
             const container = document.getElementById('floatResultContainer');
             if (!container) return;
 
             const rawVal = (document.getElementById('floatInputVal')?.value || '').trim();
             const data = computeIEEE754(rawVal, currentFloatPrecision);
             activeFloatData = data;
-
-            floatAnimState = {
-                steps: data.steps,
-                currentStep: 0,
-                isPlaying: false,
-                speedMs: 1400,
-                timer: null
-            };
-
             const spec = data.spec;
 
             let html = `
@@ -7904,52 +7836,14 @@
                     </div>
                 </div>
 
-                <!-- ─── ANIMATED NORMALIZATION SHIFT PLAYER ─── -->
-                <div class="xor-anim-card" style="border-color: rgba(236, 72, 153, 0.35);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
-                        <div>
-                            <div style="font-size: 11px; color: #f472b6; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
-                                🎬 STEP-BY-STEP NORMALIZATION & CONVERSION ANIMATION
-                            </div>
-                            <h2 style="font-size: 18px; margin: 4px 0 0 0; color: #f8fafc;">
-                                Floating Point Binary Shift & Assembly
-                            </h2>
-                        </div>
-                    </div>
-
-                    <!-- Playback Controls -->
-                    <div class="xor-control-bar">
-                        <div class="xor-btn-group">
-                            <button class="xor-ctrl-btn" onclick="prevFloatStep()">⏮ Prev</button>
-                            <button id="floatPlayBtn" class="xor-ctrl-btn primary" style="background: linear-gradient(135deg, #ec4899, #be185d); border-color: #f472b6;" onclick="toggleFloatPlay()">▶ Play</button>
-                            <button class="xor-ctrl-btn" onclick="nextFloatStep()">Next ⏭</button>
-                            <button class="xor-ctrl-btn" onclick="restartFloatAnim()">🔄 Reset</button>
-                        </div>
-
-                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                            <div style="font-size: 12px; color: var(--muted); font-family: var(--code-font);">Speed:</div>
-                            <div class="xor-speed-selector">
-                                <button id="floatSpeed05" class="xor-speed-btn" onclick="setFloatSpeed(0.5, 2400)">0.5x</button>
-                                <button id="floatSpeed1" class="xor-speed-btn active" onclick="setFloatSpeed(1, 1400)">1x</button>
-                                <button id="floatSpeed2" class="xor-speed-btn" onclick="setFloatSpeed(2, 700)">2x</button>
-                            </div>
-                            <div id="floatStepBadge" style="font-family: var(--code-font); font-size: 12px; font-weight: 700; color: #f472b6; background: rgba(15, 23, 42, 0.9); padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(236, 72, 153, 0.3);">
-                                Step 1 / ${data.steps.length}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step Active Card Content -->
-                    <div id="floatStepContainer" style="background: rgba(11, 15, 24, 0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px;">
-                    </div>
-                </div>
-
                 <!-- ─── STEP-BY-STEP PROOF ACCORDIONS ─── -->
-                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin: 20px 0 12px;">📖 Complete Mathematical Proof</div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--text); margin: 24px 0 12px; display: flex; align-items: center; gap: 8px;">
+                    <span>📖</span> Step-by-Step Conversion Process
+                </div>
                 ${data.steps.map((s, idx) => `
-                    <details class="step-details" ${idx <= 1 ? 'open' : ''}>
-                        <summary>${s.title}</summary>
-                        <div style="padding: 12px 0; font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
+                    <details class="step-details" open>
+                        <summary style="font-weight: 700; color: #f8fafc;">${s.title}</summary>
+                        <div style="padding: 14px 18px; font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
                             ${s.desc}
                         </div>
                     </details>
@@ -7957,98 +7851,6 @@
             `;
 
             container.innerHTML = html;
-            updateFloatStepUI();
-        }
-
-        function updateFloatStepUI() {
-            if (!floatAnimState.steps || floatAnimState.steps.length === 0) return;
-            const step = floatAnimState.steps[floatAnimState.currentStep];
-            const badge = document.getElementById('floatStepBadge');
-            if (badge) badge.textContent = `Step ${floatAnimState.currentStep + 1} / ${floatAnimState.steps.length}`;
-
-            const box = document.getElementById('floatStepContainer');
-            if (box) {
-                box.innerHTML = `
-                    <div style="font-size: 15px; font-weight: 800; color: #f472b6; margin-bottom: 8px;">
-                        ${step.title}
-                    </div>
-                    <div style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6;">
-                        ${step.desc}
-                    </div>
-                `;
-            }
-        }
-
-        function playFloatAnim() {
-            if (floatAnimState.isPlaying) return;
-            floatAnimState.isPlaying = true;
-            const btn = document.getElementById('floatPlayBtn');
-            if (btn) btn.innerHTML = '⏸ Pause';
-
-            floatAnimState.timer = setInterval(() => {
-                if (floatAnimState.currentStep < floatAnimState.steps.length - 1) {
-                    floatAnimState.currentStep++;
-                    updateFloatStepUI();
-                } else {
-                    pauseFloatAnim();
-                }
-            }, floatAnimState.speedMs);
-        }
-
-        function pauseFloatAnim() {
-            floatAnimState.isPlaying = false;
-            if (floatAnimState.timer) clearInterval(floatAnimState.timer);
-            floatAnimState.timer = null;
-            const btn = document.getElementById('floatPlayBtn');
-            if (btn) btn.innerHTML = '▶ Play';
-        }
-
-        function toggleFloatPlay() {
-            if (floatAnimState.isPlaying) {
-                pauseFloatAnim();
-            } else {
-                if (floatAnimState.currentStep >= floatAnimState.steps.length - 1) {
-                    floatAnimState.currentStep = 0;
-                }
-                playFloatAnim();
-            }
-        }
-
-        function nextFloatStep() {
-            pauseFloatAnim();
-            if (floatAnimState.currentStep < floatAnimState.steps.length - 1) {
-                floatAnimState.currentStep++;
-                updateFloatStepUI();
-            }
-        }
-
-        function prevFloatStep() {
-            pauseFloatAnim();
-            if (floatAnimState.currentStep > 0) {
-                floatAnimState.currentStep--;
-                updateFloatStepUI();
-            }
-        }
-
-        function restartFloatAnim() {
-            pauseFloatAnim();
-            floatAnimState.currentStep = 0;
-            updateFloatStepUI();
-        }
-
-        function setFloatSpeed(mult, ms) {
-            floatAnimState.speedMs = ms;
-            ['05', '1', '2'].forEach(s => {
-                const b = document.getElementById(`floatSpeed${s}`);
-                if (b) b.className = 'xor-speed-btn';
-            });
-            const active = document.getElementById(`floatSpeed${mult === 0.5 ? '05' : mult}`);
-            if (active) active.className = 'xor-speed-btn active';
-
-            if (floatAnimState.isPlaying) {
-                pauseFloatAnim();
-                playFloatAnim();
-            }
         }
 
         // ─── FIXED-POINT (Q-FORMAT) CORE ENGINE ───
@@ -8113,31 +7915,29 @@
             const scaleFactor = Math.pow(2, fracBits);
             const resolution = 1 / scaleFactor;
 
-            // Range Calculation
             const minVal = isSigned ? -Math.pow(2, intBits - 1) : 0;
             const maxVal = isSigned ? (Math.pow(2, intBits - 1) - resolution) : (Math.pow(2, intBits) - resolution);
 
             const isOutOfRange = numVal < minVal || numVal > maxVal;
 
-            // Step 1: Scale factor multiplication
             const multiplied = numVal * scaleFactor;
             const quantizedInt = Math.round(multiplied);
             const representedVal = quantizedInt / scaleFactor;
             const quantError = Math.abs(numVal - representedVal);
 
+            // Step 1: Scale factor multiplication
             steps.push({
-                stepIdx: 0,
-                title: `Step 1 — Scale Factor Multiplication ($V \\times 2^{${fracBits}}$)`,
-                desc: `Scale the decimal value by $2^n = 2^{${fracBits}} = ${scaleFactor}$:<br>` +
+                title: `Step 1 — Scale Factor Multiplication (V × 2ⁿ)`,
+                desc: `Scale the decimal input by factor 2<sup>${fracBits}</sup> = <strong>${scaleFactor}</strong>:<br>` +
                       `<div style="font-family: var(--code-font); font-size: 15px; color: #2dd4bf; margin: 8px 0;">${numVal} × ${scaleFactor} = <strong>${multiplied.toFixed(4)}</strong></div>`
             });
 
-            // Step 2: Integer Rounding / Quantization
+            // Step 2: Integer Rounding
             steps.push({
-                stepIdx: 1,
                 title: 'Step 2 — Integer Quantization & Rounding',
-                desc: `Round to nearest integer integer code: $\\text{round}(${multiplied.toFixed(4)}) = \\mathbf{${quantizedInt}}$<br>` +
-                      `Represented Value = $${quantizedInt} / ${scaleFactor} = \\mathbf{${representedVal}}$ (Quantization Error: ${quantError.toFixed(6)}).`
+                desc: `Round to nearest integer code: <code>round(${multiplied.toFixed(4)}) = <strong>${quantizedInt}</strong></code><br>` +
+                      `Represented Value = <code>${quantizedInt} / ${scaleFactor} = <strong>${representedVal}</strong></code> ` +
+                      `${quantError > 0 ? `(Quantization Error: ${quantError.toFixed(6)})` : `(Exact representation)`}.`
             });
 
             // Step 3: Binary Encoding
@@ -8150,8 +7950,7 @@
             const fracBitStr = fullBinary.slice(intBits);
 
             steps.push({
-                stepIdx: 2,
-                title: `Step 3 — Binary Field Placement ($Q_{${intBits}.${fracBits}}$)`,
+                title: `Step 3 — Binary Field Placement (Q${intBits}.${fracBits})`,
                 desc: `Split binary word into <strong>${intBits} Integer bits</strong> and <strong>${fracBits} Fractional bits</strong> with fixed radix point:<br>` +
                       `<div style="font-family: var(--code-font); font-size: 16px; margin: 10px 0;">` +
                       `<span style="color: #c084fc; font-weight: 800;">${intBitStr}</span>` +
@@ -8168,9 +7967,8 @@
             }
 
             steps.push({
-                stepIdx: 3,
-                title: 'Step 4 — Hexadecimal & Memory Assembly',
-                desc: `Final ${totalBits}-bit word representation: <strong>0x${hexStr}</strong> (Binary: <code>${intBitStr}.${fracBitStr}</code>).`
+                title: `Step 4 — Final ${totalBits}-bit Word & Hex Assembly`,
+                desc: `Concatenate integer and fractional bits: <code>${intBitStr}.${fracBitStr}</code> ➔ <strong>0x${hexStr}</strong>.`
             });
 
             return {
@@ -8245,7 +8043,6 @@
             const full = activeFixedData.fullBinary.split('');
             full[bitIndex] = (full[bitIndex] === '1') ? '0' : '1';
 
-            // Calculate new represented value
             let val = 0;
             const intB = activeFixedData.intBits;
             const fracB = activeFixedData.fracBits;
@@ -8270,7 +8067,6 @@
         }
 
         function calculateFixedPoint() {
-            pauseFixAnim();
             const container = document.getElementById('fixResultContainer');
             if (!container) return;
 
@@ -8281,14 +8077,6 @@
 
             const data = computeFixedPoint(rawVal, intBits, fracBits, isSigned);
             activeFixedData = data;
-
-            fixAnimState = {
-                steps: data.steps,
-                currentStep: 0,
-                isPlaying: false,
-                speedMs: 1400,
-                timer: null
-            };
 
             let html = `
                 <!-- ─── HERO FIXED ANSWER CARD ─── -->
@@ -8350,52 +8138,14 @@
                     </div>
                 </div>
 
-                <!-- ─── ANIMATED CONVERSION PLAYER ─── -->
-                <div class="xor-anim-card" style="border-color: rgba(45, 212, 191, 0.35);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
-                        <div>
-                            <div style="font-size: 11px; color: #2dd4bf; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
-                                🎬 STEP-BY-STEP FIXED-POINT ANIMATION
-                            </div>
-                            <h2 style="font-size: 18px; margin: 4px 0 0 0; color: #f8fafc;">
-                                Q-Format Scaling & Bit Field Assembly
-                            </h2>
-                        </div>
-                    </div>
-
-                    <!-- Playback Controls -->
-                    <div class="xor-control-bar">
-                        <div class="xor-btn-group">
-                            <button class="xor-ctrl-btn" onclick="prevFixStep()">⏮ Prev</button>
-                            <button id="fixPlayBtn" class="xor-ctrl-btn primary" style="background: linear-gradient(135deg, #0d9488, #0f766e); border-color: #2dd4bf;" onclick="toggleFixPlay()">▶ Play</button>
-                            <button class="xor-ctrl-btn" onclick="nextFixStep()">Next ⏭</button>
-                            <button class="xor-ctrl-btn" onclick="restartFixAnim()">🔄 Reset</button>
-                        </div>
-
-                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-                            <div style="font-size: 12px; color: var(--muted); font-family: var(--code-font);">Speed:</div>
-                            <div class="xor-speed-selector">
-                                <button id="fixSpeed05" class="xor-speed-btn" onclick="setFixSpeed(0.5, 2400)">0.5x</button>
-                                <button id="fixSpeed1" class="xor-speed-btn active" onclick="setFixSpeed(1, 1400)">1x</button>
-                                <button id="fixSpeed2" class="xor-speed-btn" onclick="setFixSpeed(2, 700)">2x</button>
-                            </div>
-                            <div id="fixStepBadge" style="font-family: var(--code-font); font-size: 12px; font-weight: 700; color: #2dd4bf; background: rgba(15, 23, 42, 0.9); padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(45, 212, 191, 0.3);">
-                                Step 1 / ${data.steps.length}
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step Active Card Content -->
-                    <div id="fixStepContainer" style="background: rgba(11, 15, 24, 0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px;">
-                    </div>
-                </div>
-
                 <!-- ─── STEP-BY-STEP PROOFS ─── -->
-                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin: 20px 0 12px;">📖 Step-by-Step Fixed-Point Derivation</div>
+                <div style="font-size: 14px; font-weight: 700; color: var(--text); margin: 24px 0 12px; display: flex; align-items: center; gap: 8px;">
+                    <span>📖</span> Step-by-Step Fixed-Point Process
+                </div>
                 ${data.steps.map((s, idx) => `
-                    <details class="step-details" ${idx <= 1 ? 'open' : ''}>
-                        <summary>${s.title}</summary>
-                        <div style="padding: 12px 0; font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
+                    <details class="step-details" open>
+                        <summary style="font-weight: 700; color: #f8fafc;">${s.title}</summary>
+                        <div style="padding: 14px 18px; font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
                             ${s.desc}
                         </div>
                     </details>
@@ -8403,98 +8153,6 @@
             `;
 
             container.innerHTML = html;
-            updateFixStepUI();
-        }
-
-        function updateFixStepUI() {
-            if (!fixAnimState.steps || fixAnimState.steps.length === 0) return;
-            const step = fixAnimState.steps[fixAnimState.currentStep];
-            const badge = document.getElementById('fixStepBadge');
-            if (badge) badge.textContent = `Step ${fixAnimState.currentStep + 1} / ${fixAnimState.steps.length}`;
-
-            const box = document.getElementById('fixStepContainer');
-            if (box) {
-                box.innerHTML = `
-                    <div style="font-size: 15px; font-weight: 800; color: #2dd4bf; margin-bottom: 8px;">
-                        ${step.title}
-                    </div>
-                    <div style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6;">
-                        ${step.desc}
-                    </div>
-                `;
-            }
-        }
-
-        function playFixAnim() {
-            if (fixAnimState.isPlaying) return;
-            fixAnimState.isPlaying = true;
-            const btn = document.getElementById('fixPlayBtn');
-            if (btn) btn.innerHTML = '⏸ Pause';
-
-            fixAnimState.timer = setInterval(() => {
-                if (fixAnimState.currentStep < fixAnimState.steps.length - 1) {
-                    fixAnimState.currentStep++;
-                    updateFixStepUI();
-                } else {
-                    pauseFixAnim();
-                }
-            }, fixAnimState.speedMs);
-        }
-
-        function pauseFixAnim() {
-            fixAnimState.isPlaying = false;
-            if (fixAnimState.timer) clearInterval(fixAnimState.timer);
-            fixAnimState.timer = null;
-            const btn = document.getElementById('fixPlayBtn');
-            if (btn) btn.innerHTML = '▶ Play';
-        }
-
-        function toggleFixPlay() {
-            if (fixAnimState.isPlaying) {
-                pauseFixAnim();
-            } else {
-                if (fixAnimState.currentStep >= fixAnimState.steps.length - 1) {
-                    fixAnimState.currentStep = 0;
-                }
-                playFixAnim();
-            }
-        }
-
-        function nextFixStep() {
-            pauseFixAnim();
-            if (fixAnimState.currentStep < fixAnimState.steps.length - 1) {
-                fixAnimState.currentStep++;
-                updateFixStepUI();
-            }
-        }
-
-        function prevFixStep() {
-            pauseFixAnim();
-            if (fixAnimState.currentStep > 0) {
-                fixAnimState.currentStep--;
-                updateFixStepUI();
-            }
-        }
-
-        function restartFixAnim() {
-            pauseFixAnim();
-            fixAnimState.currentStep = 0;
-            updateFixStepUI();
-        }
-
-        function setFixSpeed(mult, ms) {
-            fixAnimState.speedMs = ms;
-            ['05', '1', '2'].forEach(s => {
-                const b = document.getElementById(`fixSpeed${s}`);
-                if (b) b.className = 'xor-speed-btn';
-            });
-            const active = document.getElementById(`fixSpeed${mult === 0.5 ? '05' : mult}`);
-            if (active) active.className = 'xor-speed-btn active';
-
-            if (fixAnimState.isPlaying) {
-                pauseFixAnim();
-                playFixAnim();
-            }
         }
 
         // ─── COMPARISON LAB ───
@@ -8520,18 +8178,18 @@
                         <tbody>
                             <tr>
                                 <td><strong>Radix Point Position</strong></td>
-                                <td><span style="color: #f472b6;">Dynamic (Floats)</span> via exponent scaling ($1.M \\times 2^E$)</td>
-                                <td><span style="color: #2dd4bf;">Static / Fixed</span> at predetermined bit position ($Q_{m.n}$)</td>
+                                <td><span style="color: #f472b6;">Dynamic (Floats)</span> via exponent scaling (1.M × 2<sup>E</sup>)</td>
+                                <td><span style="color: #2dd4bf;">Static / Fixed</span> at predetermined bit position (Q<sub>m.n</sub>)</td>
                             </tr>
                             <tr>
                                 <td><strong>Dynamic Range</strong></td>
-                                <td><strong>Extremely Massive</strong> ($10^{-38} \\dots 10^{38}$ for 32-bit float)</td>
-                                <td><strong>Limited</strong> by integer bit count ($[-2^{m-1}, 2^{m-1}-2^{-n}]$)</td>
+                                <td><strong>Extremely Massive</strong> (10<sup>-38</sup> to 10<sup>38</sup> for 32-bit float)</td>
+                                <td><strong>Limited</strong> by integer bit count ([-2<sup>m-1</sup>, 2<sup>m-1</sup> - 2<sup>-n</sup>])</td>
                             </tr>
                             <tr>
                                 <td><strong>Resolution & Step Size</strong></td>
                                 <td><strong>Relative / Variable</strong> (high near 0, coarser for large numbers)</td>
-                                <td><strong>Constant Absolute Step Size</strong> ($\Delta = 2^{-n}$)</td>
+                                <td><strong>Constant Absolute Step Size</strong> (Δ = 2<sup>-n</sup>)</td>
                             </tr>
                             <tr>
                                 <td><strong>Hardware Complexity</strong></td>
