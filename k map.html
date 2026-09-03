@@ -2058,6 +2058,226 @@
             font-weight: 700;
         }
 
+        .tab-btn.active.active-float {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2) 0%, rgba(219, 39, 119, 0.08) 100%);
+            color: #f472b6;
+            border: 1px solid rgba(236, 72, 153, 0.45);
+            box-shadow: 0 4px 14px rgba(236, 72, 153, 0.22), inset 0 1px 0 rgba(236, 72, 153, 0.35);
+            font-weight: 700;
+        }
+
+        /* ─── FIXED & FLOATING POINT STYLES ─── */
+        .ff-subtab-bar {
+            display: flex;
+            gap: 8px;
+            background: rgba(11, 15, 24, 0.8);
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .ff-subtab-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 9px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            background: transparent;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .ff-subtab-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .ff-subtab-btn.active {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(219, 39, 119, 0.1));
+            color: #f472b6;
+            border-color: rgba(236, 72, 153, 0.4);
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+        }
+
+        .ff-bit-ribbon {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            background: rgba(8, 12, 20, 0.9);
+            padding: 16px 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 16px 0;
+            user-select: none;
+        }
+
+        .ff-bit-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 28px;
+            height: 48px;
+            padding: 2px 4px;
+            border-radius: 6px;
+            font-family: var(--code-font);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .ff-bit-cell .ff-bit-val {
+            font-size: 16px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .ff-bit-cell .ff-bit-idx {
+            font-size: 8.5px;
+            color: var(--muted);
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        .ff-bit-cell.sign-field {
+            background: rgba(244, 63, 94, 0.15);
+            border-color: rgba(244, 63, 94, 0.35);
+            color: #fb7185;
+        }
+        .ff-bit-cell.sign-field:hover {
+            background: rgba(244, 63, 94, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 0 12px rgba(244, 63, 94, 0.4);
+        }
+
+        .ff-bit-cell.exp-field {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: rgba(56, 189, 248, 0.35);
+            color: #38bdf8;
+        }
+        .ff-bit-cell.exp-field:hover {
+            background: rgba(56, 189, 248, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+        }
+
+        .ff-bit-cell.mant-field {
+            background: rgba(52, 211, 153, 0.15);
+            border-color: rgba(52, 211, 153, 0.35);
+            color: #34d399;
+        }
+        .ff-bit-cell.mant-field:hover {
+            background: rgba(52, 211, 153, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 0 12px rgba(52, 211, 153, 0.4);
+        }
+
+        .ff-bit-cell.int-field {
+            background: rgba(192, 132, 252, 0.15);
+            border-color: rgba(192, 132, 252, 0.35);
+            color: #c084fc;
+        }
+        .ff-bit-cell.int-field:hover {
+            background: rgba(192, 132, 252, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 0 12px rgba(192, 132, 252, 0.4);
+        }
+
+        .ff-bit-cell.frac-field {
+            background: rgba(251, 191, 36, 0.15);
+            border-color: rgba(251, 191, 36, 0.35);
+            color: #fbbf24;
+        }
+        .ff-bit-cell.frac-field:hover {
+            background: rgba(251, 191, 36, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+        }
+
+        .ff-point-separator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6px;
+            color: #f43f5e;
+            font-size: 24px;
+            font-weight: 900;
+            user-select: none;
+        }
+
+        .ff-metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .ff-metric-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .ff-metric-card .label {
+            font-size: 11px;
+            color: var(--muted);
+            font-family: var(--code-font);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .ff-metric-card .val {
+            font-family: var(--code-font);
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-top: 4px;
+            word-break: break-all;
+        }
+
+        .shift-anim-container {
+            background: rgba(11, 15, 24, 0.95);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 14px;
+            padding: 20px;
+            margin: 16px 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .shift-bit-badge {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 10px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            font-family: var(--code-font);
+            font-size: 16px;
+            font-weight: 800;
+            color: #f1f5f9;
+            margin: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .shift-bit-badge.highlight-radix {
+            background: rgba(236, 72, 153, 0.25);
+            border-color: #f472b6;
+            color: #f472b6;
+            transform: scale(1.15);
+            box-shadow: 0 0 14px rgba(236, 72, 153, 0.5);
+        }
+
         /* Collapsible Step Sections */
         .step-details {
             background: var(--panel);
@@ -2565,6 +2785,9 @@
                 </button>
                 <button class="tab-btn" id="tabBtnConvert" onclick="switchTab('convert')">
                     <span class="tab-icon">🔄</span> Number Conversion
+                </button>
+                <button class="tab-btn" id="tabBtnFloatFix" onclick="switchTab('floatFix')">
+                    <span class="tab-icon">🎯</span> Fixed & Floating Point
                 </button>
             </div>
         </div>
@@ -3255,13 +3478,152 @@
             <div id="convertResultContainer" style="max-width: 750px;"></div>
         </div>
 
+        <!-- ========================================================================= -->
+        <!-- TAB 5: FIXED & FLOATING POINT LAB -->
+        <!-- ========================================================================= -->
+        <div id="paneFloatFix" class="tab-pane">
+            <div class="eyebrow" style="color: #f472b6;">// Binary Real-Number Architecture Lab</div>
+            <h1 style="font-size: 22px;">Fixed & Floating Point Representation</h1>
+            <div class="sub" style="max-width: 750px;">
+                Explore IEEE-754 Floating-Point standards (Single 32-bit, Double 64-bit, Half 16-bit, Mini 8-bit) and 
+                Fixed-Point Q-Formats ($Q_{m.n}$) with step-by-step bit-shifting animations, interactive live memory ribbons, and precision metrics.
+            </div>
+
+            <!-- Sub-Tab Navigation Switcher -->
+            <div class="ff-subtab-bar" style="max-width: 800px;">
+                <button id="ffSubTabFloat" class="ff-subtab-btn active" onclick="setFloatFixSubTab('float')">
+                    🚀 Floating Point (IEEE-754)
+                </button>
+                <button id="ffSubTabFix" class="ff-subtab-btn" onclick="setFloatFixSubTab('fix')">
+                    🎯 Fixed Point (Q-Format)
+                </button>
+                <button id="ffSubTabComp" class="ff-subtab-btn" onclick="setFloatFixSubTab('comp')">
+                    ⚖️ Comparison Lab
+                </button>
+            </div>
+
+            <!-- ─── SUB-PANE 1: FLOATING POINT (IEEE-754) ─── -->
+            <div id="ffPaneFloat" style="max-width: 850px;">
+                <div class="panel">
+                    <div class="config-block" style="margin-bottom: 14px;">
+                        <label>IEEE-754 Standard Precision Format</label>
+                        <div class="pill-group">
+                            <button id="btnFpSingle" class="active teal-mode" onclick="setFloatPrecision('single')">Single (32-bit: 1-8-23)</button>
+                            <button id="btnFpDouble" onclick="setFloatPrecision('double')">Double (64-bit: 1-11-52)</button>
+                            <button id="btnFpHalf" onclick="setFloatPrecision('half')">Half (16-bit: 1-5-10)</button>
+                            <button id="btnFpMini" onclick="setFloatPrecision('mini')">Mini-Float (8-bit: 1-4-3)</button>
+                        </div>
+                    </div>
+
+                    <!-- Input Row -->
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 260px; display: flex; align-items: center; background: rgba(11, 15, 24, 0.9); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; overflow: hidden;">
+                            <span id="floatInputLabel" style="padding: 12px 14px; background: rgba(236, 72, 153, 0.12); border-right: 1px solid rgba(255,255,255,0.1); color: #f472b6; font-family: var(--code-font); font-weight: 700; font-size: 13px; white-space: nowrap; flex-shrink: 0;">Real Value:</span>
+                            <input type="text" id="floatInputVal" value="-13.625" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter') calculateFloatingPoint();"
+                                style="flex: 1; min-width: 120px; padding: 12px 14px; font-size: 16px; font-family: var(--code-font); font-weight: 700; background: transparent; border: none; color: #f1f5f9; outline: none;"
+                                placeholder="e.g. -13.625, 0.1, 85.125, +0, -Infinity, NaN, 1e-5">
+                        </div>
+                        <button onclick="calculateFloatingPoint()" style="background: linear-gradient(135deg, #ec4899, #be185d); color: #fff; border: 1px solid #f472b6; padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; box-shadow: 0 4px 16px rgba(236, 72, 153, 0.35); flex-shrink: 0;">
+                            Encode Float 🚀
+                        </button>
+                    </div>
+
+                    <!-- Quick Presets -->
+                    <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center;">
+                        <span style="font-size: 11px; color: var(--muted); font-family: var(--code-font);">PRESETS:</span>
+                        <span class="preset-chip" onclick="loadFloatPreset('-13.625', 'single')">-13.625</span>
+                        <span class="preset-chip" onclick="loadFloatPreset('0.1', 'single')">0.1 (Inexact Fraction)</span>
+                        <span class="preset-chip" onclick="loadFloatPreset('85.125', 'single')">85.125</span>
+                        <span class="preset-chip" onclick="loadFloatPreset('3.14159265', 'double')">π (Double 64-bit)</span>
+                        <span class="preset-chip" onclick="loadFloatPreset('0.0', 'single')">+0.0</span>
+                        <span class="preset-chip" onclick="loadFloatPreset('-Infinity', 'single')">-Infinity</span>
+                        <span class="preset-chip" onclick="loadFloatPreset('NaN', 'single')">NaN (Not-a-Number)</span>
+                        <span class="preset-chip" onclick="loadFloatPreset('1.401298e-45', 'single')">Subnormal Min</span>
+                    </div>
+                </div>
+
+                <!-- Container for Float Result & Animation -->
+                <div id="floatResultContainer" style="margin-top: 16px;"></div>
+            </div>
+
+            <!-- ─── SUB-PANE 2: FIXED POINT (Q-FORMAT) ─── -->
+            <div id="ffPaneFix" style="max-width: 850px; display: none;">
+                <div class="panel">
+                    <div class="kmap-config-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                        <div class="config-block">
+                            <label>Fixed-Point Format Preset</label>
+                            <div class="pill-group">
+                                <button id="btnQ44" class="active teal-mode" onclick="setFixedPreset(4, 4)">Q4.4 (8-bit)</button>
+                                <button id="btnQ88" onclick="setFixedPreset(8, 8)">Q8.8 (16-bit)</button>
+                                <button id="btnQ1616" onclick="setFixedPreset(16, 16)">Q16.16 (32-bit)</button>
+                                <button id="btnQ35" onclick="setFixedPreset(3, 5)">Q3.5 (8-bit)</button>
+                                <button id="btnQCustom" onclick="toggleCustomQ()">Custom (m.n)</button>
+                            </div>
+                        </div>
+                        <div class="config-block">
+                            <label>Signed Representation</label>
+                            <div class="pill-group">
+                                <button id="btnFixSigned" class="active amber-mode" onclick="setFixSigned(true)">Signed (2's Complement)</button>
+                                <button id="btnFixUnsigned" onclick="setFixSigned(false)">Unsigned</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Q Bit Inputs -->
+                    <div id="customQRow" style="display: none; background: rgba(15, 20, 30, 0.8); border: 1px solid var(--border); border-radius: 10px; padding: 12px; margin-bottom: 14px;">
+                        <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 12px; color: #c084fc; font-family: var(--code-font); font-weight: 700;">Integer Bits (m):</span>
+                                <input type="number" id="fixCustomIntBits" value="4" min="0" max="32" style="width: 60px; padding: 6px; font-family: var(--code-font); text-align: center; border-radius: 6px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: #fff;">
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 12px; color: #fbbf24; font-family: var(--code-font); font-weight: 700;">Fractional Bits (n):</span>
+                                <input type="number" id="fixCustomFracBits" value="4" min="0" max="32" style="width: 60px; padding: 6px; font-family: var(--code-font); text-align: center; border-radius: 6px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: #fff;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Row -->
+                    <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 260px; display: flex; align-items: center; background: rgba(11, 15, 24, 0.9); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; overflow: hidden;">
+                            <span id="fixInputLabel" style="padding: 12px 14px; background: rgba(45, 212, 191, 0.12); border-right: 1px solid rgba(255,255,255,0.1); color: #2dd4bf; font-family: var(--code-font); font-weight: 700; font-size: 13px; white-space: nowrap; flex-shrink: 0;">Real Value:</span>
+                            <input type="text" id="fixInputVal" value="3.625" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter') calculateFixedPoint();"
+                                style="flex: 1; min-width: 120px; padding: 12px 14px; font-size: 16px; font-family: var(--code-font); font-weight: 700; background: transparent; border: none; color: #f1f5f9; outline: none;"
+                                placeholder="e.g. 3.625, -5.75, 0.3333, -13.625">
+                        </div>
+                        <button onclick="calculateFixedPoint()" style="background: linear-gradient(135deg, #0d9488, #0f766e); color: #fff; border: 1px solid #2dd4bf; padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; box-shadow: 0 4px 16px rgba(45, 212, 191, 0.35); flex-shrink: 0;">
+                            Encode Fixed 🎯
+                        </button>
+                    </div>
+
+                    <!-- Quick Presets -->
+                    <div style="display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center;">
+                        <span style="font-size: 11px; color: var(--muted); font-family: var(--code-font);">PRESETS:</span>
+                        <span class="preset-chip" onclick="loadFixPreset('3.625', 4, 4, true)">3.625 in Q4.4</span>
+                        <span class="preset-chip" onclick="loadFixPreset('-5.75', 4, 4, true)">-5.75 in Q4.4</span>
+                        <span class="preset-chip" onclick="loadFixPreset('0.3333', 4, 4, true)">0.3333 in Q4.4 (Truncation Error)</span>
+                        <span class="preset-chip" onclick="loadFixPreset('123.456', 8, 8, true)">123.456 in Q8.8</span>
+                        <span class="preset-chip" onclick="loadFixPreset('-0.125', 4, 4, true)">-0.125 in Q4.4</span>
+                    </div>
+                </div>
+
+                <!-- Container for Fix Result & Animation -->
+                <div id="fixResultContainer" style="margin-top: 16px;"></div>
+            </div>
+
+            <!-- ─── SUB-PANE 3: COMPARISON LAB ─── -->
+            <div id="ffPaneComp" style="max-width: 850px; display: none;">
+                <div id="ffCompContainer"></div>
+            </div>
+        </div>
+
 
     <!-- ========================================================================= -->
     <!-- JAVASCRIPT LOGIC ENGINE -->
     <!-- ========================================================================= -->
     <script>
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'active-matrix', 'active-comp', 'active-convert'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'active-matrix', 'active-comp', 'active-convert', 'active-float'));
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
 
             if (tabId === 'kmap') {
@@ -3279,6 +3641,10 @@
                 document.getElementById('tabBtnConvert')?.classList.add('active', 'active-convert');
                 document.getElementById('paneConvert')?.classList.add('active');
                 calculateConversion();
+            } else if (tabId === 'floatFix') {
+                document.getElementById('tabBtnFloatFix')?.classList.add('active', 'active-float');
+                document.getElementById('paneFloatFix')?.classList.add('active');
+                initFloatFixTab();
             }
         }
 
@@ -7029,6 +7395,1163 @@
             `;
 
             container.innerHTML = html;
+        }
+
+        // =========================================================================
+        // TAB 5: FIXED & FLOATING POINT JAVASCRIPT ENGINE
+        // =========================================================================
+        let currentFloatFixSubTab = 'float';
+        let currentFloatPrecision = 'single';
+        let currentFixedFormat = { intBits: 4, fracBits: 4, isSigned: true, name: 'Q4.4' };
+        let activeFloatData = null;
+        let activeFixedData = null;
+
+        const FP_SPECS = {
+            single: { name: 'Single Precision (32-bit)', totalBits: 32, expBits: 8, mantBits: 23, bias: 127 },
+            double: { name: 'Double Precision (64-bit)', totalBits: 64, expBits: 11, mantBits: 52, bias: 1023 },
+            half:   { name: 'Half Precision (16-bit)', totalBits: 16, expBits: 5, mantBits: 10, bias: 15 },
+            mini:   { name: 'Mini-Float (8-bit 1-4-3)', totalBits: 8, expBits: 4, mantBits: 3, bias: 7 }
+        };
+
+        let floatAnimState = {
+            steps: [],
+            currentStep: 0,
+            isPlaying: false,
+            speedMs: 1400,
+            timer: null
+        };
+
+        let fixAnimState = {
+            steps: [],
+            currentStep: 0,
+            isPlaying: false,
+            speedMs: 1400,
+            timer: null
+        };
+
+        function initFloatFixTab() {
+            setFloatFixSubTab(currentFloatFixSubTab);
+            if (currentFloatFixSubTab === 'float') {
+                calculateFloatingPoint();
+            } else if (currentFloatFixSubTab === 'fix') {
+                calculateFixedPoint();
+            } else if (currentFloatFixSubTab === 'comp') {
+                renderComparisonLab();
+            }
+        }
+
+        function setFloatFixSubTab(subTab) {
+            currentFloatFixSubTab = subTab;
+            ['Float', 'Fix', 'Comp'].forEach(t => {
+                const btn = document.getElementById(`ffSubTab${t}`);
+                const pane = document.getElementById(`ffPane${t}`);
+                const isActive = (subTab.toLowerCase() === t.toLowerCase());
+                if (btn) btn.className = isActive ? 'ff-subtab-btn active' : 'ff-subtab-btn';
+                if (pane) pane.style.display = isActive ? 'block' : 'none';
+            });
+
+            if (subTab === 'float') calculateFloatingPoint();
+            else if (subTab === 'fix') calculateFixedPoint();
+            else if (subTab === 'comp') renderComparisonLab();
+        }
+
+        function setFloatPrecision(prec) {
+            currentFloatPrecision = prec;
+            ['Single', 'Double', 'Half', 'Mini'].forEach(p => {
+                const btn = document.getElementById(`btnFp${p}`);
+                if (btn) btn.className = (prec.toLowerCase() === p.toLowerCase()) ? 'active teal-mode' : '';
+            });
+            calculateFloatingPoint();
+        }
+
+        function loadFloatPreset(val, prec) {
+            const input = document.getElementById('floatInputVal');
+            if (input) input.value = val;
+            setFloatPrecision(prec);
+        }
+
+        // ─── IEEE-754 CORE ENGINE ───
+        function computeIEEE754(rawStr, precisionKey) {
+            const spec = FP_SPECS[precisionKey] || FP_SPECS.single;
+            const str = (rawStr || '').trim();
+            const steps = [];
+
+            let isNeg = false;
+            let isZero = false;
+            let isInf = false;
+            let isNaNVal = false;
+            let numVal = 0;
+
+            // Handle special string formats
+            if (str.toLowerCase() === 'nan') {
+                isNaNVal = true;
+            } else if (str.toLowerCase() === 'infinity' || str.toLowerCase() === '+infinity') {
+                isInf = true;
+                isNeg = false;
+            } else if (str.toLowerCase() === '-infinity') {
+                isInf = true;
+                isNeg = true;
+            } else if (str === '-0' || str === '-0.0') {
+                isZero = true;
+                isNeg = true;
+                numVal = 0;
+            } else if (str === '+0' || str === '0' || str === '0.0') {
+                isZero = true;
+                isNeg = false;
+                numVal = 0;
+            } else {
+                numVal = parseFloat(str);
+                if (isNaN(numVal)) {
+                    isNaNVal = true;
+                } else if (numVal === 0) {
+                    isZero = true;
+                    isNeg = Object.is(numVal, -0) || str.startsWith('-');
+                } else {
+                    isNeg = numVal < 0;
+                    if (!isFinite(numVal)) {
+                        isInf = true;
+                    }
+                }
+            }
+
+            const signBit = isNeg ? '1' : '0';
+            let expBits = '';
+            let mantBits = '';
+            let caseType = 'Normal Number';
+            let unbiasedExp = 0;
+            let biasedExp = 0;
+            let shiftSteps = [];
+            let unnormBin = '';
+            let normBin = '';
+
+            if (isNaNVal) {
+                caseType = 'NaN (Not-a-Number)';
+                expBits = '1'.repeat(spec.expBits);
+                mantBits = '1' + '0'.repeat(spec.mantBits - 1); // Quiet NaN default
+                steps.push({
+                    title: 'Special Case: NaN',
+                    desc: 'Input is Not-a-Number. In IEEE-754, NaN is represented with all 1s in the Exponent field and a non-zero Mantissa.',
+                    bits: { sign: signBit, exp: expBits, mant: mantBits }
+                });
+            } else if (isInf) {
+                caseType = isNeg ? '-Infinity' : '+Infinity';
+                expBits = '1'.repeat(spec.expBits);
+                mantBits = '0'.repeat(spec.mantBits);
+                steps.push({
+                    title: 'Special Case: Infinity',
+                    desc: `Input magnitude overflowed to ${caseType}. Represented with all 1s in the Exponent field and all 0s in the Mantissa.`,
+                    bits: { sign: signBit, exp: expBits, mant: mantBits }
+                });
+            } else if (isZero) {
+                caseType = isNeg ? '-Zero (-0.0)' : '+Zero (+0.0)';
+                expBits = '0'.repeat(spec.expBits);
+                mantBits = '0'.repeat(spec.mantBits);
+                steps.push({
+                    title: 'Special Case: Zero',
+                    desc: `Input is zero (${isNeg ? '-0.0' : '+0.0'}). Represented with all 0s in both Exponent and Mantissa.`,
+                    bits: { sign: signBit, exp: expBits, mant: mantBits }
+                });
+            } else {
+                // Normal or Subnormal
+                const absVal = Math.abs(numVal);
+                const intPart = Math.floor(absVal);
+                let fracPart = absVal - intPart;
+
+                // Convert Integer to Binary
+                let intBin = intPart.toString(2);
+
+                // Convert Fraction to Binary (up to 80 bits for precision)
+                let fracBin = '';
+                let tempF = fracPart;
+                for (let k = 0; k < 75; k++) {
+                    tempF *= 2;
+                    const d = Math.floor(tempF);
+                    fracBin += d.toString();
+                    tempF -= d;
+                    if (tempF === 0) break;
+                }
+
+                unnormBin = (intPart === 0 ? '0' : intBin) + '.' + (fracBin || '0');
+
+                // Step 1: Sign
+                steps.push({
+                    stepIdx: 0,
+                    title: 'Step 1 — Sign Bit Determination',
+                    desc: `The number is <strong>${isNeg ? 'Negative (< 0)' : 'Positive (≥ 0)'}</strong>. Therefore, Sign Bit $S = ${signBit}$.`,
+                    signBit,
+                    activeField: 'sign'
+                });
+
+                // Step 2: Convert to Unnormalized Binary
+                steps.push({
+                    stepIdx: 1,
+                    title: 'Step 2 — Decimal to Binary Conversion',
+                    desc: `Convert integer part (${intPart}₁₀ = <code>${intBin}₂</code>) and fractional part (0.${fracPart.toString().slice(2) || '0'}₁₀ ≈ <code>0.${fracBin}₂</code>):<br>` +
+                          `<div style="font-family: var(--code-font); font-size: 15px; color: #38bdf8; margin-top: 8px;">|${numVal}| = ${unnormBin}₂</div>`,
+                    unnormBin,
+                    activeField: 'unnorm'
+                });
+
+                // Step 3: Scientific Normalization
+                if (intPart > 0) {
+                    // Shift radix point left
+                    unbiasedExp = intBin.length - 1;
+                    const combined = intBin.slice(1) + fracBin;
+                    normBin = `1.${combined}`;
+                    mantBits = combined.padEnd(spec.mantBits, '0').slice(0, spec.mantBits);
+
+                    steps.push({
+                        stepIdx: 2,
+                        title: 'Step 3 — Scientific Normalization & Shift Animation',
+                        desc: `Shift the binary radix point <strong>${unbiasedExp} positions to the LEFT</strong> to create the standard scientific normalized format $1.M \times 2^E$:<br>` +
+                              `<div style="font-family: var(--code-font); font-size: 16px; color: #f472b6; margin: 8px 0;">${unnormBin}₂ ➔ <strong>1.${mantBits}₂ × 2<sup>${unbiasedExp}</sup></strong></div>` +
+                              `Unbiased Exponent $E = ${unbiasedExp}$, Leading Hidden Bit = <code>1</code>.`,
+                        normBin,
+                        shiftCount: unbiasedExp,
+                        shiftDir: 'left',
+                        activeField: 'norm'
+                    });
+                } else {
+                    // Shift radix point right
+                    const firstOneIdx = fracBin.indexOf('1');
+                    if (firstOneIdx === -1) {
+                        unbiasedExp = 0;
+                        normBin = '0.0';
+                        mantBits = '0'.repeat(spec.mantBits);
+                    } else {
+                        unbiasedExp = -(firstOneIdx + 1);
+                        const combined = fracBin.slice(firstOneIdx + 1);
+                        normBin = `1.${combined}`;
+                        mantBits = combined.padEnd(spec.mantBits, '0').slice(0, spec.mantBits);
+
+                        steps.push({
+                            stepIdx: 2,
+                            title: 'Step 3 — Scientific Normalization & Shift Animation',
+                            desc: `Shift the binary radix point <strong>${Math.abs(unbiasedExp)} positions to the RIGHT</strong> to locate the first non-zero bit:<br>` +
+                                  `<div style="font-family: var(--code-font); font-size: 16px; color: #f472b6; margin: 8px 0;">${unnormBin}₂ ➔ <strong>1.${mantBits}₂ × 2<sup>${unbiasedExp}</sup></strong></div>` +
+                                  `Unbiased Exponent $E = ${unbiasedExp}$, Leading Hidden Bit = <code>1</code>.`,
+                            normBin,
+                            shiftCount: Math.abs(unbiasedExp),
+                            shiftDir: 'right',
+                            activeField: 'norm'
+                        });
+                    }
+                }
+
+                // Check for Denormal / Subnormal
+                biasedExp = unbiasedExp + spec.bias;
+                const minBiasedExp = 1;
+                const maxBiasedExp = (1 << spec.expBits) - 2;
+
+                if (biasedExp < minBiasedExp) {
+                    caseType = 'Subnormal / Denormal Number';
+                    biasedExp = 0;
+                    expBits = '0'.repeat(spec.expBits);
+                    // Denormal mantissa adjustment
+                    const denormShift = 1 - (unbiasedExp + spec.bias);
+                    mantBits = ('0'.repeat(denormShift - 1) + '1' + mantBits).slice(0, spec.mantBits);
+                    steps.push({
+                        stepIdx: 3,
+                        title: 'Step 4 — Subnormal Exponent Handling',
+                        desc: `Biased exponent falls below 1 ($E_{biased} \\le 0$). Stored as a <strong>Subnormal Number</strong> with Exponent = <code>${expBits}</code> and no implicit leading 1 bit.`,
+                        activeField: 'exp'
+                    });
+                } else if (biasedExp > maxBiasedExp) {
+                    caseType = isNeg ? '-Infinity (Overflow)' : '+Infinity (Overflow)';
+                    expBits = '1'.repeat(spec.expBits);
+                    mantBits = '0'.repeat(spec.mantBits);
+                    steps.push({
+                        stepIdx: 3,
+                        title: 'Step 4 — Exponent Overflow to Infinity',
+                        desc: `Biased exponent exceeds maximum capacity ($E_{biased} > ${maxBiasedExp}$). Overflowed to <strong>${caseType}</strong>.`,
+                        activeField: 'exp'
+                    });
+                } else {
+                    expBits = biasedExp.toString(2).padStart(spec.expBits, '0');
+                    steps.push({
+                        stepIdx: 3,
+                        title: 'Step 4 — Exponent Biasing ($E_{biased} = E + Bias$)',
+                        desc: `Add the format bias ($+${spec.bias}$) to the unbiased exponent:<br>` +
+                              `<div style="font-family: var(--code-font); font-size: 15px; color: #38bdf8; margin: 8px 0;">E<sub>biased</sub> = ${unbiasedExp} + ${spec.bias} = <strong>${biasedExp}₁₀</strong> = <code>${expBits}₂</code></div>`,
+                        biasedExp,
+                        expBits,
+                        activeField: 'exp'
+                    });
+                }
+
+                // Step 5: Mantissa Assembly
+                steps.push({
+                    stepIdx: 4,
+                    title: `Step 5 — Mantissa Extraction (${spec.mantBits}-bit Fraction)`,
+                    desc: `Drop the implicit leading <code>1.</code> bit and truncate/zero-pad the fraction to exactly <strong>${spec.mantBits} bits</strong>:<br>` +
+                          `<div style="font-family: var(--code-font); font-size: 14px; color: #34d399; margin: 8px 0; word-break: break-all;">Mantissa (M) = <strong>${mantBits}</strong></div>`,
+                    mantBits,
+                    activeField: 'mant'
+                });
+            }
+
+            const fullBitStr = signBit + expBits + mantBits;
+
+            // Convert to Hex
+            let hexStr = '';
+            for (let i = 0; i < fullBitStr.length; i += 4) {
+                const chunk = fullBitStr.slice(i, i + 4);
+                hexStr += parseInt(chunk, 2).toString(16).toUpperCase();
+            }
+
+            // Step 6: Full Assembly
+            steps.push({
+                stepIdx: steps.length,
+                title: `Final Step — Complete ${spec.totalBits}-bit Word & Hex Encoding`,
+                desc: `Concatenate Sign (${signBit}) + Exponent (${expBits}) + Mantissa (${mantBits}):<br>` +
+                      `<div style="font-family: var(--code-font); font-size: 18px; font-weight: 800; color: #f472b6; margin: 10px 0;">0x${hexStr}</div>`,
+                hexStr,
+                fullBitStr,
+                activeField: 'full'
+            });
+
+            // Reconstruct Real Value from Bits for verification
+            const recon = reconstructFloatFromBits(signBit, expBits, mantBits, precisionKey);
+
+            return {
+                spec,
+                rawInput: rawStr,
+                parsedNum: numVal,
+                caseType,
+                signBit,
+                expBits,
+                mantBits,
+                fullBitStr,
+                hexStr,
+                unbiasedExp,
+                biasedExp,
+                reconstructedVal: recon.val,
+                reconstructedStr: recon.str,
+                errorVal: isNaNVal || isInf ? 0 : Math.abs(numVal - recon.val),
+                steps
+            };
+        }
+
+        function reconstructFloatFromBits(signBit, expBits, mantBits, precisionKey) {
+            const spec = FP_SPECS[precisionKey] || FP_SPECS.single;
+            const isNeg = signBit === '1';
+            const expVal = parseInt(expBits, 2);
+            const allExpOnes = expVal === (1 << spec.expBits) - 1;
+            const allExpZeros = expVal === 0;
+            const isMantZero = !mantBits.includes('1');
+
+            if (allExpOnes) {
+                if (isMantZero) {
+                    return { val: isNeg ? -Infinity : Infinity, str: isNeg ? '-Infinity' : '+Infinity' };
+                } else {
+                    return { val: NaN, str: 'NaN' };
+                }
+            }
+
+            if (allExpZeros && isMantZero) {
+                return { val: isNeg ? -0 : 0, str: isNeg ? '-0.0' : '+0.0' };
+            }
+
+            let mantVal = 0;
+            for (let i = 0; i < mantBits.length; i++) {
+                if (mantBits[i] === '1') {
+                    mantVal += Math.pow(2, -(i + 1));
+                }
+            }
+
+            if (allExpZeros) {
+                // Subnormal
+                const val = (isNeg ? -1 : 1) * mantVal * Math.pow(2, 1 - spec.bias);
+                return { val, str: val.toExponential(8) };
+            } else {
+                // Normal
+                const val = (isNeg ? -1 : 1) * (1 + mantVal) * Math.pow(2, expVal - spec.bias);
+                return { val, str: val.toString() };
+            }
+        }
+
+        function renderFloatBitRibbon(data) {
+            const { signBit, expBits, mantBits, spec } = data;
+            const total = spec.totalBits;
+
+            let html = `
+                <div style="font-size: 11.5px; color: var(--muted); font-family: var(--code-font); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <span>INTERACTIVE MEMORY BIT RIBBON (CLICK ANY BIT TO FLIP 0 ↔ 1):</span>
+                    <span style="color: #f472b6;">Total: ${total} bits [1-S, ${spec.expBits}-E, ${spec.mantBits}-M]</span>
+                </div>
+                <div class="ff-bit-ribbon">
+            `;
+
+            // Sign Bit
+            html += `
+                <div class="ff-bit-cell sign-field" onclick="flipFloatBit(0)" title="Sign Bit (0 = Positive, 1 = Negative)">
+                    <span class="ff-bit-val">${signBit}</span>
+                    <span class="ff-bit-idx">${total - 1} (S)</span>
+                </div>
+            `;
+
+            // Exponent Bits
+            for (let e = 0; e < expBits.length; e++) {
+                const bitIdx = total - 2 - e;
+                html += `
+                    <div class="ff-bit-cell exp-field" onclick="flipFloatBit(${1 + e})" title="Exponent Bit e[${spec.expBits - 1 - e}]">
+                        <span class="ff-bit-val">${expBits[e]}</span>
+                        <span class="ff-bit-idx">${bitIdx}</span>
+                    </div>
+                `;
+            }
+
+            // Mantissa Bits
+            for (let m = 0; m < mantBits.length; m++) {
+                const bitIdx = spec.mantBits - 1 - m;
+                html += `
+                    <div class="ff-bit-cell mant-field" onclick="flipFloatBit(${1 + spec.expBits + m})" title="Mantissa Fraction Bit m[${spec.mantBits - 1 - m}]">
+                        <span class="ff-bit-val">${mantBits[m]}</span>
+                        <span class="ff-bit-idx">${bitIdx}</span>
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+            return html;
+        }
+
+        function flipFloatBit(bitIndex) {
+            if (!activeFloatData) return;
+            const full = activeFloatData.fullBitStr.split('');
+            full[bitIndex] = (full[bitIndex] === '1') ? '0' : '1';
+
+            const newSign = full[0];
+            const newExp = full.slice(1, 1 + activeFloatData.spec.expBits).join('');
+            const newMant = full.slice(1 + activeFloatData.spec.expBits).join('');
+
+            const recon = reconstructFloatFromBits(newSign, newExp, newMant, currentFloatPrecision);
+            const input = document.getElementById('floatInputVal');
+            if (input) input.value = recon.str;
+
+            calculateFloatingPoint();
+        }
+
+        function calculateFloatingPoint() {
+            pauseFloatAnim();
+            const container = document.getElementById('floatResultContainer');
+            if (!container) return;
+
+            const rawVal = (document.getElementById('floatInputVal')?.value || '').trim();
+            const data = computeIEEE754(rawVal, currentFloatPrecision);
+            activeFloatData = data;
+
+            floatAnimState = {
+                steps: data.steps,
+                currentStep: 0,
+                isPlaying: false,
+                speedMs: 1400,
+                timer: null
+            };
+
+            const spec = data.spec;
+
+            let html = `
+                <!-- ─── HERO FLOAT ANSWER CARD ─── -->
+                <div style="background: linear-gradient(145deg, rgba(236, 72, 153, 0.08), rgba(15, 18, 28, 0.95)); border: 1px solid rgba(236, 72, 153, 0.35); border-radius: 14px; padding: 22px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 11px; color: #f472b6; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.06em;">IEEE-754 ENCODING RESULT</span>
+                            <span style="font-size: 11px; background: rgba(236, 72, 153, 0.15); color: #f472b6; padding: 2px 8px; border-radius: 12px; font-weight: 700;">${data.caseType}</span>
+                        </div>
+                        <button class="secondary" onclick="navigator.clipboard.writeText('0x${data.hexStr}'); alert('Hex encoding copied!');" style="padding: 4px 10px; font-size: 11px;">📋 Copy Hex</button>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 10px;">
+                        <span style="font-family: var(--code-font); font-size: 22px; font-weight: 700; color: #94a3b8;">
+                            ${data.rawInput}₁₀
+                        </span>
+                        <span style="font-size: 24px; color: #f472b6;">➔</span>
+                        <span style="font-family: var(--code-font); font-size: 28px; font-weight: 800; color: #f472b6; letter-spacing: 0.06em;">
+                            0x${data.hexStr}
+                        </span>
+                    </div>
+
+                    <!-- Mathematical Reconstruction Formula Pill -->
+                    <div style="margin-top: 14px; padding: 12px 16px; background: rgba(11, 15, 24, 0.85); border: 1px solid var(--border); border-radius: 10px; font-family: var(--code-font); font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                        <strong>Value Formula:</strong> (-1)<sup>${data.signBit}</sup> × (1 + ${data.mantBits ? 'Fraction' : '0'}) × 2<sup>(${data.biasedExp} - ${spec.bias})</sup>
+                        <br>
+                        <strong>Reconstructed Real:</strong> <span style="color: #34d399; font-weight: 700;">${data.reconstructedStr}</span>
+                        ${data.errorVal > 0 ? `<span style="color: var(--muted); margin-left: 10px;">(Truncation Error: ${data.errorVal.toExponential(4)})</span>` : `<span style="color: #38bdf8; margin-left: 10px;">(Exact Representation)</span>`}
+                    </div>
+                </div>
+
+                <!-- ─── INTERACTIVE BIT MEMORY RIBBON ─── -->
+                ${renderFloatBitRibbon(data)}
+
+                <!-- ─── FIELD METRICS BREAKDOWN GRID ─── -->
+                <div class="ff-metric-grid">
+                    <div class="ff-metric-card" style="border-color: rgba(244, 63, 94, 0.3);">
+                        <div class="label" style="color: #fb7185;">Sign Field (1-bit)</div>
+                        <div class="val" style="color: #fb7185;">${data.signBit} (${data.signBit === '1' ? 'Negative' : 'Positive'})</div>
+                    </div>
+                    <div class="ff-metric-card" style="border-color: rgba(56, 189, 248, 0.3);">
+                        <div class="label" style="color: #38bdf8;">Biased Exponent (${spec.expBits}-bit)</div>
+                        <div class="val" style="color: #38bdf8;">${data.biasedExp} (E = ${data.unbiasedExp})</div>
+                    </div>
+                    <div class="ff-metric-card" style="border-color: rgba(52, 211, 153, 0.3);">
+                        <div class="label" style="color: #34d399;">Mantissa Fraction (${spec.mantBits}-bit)</div>
+                        <div class="val" style="color: #34d399; font-size: 13px;">${data.mantBits.slice(0, 12)}...</div>
+                    </div>
+                    <div class="ff-metric-card" style="border-color: rgba(236, 72, 153, 0.3);">
+                        <div class="label" style="color: #f472b6;">Hexadecimal Encoding</div>
+                        <div class="val" style="color: #f472b6;">0x${data.hexStr}</div>
+                    </div>
+                </div>
+
+                <!-- ─── ANIMATED NORMALIZATION SHIFT PLAYER ─── -->
+                <div class="xor-anim-card" style="border-color: rgba(236, 72, 153, 0.35);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+                        <div>
+                            <div style="font-size: 11px; color: #f472b6; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
+                                🎬 STEP-BY-STEP NORMALIZATION & CONVERSION ANIMATION
+                            </div>
+                            <h2 style="font-size: 18px; margin: 4px 0 0 0; color: #f8fafc;">
+                                Floating Point Binary Shift & Assembly
+                            </h2>
+                        </div>
+                    </div>
+
+                    <!-- Playback Controls -->
+                    <div class="xor-control-bar">
+                        <div class="xor-btn-group">
+                            <button class="xor-ctrl-btn" onclick="prevFloatStep()">⏮ Prev</button>
+                            <button id="floatPlayBtn" class="xor-ctrl-btn primary" style="background: linear-gradient(135deg, #ec4899, #be185d); border-color: #f472b6;" onclick="toggleFloatPlay()">▶ Play</button>
+                            <button class="xor-ctrl-btn" onclick="nextFloatStep()">Next ⏭</button>
+                            <button class="xor-ctrl-btn" onclick="restartFloatAnim()">🔄 Reset</button>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <div style="font-size: 12px; color: var(--muted); font-family: var(--code-font);">Speed:</div>
+                            <div class="xor-speed-selector">
+                                <button id="floatSpeed05" class="xor-speed-btn" onclick="setFloatSpeed(0.5, 2400)">0.5x</button>
+                                <button id="floatSpeed1" class="xor-speed-btn active" onclick="setFloatSpeed(1, 1400)">1x</button>
+                                <button id="floatSpeed2" class="xor-speed-btn" onclick="setFloatSpeed(2, 700)">2x</button>
+                            </div>
+                            <div id="floatStepBadge" style="font-family: var(--code-font); font-size: 12px; font-weight: 700; color: #f472b6; background: rgba(15, 23, 42, 0.9); padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(236, 72, 153, 0.3);">
+                                Step 1 / ${data.steps.length}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step Active Card Content -->
+                    <div id="floatStepContainer" style="background: rgba(11, 15, 24, 0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px;">
+                    </div>
+                </div>
+
+                <!-- ─── STEP-BY-STEP PROOF ACCORDIONS ─── -->
+                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin: 20px 0 12px;">📖 Complete Mathematical Proof</div>
+                ${data.steps.map((s, idx) => `
+                    <details class="step-details" ${idx <= 1 ? 'open' : ''}>
+                        <summary>${s.title}</summary>
+                        <div style="padding: 12px 0; font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
+                            ${s.desc}
+                        </div>
+                    </details>
+                `).join('')}
+            `;
+
+            container.innerHTML = html;
+            updateFloatStepUI();
+        }
+
+        function updateFloatStepUI() {
+            if (!floatAnimState.steps || floatAnimState.steps.length === 0) return;
+            const step = floatAnimState.steps[floatAnimState.currentStep];
+            const badge = document.getElementById('floatStepBadge');
+            if (badge) badge.textContent = `Step ${floatAnimState.currentStep + 1} / ${floatAnimState.steps.length}`;
+
+            const box = document.getElementById('floatStepContainer');
+            if (box) {
+                box.innerHTML = `
+                    <div style="font-size: 15px; font-weight: 800; color: #f472b6; margin-bottom: 8px;">
+                        ${step.title}
+                    </div>
+                    <div style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6;">
+                        ${step.desc}
+                    </div>
+                `;
+            }
+        }
+
+        function playFloatAnim() {
+            if (floatAnimState.isPlaying) return;
+            floatAnimState.isPlaying = true;
+            const btn = document.getElementById('floatPlayBtn');
+            if (btn) btn.innerHTML = '⏸ Pause';
+
+            floatAnimState.timer = setInterval(() => {
+                if (floatAnimState.currentStep < floatAnimState.steps.length - 1) {
+                    floatAnimState.currentStep++;
+                    updateFloatStepUI();
+                } else {
+                    pauseFloatAnim();
+                }
+            }, floatAnimState.speedMs);
+        }
+
+        function pauseFloatAnim() {
+            floatAnimState.isPlaying = false;
+            if (floatAnimState.timer) clearInterval(floatAnimState.timer);
+            floatAnimState.timer = null;
+            const btn = document.getElementById('floatPlayBtn');
+            if (btn) btn.innerHTML = '▶ Play';
+        }
+
+        function toggleFloatPlay() {
+            if (floatAnimState.isPlaying) {
+                pauseFloatAnim();
+            } else {
+                if (floatAnimState.currentStep >= floatAnimState.steps.length - 1) {
+                    floatAnimState.currentStep = 0;
+                }
+                playFloatAnim();
+            }
+        }
+
+        function nextFloatStep() {
+            pauseFloatAnim();
+            if (floatAnimState.currentStep < floatAnimState.steps.length - 1) {
+                floatAnimState.currentStep++;
+                updateFloatStepUI();
+            }
+        }
+
+        function prevFloatStep() {
+            pauseFloatAnim();
+            if (floatAnimState.currentStep > 0) {
+                floatAnimState.currentStep--;
+                updateFloatStepUI();
+            }
+        }
+
+        function restartFloatAnim() {
+            pauseFloatAnim();
+            floatAnimState.currentStep = 0;
+            updateFloatStepUI();
+        }
+
+        function setFloatSpeed(mult, ms) {
+            floatAnimState.speedMs = ms;
+            ['05', '1', '2'].forEach(s => {
+                const b = document.getElementById(`floatSpeed${s}`);
+                if (b) b.className = 'xor-speed-btn';
+            });
+            const active = document.getElementById(`floatSpeed${mult === 0.5 ? '05' : mult}`);
+            if (active) active.className = 'xor-speed-btn active';
+
+            if (floatAnimState.isPlaying) {
+                pauseFloatAnim();
+                playFloatAnim();
+            }
+        }
+
+        // ─── FIXED-POINT (Q-FORMAT) CORE ENGINE ───
+        function setFixedPreset(intB, fracB) {
+            currentFixedFormat.intBits = intB;
+            currentFixedFormat.fracBits = fracB;
+            currentFixedFormat.name = `Q${intB}.${fracB}`;
+            document.getElementById('customQRow').style.display = 'none';
+
+            ['Q44', 'Q88', 'Q1616', 'Q35', 'QCustom'].forEach(k => {
+                const el = document.getElementById(`btn${k}`);
+                if (el) el.className = '';
+            });
+            const activeBtn = document.getElementById(`btnQ${intB}${fracB}`);
+            if (activeBtn) activeBtn.className = 'active teal-mode';
+
+            calculateFixedPoint();
+        }
+
+        function toggleCustomQ() {
+            const row = document.getElementById('customQRow');
+            const isShown = row.style.display === 'block';
+            row.style.display = isShown ? 'none' : 'block';
+
+            ['Q44', 'Q88', 'Q1616', 'Q35'].forEach(k => {
+                const el = document.getElementById(`btn${k}`);
+                if (el) el.className = '';
+            });
+            const custBtn = document.getElementById('btnQCustom');
+            if (custBtn) custBtn.className = 'active teal-mode';
+
+            if (!isShown) {
+                const m = parseInt(document.getElementById('fixCustomIntBits').value, 10) || 4;
+                const n = parseInt(document.getElementById('fixCustomFracBits').value, 10) || 4;
+                currentFixedFormat.intBits = m;
+                currentFixedFormat.fracBits = n;
+                currentFixedFormat.name = `Q${m}.${n}`;
+                calculateFixedPoint();
+            }
+        }
+
+        function setFixSigned(signedBool) {
+            currentFixedFormat.isSigned = signedBool;
+            document.getElementById('btnFixSigned').className = signedBool ? 'active amber-mode' : '';
+            document.getElementById('btnFixUnsigned').className = !signedBool ? 'active amber-mode' : '';
+            calculateFixedPoint();
+        }
+
+        function loadFixPreset(val, intB, fracB, isSigned) {
+            const input = document.getElementById('fixInputVal');
+            if (input) input.value = val;
+            currentFixedFormat.isSigned = isSigned;
+            setFixedPreset(intB, fracB);
+        }
+
+        function computeFixedPoint(rawValStr, intBits, fracBits, isSigned) {
+            const raw = (rawValStr || '').trim();
+            const numVal = parseFloat(raw) || 0;
+            const steps = [];
+
+            const totalBits = intBits + fracBits;
+            const scaleFactor = Math.pow(2, fracBits);
+            const resolution = 1 / scaleFactor;
+
+            // Range Calculation
+            const minVal = isSigned ? -Math.pow(2, intBits - 1) : 0;
+            const maxVal = isSigned ? (Math.pow(2, intBits - 1) - resolution) : (Math.pow(2, intBits) - resolution);
+
+            const isOutOfRange = numVal < minVal || numVal > maxVal;
+
+            // Step 1: Scale factor multiplication
+            const multiplied = numVal * scaleFactor;
+            const quantizedInt = Math.round(multiplied);
+            const representedVal = quantizedInt / scaleFactor;
+            const quantError = Math.abs(numVal - representedVal);
+
+            steps.push({
+                stepIdx: 0,
+                title: `Step 1 — Scale Factor Multiplication ($V \\times 2^{${fracBits}}$)`,
+                desc: `Scale the decimal value by $2^n = 2^{${fracBits}} = ${scaleFactor}$:<br>` +
+                      `<div style="font-family: var(--code-font); font-size: 15px; color: #2dd4bf; margin: 8px 0;">${numVal} × ${scaleFactor} = <strong>${multiplied.toFixed(4)}</strong></div>`
+            });
+
+            // Step 2: Integer Rounding / Quantization
+            steps.push({
+                stepIdx: 1,
+                title: 'Step 2 — Integer Quantization & Rounding',
+                desc: `Round to nearest integer integer code: $\\text{round}(${multiplied.toFixed(4)}) = \\mathbf{${quantizedInt}}$<br>` +
+                      `Represented Value = $${quantizedInt} / ${scaleFactor} = \\mathbf{${representedVal}}$ (Quantization Error: ${quantError.toFixed(6)}).`
+            });
+
+            // Step 3: Binary Encoding
+            let unsignedIntVal = quantizedInt;
+            if (quantizedInt < 0) {
+                unsignedIntVal = (1 << totalBits) + quantizedInt;
+            }
+            let fullBinary = (unsignedIntVal >>> 0).toString(2).padStart(totalBits, '0').slice(-totalBits);
+            const intBitStr = fullBinary.slice(0, intBits);
+            const fracBitStr = fullBinary.slice(intBits);
+
+            steps.push({
+                stepIdx: 2,
+                title: `Step 3 — Binary Field Placement ($Q_{${intBits}.${fracBits}}$)`,
+                desc: `Split binary word into <strong>${intBits} Integer bits</strong> and <strong>${fracBits} Fractional bits</strong> with fixed radix point:<br>` +
+                      `<div style="font-family: var(--code-font); font-size: 16px; margin: 10px 0;">` +
+                      `<span style="color: #c084fc; font-weight: 800;">${intBitStr}</span>` +
+                      `<span style="color: #f43f5e; font-weight: 900; font-size: 20px;">.</span>` +
+                      `<span style="color: #fbbf24; font-weight: 800;">${fracBitStr}</span>₂` +
+                      `</div>`
+            });
+
+            // Convert to Hex
+            let hexStr = '';
+            for (let i = 0; i < fullBinary.length; i += 4) {
+                const chunk = fullBinary.slice(i, i + 4).padStart(4, '0');
+                hexStr += parseInt(chunk, 2).toString(16).toUpperCase();
+            }
+
+            steps.push({
+                stepIdx: 3,
+                title: 'Step 4 — Hexadecimal & Memory Assembly',
+                desc: `Final ${totalBits}-bit word representation: <strong>0x${hexStr}</strong> (Binary: <code>${intBitStr}.${fracBitStr}</code>).`
+            });
+
+            return {
+                rawInput: raw,
+                numVal,
+                intBits,
+                fracBits,
+                totalBits,
+                isSigned,
+                scaleFactor,
+                resolution,
+                minVal,
+                maxVal,
+                isOutOfRange,
+                quantizedInt,
+                representedVal,
+                quantError,
+                fullBinary,
+                intBitStr,
+                fracBitStr,
+                hexStr,
+                steps
+            };
+        }
+
+        function renderFixBitRibbon(data) {
+            const { intBitStr, fracBitStr, intBits, fracBits, isSigned, totalBits } = data;
+
+            let html = `
+                <div style="font-size: 11.5px; color: var(--muted); font-family: var(--code-font); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <span>INTERACTIVE BIT-WEIGHT INSPECTOR (CLICK BITS TO TOGGLE):</span>
+                    <span style="color: #2dd4bf;">Format: Q${intBits}.${fracBits} (${totalBits}-bit ${isSigned ? 'Signed' : 'Unsigned'})</span>
+                </div>
+                <div class="ff-bit-ribbon">
+            `;
+
+            // Integer Bits
+            for (let i = 0; i < intBits; i++) {
+                const bitVal = intBitStr[i];
+                const pow = intBits - 1 - i;
+                const weight = (isSigned && i === 0) ? -Math.pow(2, pow) : Math.pow(2, pow);
+                html += `
+                    <div class="ff-bit-cell int-field" onclick="flipFixBit(${i})" title="Weight: ${weight} (2^${pow})">
+                        <span class="ff-bit-val">${bitVal}</span>
+                        <span class="ff-bit-idx">2<sup>${pow}</sup> (${weight})</span>
+                    </div>
+                `;
+            }
+
+            // Fixed Point Separator
+            html += `<div class="ff-point-separator">.</div>`;
+
+            // Fractional Bits
+            for (let j = 0; j < fracBits; j++) {
+                const bitVal = fracBitStr[j];
+                const pow = -(j + 1);
+                const weight = Math.pow(2, pow);
+                html += `
+                    <div class="ff-bit-cell frac-field" onclick="flipFixBit(${intBits + j})" title="Weight: ${weight} (2^${pow})">
+                        <span class="ff-bit-val">${bitVal}</span>
+                        <span class="ff-bit-idx">2<sup>${pow}</sup></span>
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+            return html;
+        }
+
+        function flipFixBit(bitIndex) {
+            if (!activeFixedData) return;
+            const full = activeFixedData.fullBinary.split('');
+            full[bitIndex] = (full[bitIndex] === '1') ? '0' : '1';
+
+            // Calculate new represented value
+            let val = 0;
+            const intB = activeFixedData.intBits;
+            const fracB = activeFixedData.fracBits;
+            const isSigned = activeFixedData.isSigned;
+
+            for (let i = 0; i < intB; i++) {
+                if (full[i] === '1') {
+                    const pow = intB - 1 - i;
+                    if (isSigned && i === 0) val -= Math.pow(2, pow);
+                    else val += Math.pow(2, pow);
+                }
+            }
+            for (let j = 0; j < fracB; j++) {
+                if (full[intB + j] === '1') {
+                    val += Math.pow(2, -(j + 1));
+                }
+            }
+
+            const input = document.getElementById('fixInputVal');
+            if (input) input.value = val.toString();
+            calculateFixedPoint();
+        }
+
+        function calculateFixedPoint() {
+            pauseFixAnim();
+            const container = document.getElementById('fixResultContainer');
+            if (!container) return;
+
+            const rawVal = (document.getElementById('fixInputVal')?.value || '').trim();
+            const intBits = currentFixedFormat.intBits;
+            const fracBits = currentFixedFormat.fracBits;
+            const isSigned = currentFixedFormat.isSigned;
+
+            const data = computeFixedPoint(rawVal, intBits, fracBits, isSigned);
+            activeFixedData = data;
+
+            fixAnimState = {
+                steps: data.steps,
+                currentStep: 0,
+                isPlaying: false,
+                speedMs: 1400,
+                timer: null
+            };
+
+            let html = `
+                <!-- ─── HERO FIXED ANSWER CARD ─── -->
+                <div style="background: linear-gradient(145deg, rgba(45, 212, 191, 0.08), rgba(15, 18, 28, 0.95)); border: 1px solid rgba(45, 212, 191, 0.35); border-radius: 14px; padding: 22px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 11px; color: #2dd4bf; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.06em;">FIXED-POINT Q${intBits}.${fracBits} RESULT</span>
+                            <span style="font-size: 11px; background: rgba(45, 212, 191, 0.15); color: #2dd4bf; padding: 2px 8px; border-radius: 12px; font-weight: 700;">${isSigned ? 'Signed (2\'s Comp)' : 'Unsigned'}</span>
+                        </div>
+                        <button class="secondary" onclick="navigator.clipboard.writeText('0x${data.hexStr}'); alert('Hex encoding copied!');" style="padding: 4px 10px; font-size: 11px;">📋 Copy Hex</button>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 10px;">
+                        <span style="font-family: var(--code-font); font-size: 22px; font-weight: 700; color: #94a3b8;">
+                            ${data.rawInput}₁₀
+                        </span>
+                        <span style="font-size: 24px; color: #2dd4bf;">➔</span>
+                        <span style="font-family: var(--code-font); font-size: 26px; font-weight: 800; color: #2dd4bf; letter-spacing: 0.05em;">
+                            <span style="color: #c084fc;">${data.intBitStr}</span><span style="color: #f43f5e;">.</span><span style="color: #fbbf24;">${data.fracBitStr}</span>₂
+                        </span>
+                        <span style="font-family: var(--code-font); font-size: 18px; color: var(--muted);">
+                            (0x${data.hexStr})
+                        </span>
+                    </div>
+
+                    <!-- Range / Quantization Error Warning -->
+                    ${data.isOutOfRange ? `
+                        <div style="margin-top: 12px; padding: 10px 14px; background: rgba(244, 63, 94, 0.15); border: 1px solid rgba(244, 63, 94, 0.4); border-radius: 8px; font-size: 12.5px; color: #fb7185;">
+                            ⚠️ <strong>Overflow Warning:</strong> Value ${data.numVal} is outside format range [${data.minVal}, ${data.maxVal}].
+                        </div>
+                    ` : ''}
+
+                    <div style="margin-top: 14px; padding: 12px 16px; background: rgba(11, 15, 24, 0.85); border: 1px solid var(--border); border-radius: 10px; font-family: var(--code-font); font-size: 13px; color: #cbd5e1; line-height: 1.6;">
+                        <strong>Exact Represented Value:</strong> <span style="color: #34d399; font-weight: 700;">${data.representedVal}</span>
+                        ${data.quantError > 0 ? `<span style="color: #fbbf24; margin-left: 10px;">(Quantization Error: ${data.quantError.toFixed(6)})</span>` : `<span style="color: #38bdf8; margin-left: 10px;">(Exact Fit)</span>`}
+                    </div>
+                </div>
+
+                <!-- ─── INTERACTIVE BIT WEIGHT INSPECTOR ─── -->
+                ${renderFixBitRibbon(data)}
+
+                <!-- ─── METRICS DASHBOARD GRID ─── -->
+                <div class="ff-metric-grid">
+                    <div class="ff-metric-card" style="border-color: rgba(45, 212, 191, 0.3);">
+                        <div class="label" style="color: #2dd4bf;">Resolution / Step Size (Δ)</div>
+                        <div class="val" style="color: #2dd4bf;">2<sup>-${fracBits}</sup> = ${data.resolution}</div>
+                    </div>
+                    <div class="ff-metric-card" style="border-color: rgba(192, 132, 252, 0.3);">
+                        <div class="label" style="color: #c084fc;">Dynamic Range [Min, Max]</div>
+                        <div class="val" style="color: #c084fc; font-size: 13.5px;">[${data.minVal}, ${data.maxVal.toFixed(4)}]</div>
+                    </div>
+                    <div class="ff-metric-card" style="border-color: rgba(251, 191, 36, 0.3);">
+                        <div class="label" style="color: #fbbf24;">Scale Factor (2ⁿ)</div>
+                        <div class="val" style="color: #fbbf24;">${data.scaleFactor}</div>
+                    </div>
+                    <div class="ff-metric-card" style="border-color: rgba(56, 189, 248, 0.3);">
+                        <div class="label" style="color: #38bdf8;">Total Word Length</div>
+                        <div class="val" style="color: #38bdf8;">${data.totalBits} bits</div>
+                    </div>
+                </div>
+
+                <!-- ─── ANIMATED CONVERSION PLAYER ─── -->
+                <div class="xor-anim-card" style="border-color: rgba(45, 212, 191, 0.35);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+                        <div>
+                            <div style="font-size: 11px; color: #2dd4bf; font-family: var(--code-font); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
+                                🎬 STEP-BY-STEP FIXED-POINT ANIMATION
+                            </div>
+                            <h2 style="font-size: 18px; margin: 4px 0 0 0; color: #f8fafc;">
+                                Q-Format Scaling & Bit Field Assembly
+                            </h2>
+                        </div>
+                    </div>
+
+                    <!-- Playback Controls -->
+                    <div class="xor-control-bar">
+                        <div class="xor-btn-group">
+                            <button class="xor-ctrl-btn" onclick="prevFixStep()">⏮ Prev</button>
+                            <button id="fixPlayBtn" class="xor-ctrl-btn primary" style="background: linear-gradient(135deg, #0d9488, #0f766e); border-color: #2dd4bf;" onclick="toggleFixPlay()">▶ Play</button>
+                            <button class="xor-ctrl-btn" onclick="nextFixStep()">Next ⏭</button>
+                            <button class="xor-ctrl-btn" onclick="restartFixAnim()">🔄 Reset</button>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+                            <div style="font-size: 12px; color: var(--muted); font-family: var(--code-font);">Speed:</div>
+                            <div class="xor-speed-selector">
+                                <button id="fixSpeed05" class="xor-speed-btn" onclick="setFixSpeed(0.5, 2400)">0.5x</button>
+                                <button id="fixSpeed1" class="xor-speed-btn active" onclick="setFixSpeed(1, 1400)">1x</button>
+                                <button id="fixSpeed2" class="xor-speed-btn" onclick="setFixSpeed(2, 700)">2x</button>
+                            </div>
+                            <div id="fixStepBadge" style="font-family: var(--code-font); font-size: 12px; font-weight: 700; color: #2dd4bf; background: rgba(15, 23, 42, 0.9); padding: 5px 12px; border-radius: 8px; border: 1px solid rgba(45, 212, 191, 0.3);">
+                                Step 1 / ${data.steps.length}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step Active Card Content -->
+                    <div id="fixStepContainer" style="background: rgba(11, 15, 24, 0.9); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px;">
+                    </div>
+                </div>
+
+                <!-- ─── STEP-BY-STEP PROOFS ─── -->
+                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin: 20px 0 12px;">📖 Step-by-Step Fixed-Point Derivation</div>
+                ${data.steps.map((s, idx) => `
+                    <details class="step-details" ${idx <= 1 ? 'open' : ''}>
+                        <summary>${s.title}</summary>
+                        <div style="padding: 12px 0; font-size: 13.5px; color: #cbd5e1; line-height: 1.6;">
+                            ${s.desc}
+                        </div>
+                    </details>
+                `).join('')}
+            `;
+
+            container.innerHTML = html;
+            updateFixStepUI();
+        }
+
+        function updateFixStepUI() {
+            if (!fixAnimState.steps || fixAnimState.steps.length === 0) return;
+            const step = fixAnimState.steps[fixAnimState.currentStep];
+            const badge = document.getElementById('fixStepBadge');
+            if (badge) badge.textContent = `Step ${fixAnimState.currentStep + 1} / ${fixAnimState.steps.length}`;
+
+            const box = document.getElementById('fixStepContainer');
+            if (box) {
+                box.innerHTML = `
+                    <div style="font-size: 15px; font-weight: 800; color: #2dd4bf; margin-bottom: 8px;">
+                        ${step.title}
+                    </div>
+                    <div style="font-size: 13.5px; color: #e2e8f0; line-height: 1.6;">
+                        ${step.desc}
+                    </div>
+                `;
+            }
+        }
+
+        function playFixAnim() {
+            if (fixAnimState.isPlaying) return;
+            fixAnimState.isPlaying = true;
+            const btn = document.getElementById('fixPlayBtn');
+            if (btn) btn.innerHTML = '⏸ Pause';
+
+            fixAnimState.timer = setInterval(() => {
+                if (fixAnimState.currentStep < fixAnimState.steps.length - 1) {
+                    fixAnimState.currentStep++;
+                    updateFixStepUI();
+                } else {
+                    pauseFixAnim();
+                }
+            }, fixAnimState.speedMs);
+        }
+
+        function pauseFixAnim() {
+            fixAnimState.isPlaying = false;
+            if (fixAnimState.timer) clearInterval(fixAnimState.timer);
+            fixAnimState.timer = null;
+            const btn = document.getElementById('fixPlayBtn');
+            if (btn) btn.innerHTML = '▶ Play';
+        }
+
+        function toggleFixPlay() {
+            if (fixAnimState.isPlaying) {
+                pauseFixAnim();
+            } else {
+                if (fixAnimState.currentStep >= fixAnimState.steps.length - 1) {
+                    fixAnimState.currentStep = 0;
+                }
+                playFixAnim();
+            }
+        }
+
+        function nextFixStep() {
+            pauseFixAnim();
+            if (fixAnimState.currentStep < fixAnimState.steps.length - 1) {
+                fixAnimState.currentStep++;
+                updateFixStepUI();
+            }
+        }
+
+        function prevFixStep() {
+            pauseFixAnim();
+            if (fixAnimState.currentStep > 0) {
+                fixAnimState.currentStep--;
+                updateFixStepUI();
+            }
+        }
+
+        function restartFixAnim() {
+            pauseFixAnim();
+            fixAnimState.currentStep = 0;
+            updateFixStepUI();
+        }
+
+        function setFixSpeed(mult, ms) {
+            fixAnimState.speedMs = ms;
+            ['05', '1', '2'].forEach(s => {
+                const b = document.getElementById(`fixSpeed${s}`);
+                if (b) b.className = 'xor-speed-btn';
+            });
+            const active = document.getElementById(`fixSpeed${mult === 0.5 ? '05' : mult}`);
+            if (active) active.className = 'xor-speed-btn active';
+
+            if (fixAnimState.isPlaying) {
+                pauseFixAnim();
+                playFixAnim();
+            }
+        }
+
+        // ─── COMPARISON LAB ───
+        function renderComparisonLab() {
+            const comp = document.getElementById('ffCompContainer');
+            if (!comp) return;
+
+            comp.innerHTML = `
+                <div class="panel">
+                    <h2 style="font-size: 18px; margin-bottom: 12px; color: #f8fafc;">Floating-Point vs Fixed-Point Architecture Comparison</h2>
+                    <div style="font-size: 13.5px; color: #cbd5e1; line-height: 1.6; margin-bottom: 16px;">
+                        Both representations handle fractional real numbers in binary systems, but offer different engineering trade-offs in <strong>Dynamic Range</strong>, <strong>Precision Resolution</strong>, and <strong>Hardware Execution Speed</strong>.
+                    </div>
+
+                    <table class="calc-table">
+                        <thead>
+                            <tr>
+                                <th>Architectural Feature</th>
+                                <th style="color: #f472b6;">Floating-Point (IEEE-754)</th>
+                                <th style="color: #2dd4bf;">Fixed-Point (Q-Format)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Radix Point Position</strong></td>
+                                <td><span style="color: #f472b6;">Dynamic (Floats)</span> via exponent scaling ($1.M \\times 2^E$)</td>
+                                <td><span style="color: #2dd4bf;">Static / Fixed</span> at predetermined bit position ($Q_{m.n}$)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dynamic Range</strong></td>
+                                <td><strong>Extremely Massive</strong> ($10^{-38} \\dots 10^{38}$ for 32-bit float)</td>
+                                <td><strong>Limited</strong> by integer bit count ($[-2^{m-1}, 2^{m-1}-2^{-n}]$)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Resolution & Step Size</strong></td>
+                                <td><strong>Relative / Variable</strong> (high near 0, coarser for large numbers)</td>
+                                <td><strong>Constant Absolute Step Size</strong> ($\Delta = 2^{-n}$)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hardware Complexity</strong></td>
+                                <td>Requires dedicated <strong>FPU (Floating Point Unit)</strong> with barrel shifters</td>
+                                <td>Executes on standard <strong>Integer ALU</strong> with simple shifts</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Power & Execution Speed</strong></td>
+                                <td>Higher latency and higher power consumption</td>
+                                <td>Ultra fast, deterministic timing, low power (ideal for DSPs/Embedded)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Typical Applications</strong></td>
+                                <td>Scientific computing, 3D graphics, machine learning, physics engines</td>
+                                <td>Audio DSP, audio codecs, microcontrollers, FPGA signal processing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
         }
 
     </script>
